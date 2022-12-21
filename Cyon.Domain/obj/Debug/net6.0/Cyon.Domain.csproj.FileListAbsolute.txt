@@ -1,0 +1,12 @@
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\bin\Debug\net6.0\Cyon.Domain.deps.json
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\bin\Debug\net6.0\Cyon.Domain.dll
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\bin\Debug\net6.0\Cyon.Domain.pdb
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\Cyon.Domain.csproj.AssemblyReference.cache
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\Cyon.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\Cyon.Domain.AssemblyInfoInputs.cache
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\Cyon.Domain.AssemblyInfo.cs
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\Cyon.Domain.csproj.CoreCompileInputs.cache
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\Cyon.Domain.dll
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\refint\Cyon.Domain.dll
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\Cyon.Domain.pdb
+C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Domain\obj\Debug\net6.0\ref\Cyon.Domain.dll

@@ -1,0 +1,5 @@
+2022-12-09 15:14:50.006 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-09 15:14:56.748 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-09 15:14:56.749 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-09 15:14:56.763 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-09 15:14:56.764 +01:00 [INF] Hosting environment: Development

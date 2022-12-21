@@ -1,0 +1,981 @@
+2022-12-12 09:14:42.324 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 09:14:45.384 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 09:14:45.384 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 09:14:45.390 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 09:14:45.390 +01:00 [INF] Hosting environment: Development
+2022-12-12 09:14:45.390 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 09:14:46.574 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 09:14:49.241 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 09:14:49.280 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 37.7368ms
+2022-12-12 09:14:49.280 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 2711.4806ms
+2022-12-12 09:14:49.371 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 09:14:49.896 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 525.0585ms
+2022-12-12 09:14:50.182 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 09:14:50.675 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 492.5831ms
+2022-12-12 09:39:46.584 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/meetings - -
+2022-12-12 09:39:47.422 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 09:39:47.593 +01:00 [INF] Route matched with {action = "GetMeetings", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Cyon.Domain.Models.Meeting.MeetingModel]]] GetMeetings(Cyon.Domain.Common.Pagination) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 09:41:45.292 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 09:41:47.012 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 09:41:47.018 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 09:41:51.947 +01:00 [ERR] Failed executing DbCommand (3,620ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    ORDER BY (SELECT 1)
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 09:41:52.895 +01:00 [ERR] An exception occurred while iterating over the results of a query for context type 'Cyon.Infrastructure.Database.AppDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Agenda'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:73bb182a-824e-4908-8b5e-ebe9d182ccc4
+Error Number:208,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Agenda'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:73bb182a-824e-4908-8b5e-ebe9d182ccc4
+Error Number:208,State:1,Class:16
+2022-12-12 09:41:55.500 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api) in 127893.7114ms
+2022-12-12 09:41:55.957 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 09:41:56.892 +01:00 [ERR] Error processing request
+2022-12-12 09:41:56.918 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/meetings - - - 500 - application/json 130334.6072ms
+2022-12-12 09:48:43.097 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 09:49:07.484 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 09:49:56.141 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 09:49:59.207 +01:00 [INF] Executed DbCommand (1,608ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [Cyon_Shomolu];
+2022-12-12 09:49:59.916 +01:00 [INF] Executed DbCommand (701ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [Cyon_Shomolu] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2022-12-12 09:49:59.975 +01:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-12-12 09:50:00.378 +01:00 [INF] Executed DbCommand (201ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2022-12-12 09:50:00.383 +01:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-12-12 09:50:00.465 +01:00 [INF] Executed DbCommand (56ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2022-12-12 09:50:00.486 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2022-12-12 09:50:00.579 +01:00 [INF] Applying migration '20221212084907_initialCreate'.
+2022-12-12 09:50:00.934 +01:00 [INF] Executed DbCommand (145ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Announcements] (
+    [Id] uniqueidentifier NOT NULL,
+    [Title] nvarchar(256) NOT NULL,
+    [Content] nvarchar(max) NOT NULL,
+    [PhotoUrl] nvarchar(max) NULL DEFAULT N'',
+    [DateAdded] datetime2 NOT NULL DEFAULT '2022-12-12T09:49:07.5521438+01:00',
+    [IsActive] bit NOT NULL,
+    [ModifiedBy] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_Announcements] PRIMARY KEY ([Id])
+);
+2022-12-12 09:50:00.939 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+2022-12-12 09:50:00.942 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUsers] (
+    [Id] nvarchar(450) NOT NULL,
+    [FirstName] nvarchar(max) NULL,
+    [LastName] nvarchar(max) NULL,
+    [PhotoUrl] nvarchar(max) NULL,
+    [DateOfBirth] datetime2 NOT NULL,
+    [DateAdded] datetime2 NOT NULL,
+    [UserName] nvarchar(256) NULL,
+    [NormalizedUserName] nvarchar(256) NULL,
+    [Email] nvarchar(256) NULL,
+    [NormalizedEmail] nvarchar(256) NULL,
+    [EmailConfirmed] bit NOT NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [SecurityStamp] nvarchar(max) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [TwoFactorEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+);
+2022-12-12 09:50:00.948 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Chaplains] (
+    [Id] uniqueidentifier NOT NULL,
+    [Fullname] nvarchar(128) NOT NULL,
+    [ImageUrl] nvarchar(256) NOT NULL,
+    [StartYear] nvarchar(4) NOT NULL,
+    [EndYear] nvarchar(7) NOT NULL,
+    [DateAdded] datetime2 NOT NULL DEFAULT '2022-12-12T09:49:07.5520436+01:00',
+    [ModifiedBy] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_Chaplains] PRIMARY KEY ([Id])
+);
+2022-12-12 09:50:00.952 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Meetings] (
+    [Id] uniqueidentifier NOT NULL,
+    [Date] datetime2 NOT NULL,
+    [ProposedDurationInMinutes] float NOT NULL,
+    [ModifiedBy] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_Meetings] PRIMARY KEY ([Id])
+);
+2022-12-12 09:50:00.955 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Minutes] (
+    [Id] uniqueidentifier NOT NULL,
+    [Content] nvarchar(max) NULL,
+    [DateOfMeeting] datetime2 NOT NULL,
+    [ModifiedBy] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_Minutes] PRIMARY KEY ([Id])
+);
+2022-12-12 09:50:00.966 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [RoleId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+2022-12-12 09:50:00.970 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2022-12-12 09:50:01.023 +01:00 [INF] Executed DbCommand (53ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2022-12-12 09:50:01.028 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2022-12-12 09:50:01.034 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] nvarchar(450) NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+2022-12-12 09:50:01.038 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Agenda] (
+    [Id] uniqueidentifier NOT NULL,
+    [Title] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [MeetingId] uniqueidentifier NULL,
+    CONSTRAINT [PK_Agenda] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Agenda_Meetings_MeetingId] FOREIGN KEY ([MeetingId]) REFERENCES [Meetings] ([Id]) ON DELETE CASCADE
+);
+2022-12-12 09:50:01.239 +01:00 [INF] Executed DbCommand (201ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] ON;
+INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+VALUES (N'535e96f6-b663-4eef-839f-933cda7aed01', N'823dc4df-3cac-44aa-a4c6-a6151e008ebc', N'Executive', N'EXECUTIVE');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] OFF;
+2022-12-12 09:50:01.266 +01:00 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] ON;
+INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+VALUES (N'8c79a719-51b9-4303-bdce-b18c0b54d31e', N'b4221603-4fa4-4d6d-b3d2-6f1834c2466c', N'Member', N'MEMBER');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] OFF;
+2022-12-12 09:50:01.299 +01:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] ON;
+INSERT INTO [AspNetRoles] ([Id], [ConcurrencyStamp], [Name], [NormalizedName])
+VALUES (N'f4662853-4027-4873-8b2d-bf324daa6dd2', N'8a2bf9c2-c94a-4cfd-a4d3-bb25ed269c62', N'Super', N'SUPER');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'ConcurrencyStamp', N'Name', N'NormalizedName') AND [object_id] = OBJECT_ID(N'[AspNetRoles]'))
+    SET IDENTITY_INSERT [AspNetRoles] OFF;
+2022-12-12 09:50:01.400 +01:00 [INF] Executed DbCommand (101ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Agenda_MeetingId] ON [Agenda] ([MeetingId]);
+2022-12-12 09:50:01.406 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+2022-12-12 09:50:01.674 +01:00 [INF] Executed DbCommand (268ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+2022-12-12 09:50:01.677 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+2022-12-12 09:50:01.679 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+2022-12-12 09:50:01.682 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+2022-12-12 09:50:01.684 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+2022-12-12 09:50:01.687 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+2022-12-12 09:50:01.696 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20221212084907_initialCreate', N'6.0.11');
+2022-12-12 09:51:09.676 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 09:51:10.375 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 09:51:10.376 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 09:51:10.382 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 09:51:10.383 +01:00 [INF] Hosting environment: Development
+2022-12-12 09:51:10.383 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 09:51:11.556 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 09:51:12.557 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 09:51:12.568 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 1022.6006ms
+2022-12-12 09:51:12.571 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 14.0942ms
+2022-12-12 09:51:12.628 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 09:51:12.678 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 49.7978ms
+2022-12-12 09:51:13.031 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 09:51:13.315 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 284.5681ms
+2022-12-12 09:51:25.451 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/announcement - -
+2022-12-12 09:51:25.693 +01:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2022-12-12 09:51:25.714 +01:00 [INF] AuthenticationScheme: Bearer was challenged.
+2022-12-12 09:51:25.715 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/announcement - - - 401 0 - 263.8981ms
+2022-12-12 09:51:43.095 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/meetings - -
+2022-12-12 09:51:43.120 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 09:51:43.205 +01:00 [INF] Route matched with {action = "GetMeetings", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Cyon.Domain.Models.Meeting.MeetingModel]]] GetMeetings(Cyon.Domain.Common.Pagination) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 09:52:14.962 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 09:52:15.977 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 09:52:15.981 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 09:52:18.816 +01:00 [INF] Executed DbCommand (257ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    ORDER BY (SELECT 1)
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 09:52:33.333 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Cyon.Domain.Models.Meeting.MeetingModel, Cyon.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-12-12 09:52:33.960 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api) in 50736.2614ms
+2022-12-12 09:52:33.964 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 09:52:33.995 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/meetings - - - 200 2 application/json;+charset=utf-8 50900.1929ms
+2022-12-12 09:56:38.207 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 349
+2022-12-12 09:56:38.226 +01:00 [INF] CORS policy execution failed.
+2022-12-12 09:56:38.228 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 09:56:38.231 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 09:56:38.238 +01:00 [INF] Route matched with {action = "AddMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddMeeting(Cyon.Domain.DTOs.Meeting.CreateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 09:56:39.104 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api) in 865.6326ms
+2022-12-12 09:56:39.236 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 09:56:39.476 +01:00 [ERR] Error processing request
+2022-12-12 09:56:39.477 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 349 - 500 - application/json 1270.7726ms
+2022-12-12 09:57:46.572 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 349
+2022-12-12 09:57:46.573 +01:00 [INF] CORS policy execution failed.
+2022-12-12 09:57:46.574 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 09:57:46.585 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 09:57:46.587 +01:00 [INF] Route matched with {action = "AddMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddMeeting(Cyon.Domain.DTOs.Meeting.CreateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 09:57:51.079 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api) in 4486.9487ms
+2022-12-12 09:57:51.358 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 09:58:16.067 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 09:58:17.157 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 09:58:17.158 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 09:58:17.176 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 09:58:17.177 +01:00 [INF] Hosting environment: Development
+2022-12-12 09:58:17.177 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 09:58:18.511 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 09:58:19.486 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 09:58:19.503 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 1004.2136ms
+2022-12-12 09:58:19.503 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 14.4614ms
+2022-12-12 09:58:19.571 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 09:58:19.645 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 74.0707ms
+2022-12-12 09:58:19.871 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 09:58:20.338 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 467.7696ms
+2022-12-12 09:59:54.748 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/authentication/register application/json-patch+json 220
+2022-12-12 09:59:54.793 +01:00 [INF] CORS policy execution failed.
+2022-12-12 09:59:54.794 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 09:59:55.285 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.RegisterUser (Cyon.Api)'
+2022-12-12 09:59:55.451 +01:00 [INF] Route matched with {action = "RegisterUser", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterUser(Cyon.Domain.DTOs.Authentication.UserForRegistrationDto) on controller Cyon.Api.Controllers.v1.AuthenticationController (Cyon.Api).
+2022-12-12 09:59:59.932 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:00:03.430 +01:00 [INF] Executed DbCommand (454ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2022-12-12 10:00:03.721 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2022-12-12 10:00:04.807 +01:00 [INF] Executed DbCommand (90ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (DbType = Int32), @p2='?' (Size = 4000), @p3='?' (DbType = DateTime2), @p4='?' (DbType = DateTime2), @p5='?' (Size = 256), @p6='?' (DbType = Boolean), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (DbType = Boolean), @p10='?' (DbType = DateTimeOffset), @p11='?' (Size = 256), @p12='?' (Size = 256), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Boolean), @p16='?' (Size = 4000), @p17='?' (Size = 4000), @p18='?' (DbType = Boolean), @p19='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUsers] ([Id], [AccessFailedCount], [ConcurrencyStamp], [DateAdded], [DateOfBirth], [Email], [EmailConfirmed], [FirstName], [LastName], [LockoutEnabled], [LockoutEnd], [NormalizedEmail], [NormalizedUserName], [PasswordHash], [PhoneNumber], [PhoneNumberConfirmed], [PhotoUrl], [SecurityStamp], [TwoFactorEnabled], [UserName])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19);
+2022-12-12 10:00:05.132 +01:00 [INF] Executed DbCommand (52ms) [Parameters=[@__normalizedRoleName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0
+2022-12-12 10:00:05.403 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)
+2022-12-12 10:00:05.447 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__normalizedRoleName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0
+2022-12-12 10:00:05.595 +01:00 [INF] Executed DbCommand (52ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2022-12-12 10:00:05.642 +01:00 [INF] Executed DbCommand (15ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2022-12-12 10:00:05.765 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUserRoles] ([RoleId], [UserId])
+VALUES (@p0, @p1);
+2022-12-12 10:00:05.854 +01:00 [INF] Executed DbCommand (62ms) [Parameters=[@p19='?' (Size = 450), @p0='?' (DbType = Int32), @p1='?' (Size = 4000), @p20='?' (Size = 4000), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (Size = 256), @p5='?' (DbType = Boolean), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTimeOffset), @p10='?' (Size = 256), @p11='?' (Size = 256), @p12='?' (Size = 4000), @p13='?' (Size = 4000), @p14='?' (DbType = Boolean), @p15='?' (Size = 4000), @p16='?' (Size = 4000), @p17='?' (DbType = Boolean), @p18='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [AspNetUsers] SET [AccessFailedCount] = @p0, [ConcurrencyStamp] = @p1, [DateAdded] = @p2, [DateOfBirth] = @p3, [Email] = @p4, [EmailConfirmed] = @p5, [FirstName] = @p6, [LastName] = @p7, [LockoutEnabled] = @p8, [LockoutEnd] = @p9, [NormalizedEmail] = @p10, [NormalizedUserName] = @p11, [PasswordHash] = @p12, [PhoneNumber] = @p13, [PhoneNumberConfirmed] = @p14, [PhotoUrl] = @p15, [SecurityStamp] = @p16, [TwoFactorEnabled] = @p17, [UserName] = @p18
+WHERE [Id] = @p19 AND [ConcurrencyStamp] = @p20;
+SELECT @@ROWCOUNT;
+2022-12-12 10:00:05.949 +01:00 [INF] Executing StatusCodeResult, setting HTTP status code 201
+2022-12-12 10:00:05.986 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.AuthenticationController.RegisterUser (Cyon.Api) in 10508.3442ms
+2022-12-12 10:00:05.994 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.RegisterUser (Cyon.Api)'
+2022-12-12 10:00:06.043 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/authentication/register application/json-patch+json 220 - 201 0 - 11294.8059ms
+2022-12-12 10:00:36.494 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/authentication/login application/json-patch+json 64
+2022-12-12 10:00:36.516 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:00:36.516 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:00:36.520 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api)'
+2022-12-12 10:00:36.528 +01:00 [INF] Route matched with {action = "LoginUser", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginUser(Cyon.Domain.DTOs.Authentication.UserForAuthenticationDto) on controller Cyon.Api.Controllers.v1.AuthenticationController (Cyon.Api).
+2022-12-12 10:00:36.638 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:00:36.645 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2022-12-12 10:00:36.687 +01:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2022-12-12 10:00:36.822 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api) in 294.1199ms
+2022-12-12 10:00:36.822 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api)'
+2022-12-12 10:00:36.823 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/authentication/login application/json-patch+json 64 - 401 162 application/problem+json;+charset=utf-8 328.1210ms
+2022-12-12 10:00:53.101 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/authentication/login application/json-patch+json 65
+2022-12-12 10:00:53.102 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:00:53.102 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:00:53.109 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api)'
+2022-12-12 10:00:53.109 +01:00 [INF] Route matched with {action = "LoginUser", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginUser(Cyon.Domain.DTOs.Authentication.UserForAuthenticationDto) on controller Cyon.Api.Controllers.v1.AuthenticationController (Cyon.Api).
+2022-12-12 10:00:53.159 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:00:53.164 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2022-12-12 10:00:53.465 +01:00 [INF] Executed DbCommand (15ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2022-12-12 10:00:54.024 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2022-12-12 10:00:54.039 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api) in 929.2515ms
+2022-12-12 10:00:54.039 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api)'
+2022-12-12 10:00:54.040 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/authentication/login application/json-patch+json 65 - 200 349 application/json;+charset=utf-8 939.3352ms
+2022-12-12 10:03:40.804 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/announcement - -
+2022-12-12 10:03:41.345 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.AnnouncementsController.GetAnnouncements (Cyon.Api)'
+2022-12-12 10:03:41.365 +01:00 [INF] Route matched with {action = "GetAnnouncements", controller = "Announcements"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Cyon.Domain.Models.Announcement.AnnouncementModel]]] GetAnnouncements(Cyon.Domain.Common.Pagination) on controller Cyon.Api.Controllers.v1.AnnouncementsController (Cyon.Api).
+2022-12-12 10:03:41.435 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:03:41.505 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:03:41.509 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:03:41.558 +01:00 [INF] Executed DbCommand (35ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[Content], [a].[DateAdded], [a].[IsActive], [a].[ModifiedBy], [a].[PhotoUrl], [a].[Title]
+FROM [Announcements] AS [a]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2022-12-12 10:03:41.628 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Cyon.Domain.Models.Announcement.AnnouncementModel, Cyon.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-12-12 10:03:41.684 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.AnnouncementsController.GetAnnouncements (Cyon.Api) in 318.6714ms
+2022-12-12 10:03:41.684 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.AnnouncementsController.GetAnnouncements (Cyon.Api)'
+2022-12-12 10:03:41.709 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/announcement - - - 200 2 application/json;+charset=utf-8 904.3892ms
+2022-12-12 10:03:57.376 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/meetings - -
+2022-12-12 10:03:57.377 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 10:03:57.383 +01:00 [INF] Route matched with {action = "GetMeetings", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Cyon.Domain.Models.Meeting.MeetingModel]]] GetMeetings(Cyon.Domain.Common.Pagination) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:03:57.398 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:03:57.452 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:03:57.453 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:03:57.618 +01:00 [INF] Executed DbCommand (9ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    ORDER BY (SELECT 1)
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 10:03:57.631 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Cyon.Domain.Models.Meeting.MeetingModel, Cyon.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-12-12 10:03:57.632 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api) in 248.8448ms
+2022-12-12 10:03:57.633 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 10:03:57.633 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/meetings - - - 200 2 application/json;+charset=utf-8 257.4139ms
+2022-12-12 10:04:30.483 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 161
+2022-12-12 10:04:30.484 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:04:30.484 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:04:30.486 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 10:04:30.518 +01:00 [INF] Route matched with {action = "AddMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddMeeting(Cyon.Domain.DTOs.Meeting.CreateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:04:47.032 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:04:52.593 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Guid), @p3='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Meetings] ([Id], [Date], [ModifiedBy], [ProposedDurationInMinutes])
+VALUES (@p0, @p1, @p2, @p3);
+2022-12-12 10:04:52.600 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Agenda] ([Id], [Description], [MeetingId], [Title])
+VALUES (@p4, @p5, @p6, @p7);
+2022-12-12 10:04:52.612 +01:00 [INF] Executing CreatedAtActionResult, writing value of type 'Cyon.Domain.Models.Meeting.MeetingModel'.
+2022-12-12 10:04:52.689 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api) in 22170.5275ms
+2022-12-12 10:04:52.689 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 10:04:52.689 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 161 - 201 165 application/json;+charset=utf-8 22206.0194ms
+2022-12-12 10:06:30.963 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/meetings/9948e7a1-4e6c-4b94-e6c9-08dadc1feafb - -
+2022-12-12 10:06:30.972 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetingById (Cyon.Api)'
+2022-12-12 10:06:30.981 +01:00 [INF] Route matched with {action = "GetMeetingById", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Cyon.Domain.Models.Meeting.MeetingModel]] GetMeetingById(System.Guid) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:06:30.994 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:06:31.050 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__meetingId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Meetings] AS [m]
+        WHERE [m].[Id] = @__meetingId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-12-12 10:06:31.102 +01:00 [INF] Executed DbCommand (21ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT TOP(1) [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    WHERE [m].[Id] = @__id_0
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 10:06:31.131 +01:00 [INF] Executing OkObjectResult, writing value of type 'Cyon.Domain.Models.Meeting.MeetingModel'.
+2022-12-12 10:06:31.132 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.GetMeetingById (Cyon.Api) in 150.5387ms
+2022-12-12 10:06:31.132 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetingById (Cyon.Api)'
+2022-12-12 10:06:31.133 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/meetings/9948e7a1-4e6c-4b94-e6c9-08dadc1feafb - - - 200 164 application/json;+charset=utf-8 169.1739ms
+2022-12-12 10:11:49.921 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 10:11:50.809 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 10:11:50.809 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 10:11:50.818 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 10:11:50.818 +01:00 [INF] Hosting environment: Development
+2022-12-12 10:11:50.819 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 10:11:52.366 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 10:11:53.344 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 983.5611ms
+2022-12-12 10:11:53.384 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 10:11:53.400 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 15.5408ms
+2022-12-12 10:11:53.488 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 10:11:53.534 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 46.6212ms
+2022-12-12 10:11:53.943 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 10:11:54.339 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 396.7574ms
+2022-12-12 10:12:51.905 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/minutes - -
+2022-12-12 10:12:53.406 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MinutesController.GetAllMinutes (Cyon.Api)'
+2022-12-12 10:12:53.557 +01:00 [INF] Route matched with {action = "GetAllMinutes", controller = "Minutes"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Cyon.Domain.Models.Minutes.MinutesModel]]] GetAllMinutes(Cyon.Domain.Common.Pagination) on controller Cyon.Api.Controllers.v1.MinutesController (Cyon.Api).
+2022-12-12 10:12:59.605 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:13:00.550 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:13:00.552 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:13:03.585 +01:00 [INF] Executed DbCommand (208ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [m].[Id], [m].[Content], [m].[DateOfMeeting], [m].[ModifiedBy]
+FROM [Minutes] AS [m]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2022-12-12 10:13:03.948 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Cyon.Domain.Models.Minutes.MinutesModel, Cyon.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-12-12 10:13:04.210 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MinutesController.GetAllMinutes (Cyon.Api) in 10639.8521ms
+2022-12-12 10:13:04.213 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MinutesController.GetAllMinutes (Cyon.Api)'
+2022-12-12 10:13:04.234 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/minutes - - - 200 2 application/json;+charset=utf-8 12329.1090ms
+2022-12-12 10:13:57.397 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/meetings - -
+2022-12-12 10:13:57.433 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 10:13:57.441 +01:00 [INF] Route matched with {action = "GetMeetings", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Cyon.Domain.Models.Meeting.MeetingModel]]] GetMeetings(Cyon.Domain.Common.Pagination) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:13:57.466 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:13:57.581 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:13:57.582 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:13:58.436 +01:00 [INF] Executed DbCommand (67ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    ORDER BY (SELECT 1)
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 10:13:58.621 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Cyon.Domain.Models.Meeting.MeetingModel, Cyon.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-12-12 10:13:58.757 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api) in 1316.2234ms
+2022-12-12 10:13:58.758 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 10:13:58.759 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/meetings - - - 200 210 application/json;+charset=utf-8 1368.0327ms
+2022-12-12 10:15:03.359 +01:00 [INF] Request starting HTTP/2 PUT https://localhost:7271/api/v1/meetings application/json-patch+json 286
+2022-12-12 10:15:03.381 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:15:03.382 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:15:03.387 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api)'
+2022-12-12 10:15:03.393 +01:00 [INF] Route matched with {action = "UpdateMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UpdateMeeting(Cyon.Domain.DTOs.Meeting.UpdateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:15:03.716 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:15:03.788 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+FROM [Meetings] AS [m]
+WHERE [m].[Id] = @__id_0
+2022-12-12 10:15:05.400 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api) in 2007.0026ms
+2022-12-12 10:15:05.703 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api)'
+2022-12-12 10:15:06.543 +01:00 [ERR] Error processing request
+2022-12-12 10:15:06.546 +01:00 [INF] Request finished HTTP/2 PUT https://localhost:7271/api/v1/meetings application/json-patch+json 286 - 500 - application/json 3187.3502ms
+2022-12-12 10:16:45.564 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 10:16:46.347 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 10:16:46.348 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 10:16:46.354 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 10:16:46.355 +01:00 [INF] Hosting environment: Development
+2022-12-12 10:16:46.355 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 10:16:47.668 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 10:16:48.624 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 10:16:48.642 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 16.3214ms
+2022-12-12 10:16:48.644 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 989.9112ms
+2022-12-12 10:16:48.697 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 10:16:48.751 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 54.5452ms
+2022-12-12 10:16:48.971 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 10:16:49.396 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 425.3342ms
+2022-12-12 10:17:24.766 +01:00 [INF] Request starting HTTP/2 PUT https://localhost:7271/api/v1/meetings application/json-patch+json 286
+2022-12-12 10:17:24.798 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:17:24.798 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:17:25.945 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api)'
+2022-12-12 10:17:26.040 +01:00 [INF] Route matched with {action = "UpdateMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UpdateMeeting(Cyon.Domain.DTOs.Meeting.UpdateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:17:31.161 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:17:35.829 +01:00 [INF] Executed DbCommand (295ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+FROM [Meetings] AS [m]
+WHERE [m].[Id] = @__id_0
+2022-12-12 10:19:01.209 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api) in 95152.1164ms
+2022-12-12 10:19:01.531 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api)'
+2022-12-12 10:19:02.163 +01:00 [ERR] Error processing request
+2022-12-12 10:19:02.191 +01:00 [INF] Request finished HTTP/2 PUT https://localhost:7271/api/v1/meetings application/json-patch+json 286 - 500 - application/json 97425.1360ms
+2022-12-12 10:22:21.242 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 10:22:21.986 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 10:22:21.987 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 10:22:21.995 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 10:22:21.996 +01:00 [INF] Hosting environment: Development
+2022-12-12 10:22:21.996 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 10:22:23.199 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 10:22:23.993 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 10:22:24.021 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 24.5424ms
+2022-12-12 10:22:24.023 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 836.6009ms
+2022-12-12 10:22:24.073 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 10:22:24.140 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 66.7326ms
+2022-12-12 10:22:24.352 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 10:22:24.752 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 399.3970ms
+2022-12-12 10:22:57.319 +01:00 [INF] Request starting HTTP/2 PUT https://localhost:7271/api/v1/meetings application/json-patch+json 287
+2022-12-12 10:22:57.355 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:22:57.356 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:22:58.085 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api)'
+2022-12-12 10:22:58.170 +01:00 [INF] Route matched with {action = "UpdateMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UpdateMeeting(Cyon.Domain.DTOs.Meeting.UpdateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:23:03.755 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:23:08.465 +01:00 [INF] Executed DbCommand (212ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT TOP(1) [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    WHERE [m].[Id] = @__id_0
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 10:24:24.553 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (Size = 4000), @p1='?' (DbType = Guid), @p2='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Agenda] SET [Description] = @p0, [MeetingId] = @p1, [Title] = @p2
+WHERE [Id] = @p3;
+SELECT @@ROWCOUNT;
+2022-12-12 10:24:24.596 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (DbType = Guid), @p2='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Meetings] SET [Date] = @p0, [ModifiedBy] = @p1, [ProposedDurationInMinutes] = @p2
+WHERE [Id] = @p3;
+SELECT @@ROWCOUNT;
+2022-12-12 10:24:24.692 +01:00 [INF] Executing StatusCodeResult, setting HTTP status code 200
+2022-12-12 10:24:24.709 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api) in 86525.9506ms
+2022-12-12 10:24:24.712 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api)'
+2022-12-12 10:24:24.734 +01:00 [INF] Request finished HTTP/2 PUT https://localhost:7271/api/v1/meetings application/json-patch+json 287 - 200 0 - 87415.3094ms
+2022-12-12 10:25:38.395 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 10:25:39.168 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 10:25:39.169 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 10:25:39.178 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 10:25:39.178 +01:00 [INF] Hosting environment: Development
+2022-12-12 10:25:39.178 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 10:25:40.517 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 10:25:41.546 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 10:25:41.555 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 1047.4318ms
+2022-12-12 10:25:41.560 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 15.7379ms
+2022-12-12 10:25:41.618 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 10:25:41.672 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 54.2101ms
+2022-12-12 10:25:41.888 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 10:25:42.350 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 462.2910ms
+2022-12-12 10:27:56.134 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 10:27:57.001 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 10:27:57.002 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 10:27:57.008 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 10:27:57.008 +01:00 [INF] Hosting environment: Development
+2022-12-12 10:27:57.008 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 10:27:58.209 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 10:27:59.167 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 10:27:59.185 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 13.9555ms
+2022-12-12 10:27:59.185 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 985.0655ms
+2022-12-12 10:27:59.260 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 10:27:59.341 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 80.2541ms
+2022-12-12 10:27:59.563 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 10:27:59.975 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 412.1188ms
+2022-12-12 10:29:31.271 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/authentication/account - -
+2022-12-12 10:29:32.076 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.GetAccount (Cyon.Api)'
+2022-12-12 10:29:32.185 +01:00 [INF] Route matched with {action = "GetAccount", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Cyon.Domain.Models.Authentication.AccountModel]] GetAccount() on controller Cyon.Api.Controllers.v1.AuthenticationController (Cyon.Api).
+2022-12-12 10:29:37.499 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:29:42.528 +01:00 [INF] Executed DbCommand (474ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2022-12-12 10:29:43.202 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2022-12-12 10:29:43.261 +01:00 [INF] Executing OkObjectResult, writing value of type 'Cyon.Domain.Models.Authentication.AccountModel'.
+2022-12-12 10:29:43.606 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.AuthenticationController.GetAccount (Cyon.Api) in 11394.4644ms
+2022-12-12 10:29:43.613 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.GetAccount (Cyon.Api)'
+2022-12-12 10:29:43.668 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/authentication/account - - - 200 251 application/json;+charset=utf-8 12398.3176ms
+2022-12-12 10:30:13.472 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/authentication/account/08c28966-0c91-4860-a0b9-b37bee9cba56/change-role application/json-patch+json 17
+2022-12-12 10:30:13.496 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:30:13.497 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:30:13.500 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.ChangeRole (Cyon.Api)'
+2022-12-12 10:30:13.530 +01:00 [INF] Route matched with {action = "ChangeRole", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ChangeRole(System.Guid, System.Collections.Generic.IEnumerable`1[System.String]) on controller Cyon.Api.Controllers.v1.AuthenticationController (Cyon.Api).
+2022-12-12 10:30:13.787 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:30:13.801 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2022-12-12 10:30:13.862 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedRoleName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0
+2022-12-12 10:30:13.905 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (Size = 450), @__p_1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[UserId], [a].[RoleId]
+FROM [AspNetUserRoles] AS [a]
+WHERE ([a].[UserId] = @__p_0) AND ([a].[RoleId] = @__p_1)
+2022-12-12 10:30:13.917 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedRoleName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedRoleName_0
+2022-12-12 10:30:14.043 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedUserName] = @__normalizedUserName_0
+2022-12-12 10:30:14.086 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2022-12-12 10:30:14.660 +01:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AspNetUserRoles] ([RoleId], [UserId])
+VALUES (@p0, @p1);
+2022-12-12 10:30:14.812 +01:00 [INF] Executed DbCommand (29ms) [Parameters=[@p19='?' (Size = 450), @p0='?' (DbType = Int32), @p1='?' (Size = 4000), @p20='?' (Size = 4000), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (Size = 256), @p5='?' (DbType = Boolean), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTimeOffset), @p10='?' (Size = 256), @p11='?' (Size = 256), @p12='?' (Size = 4000), @p13='?' (Size = 4000), @p14='?' (DbType = Boolean), @p15='?' (Size = 4000), @p16='?' (Size = 4000), @p17='?' (DbType = Boolean), @p18='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [AspNetUsers] SET [AccessFailedCount] = @p0, [ConcurrencyStamp] = @p1, [DateAdded] = @p2, [DateOfBirth] = @p3, [Email] = @p4, [EmailConfirmed] = @p5, [FirstName] = @p6, [LastName] = @p7, [LockoutEnabled] = @p8, [LockoutEnd] = @p9, [NormalizedEmail] = @p10, [NormalizedUserName] = @p11, [PasswordHash] = @p12, [PhoneNumber] = @p13, [PhoneNumberConfirmed] = @p14, [PhotoUrl] = @p15, [SecurityStamp] = @p16, [TwoFactorEnabled] = @p17, [UserName] = @p18
+WHERE [Id] = @p19 AND [ConcurrencyStamp] = @p20;
+SELECT @@ROWCOUNT;
+2022-12-12 10:30:15.005 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2022-12-12 10:30:50.712 +01:00 [INF] Executing StatusCodeResult, setting HTTP status code 201
+2022-12-12 10:30:50.712 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.AuthenticationController.ChangeRole (Cyon.Api) in 37182.5321ms
+2022-12-12 10:30:50.713 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.ChangeRole (Cyon.Api)'
+2022-12-12 10:30:50.714 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/authentication/account/08c28966-0c91-4860-a0b9-b37bee9cba56/change-role application/json-patch+json 17 - 201 0 - 37242.9021ms
+2022-12-12 10:30:51.687 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 10:30:51.728 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 41.0057ms
+2022-12-12 10:30:51.761 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 10:30:51.761 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 10:30:51.762 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 1.2430ms
+2022-12-12 10:30:51.786 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 24.9385ms
+2022-12-12 10:30:52.033 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 10:30:52.076 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/favicon-32x32.png - -
+2022-12-12 10:30:52.084 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 50.2425ms
+2022-12-12 10:30:52.140 +01:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2022-12-12 10:30:52.140 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/favicon-32x32.png - - - 200 628 image/png 64.1470ms
+2022-12-12 10:31:24.527 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/authentication/account - -
+2022-12-12 10:31:24.534 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.GetAccount (Cyon.Api)'
+2022-12-12 10:31:24.548 +01:00 [INF] Route matched with {action = "GetAccount", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Cyon.Domain.Models.Authentication.AccountModel]] GetAccount() on controller Cyon.Api.Controllers.v1.AuthenticationController (Cyon.Api).
+2022-12-12 10:31:24.600 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:31:24.611 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__p_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[Id] = @__p_0
+2022-12-12 10:31:24.618 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2022-12-12 10:31:24.619 +01:00 [INF] Executing OkObjectResult, writing value of type 'Cyon.Domain.Models.Authentication.AccountModel'.
+2022-12-12 10:31:24.620 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.AuthenticationController.GetAccount (Cyon.Api) in 69.8089ms
+2022-12-12 10:31:24.620 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.GetAccount (Cyon.Api)'
+2022-12-12 10:31:24.620 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/authentication/account - - - 200 263 application/json;+charset=utf-8 92.8348ms
+2022-12-12 10:38:38.648 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 10:38:40.106 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 10:38:40.106 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 10:38:40.111 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 10:38:40.111 +01:00 [INF] Hosting environment: Development
+2022-12-12 10:38:40.111 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 10:38:41.176 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 10:38:42.078 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 10:38:42.088 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 919.3112ms
+2022-12-12 10:38:42.092 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 13.7099ms
+2022-12-12 10:38:42.167 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 10:38:42.224 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 56.1459ms
+2022-12-12 10:38:42.402 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 10:38:42.800 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 397.6887ms
+2022-12-12 10:39:18.321 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/authentication/login application/json-patch+json 65
+2022-12-12 10:39:18.340 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:39:18.341 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:39:18.560 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api)'
+2022-12-12 10:39:18.625 +01:00 [INF] Route matched with {action = "LoginUser", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginUser(Cyon.Domain.DTOs.Authentication.UserForAuthenticationDto) on controller Cyon.Api.Controllers.v1.AuthenticationController (Cyon.Api).
+2022-12-12 10:39:24.675 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:39:29.115 +01:00 [INF] Executed DbCommand (539ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateAdded], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2022-12-12 10:39:30.418 +01:00 [INF] Executed DbCommand (17ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2022-12-12 10:39:30.868 +01:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2022-12-12 10:39:31.030 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api) in 12388.6462ms
+2022-12-12 10:39:31.034 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.AuthenticationController.LoginUser (Cyon.Api)'
+2022-12-12 10:39:31.063 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/authentication/login application/json-patch+json 65 - 200 368 application/json;+charset=utf-8 12741.4967ms
+2022-12-12 10:39:58.262 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/meetings - -
+2022-12-12 10:39:58.814 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 10:39:58.830 +01:00 [INF] Route matched with {action = "GetMeetings", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Cyon.Domain.Models.Meeting.MeetingModel]]] GetMeetings(Cyon.Domain.Common.Pagination) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:39:58.991 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:39:59.119 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:39:59.122 +01:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-12-12 10:39:59.578 +01:00 [INF] Executed DbCommand (29ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    ORDER BY (SELECT 1)
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 10:39:59.705 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Cyon.Domain.Models.Meeting.MeetingModel, Cyon.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-12-12 10:39:59.798 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api) in 968.1696ms
+2022-12-12 10:39:59.799 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 10:39:59.826 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/meetings - - - 200 216 application/json;+charset=utf-8 1564.3629ms
+2022-12-12 10:42:03.610 +01:00 [INF] Request starting HTTP/2 PUT https://localhost:7271/api/v1/meetings application/json-patch+json 367
+2022-12-12 10:42:03.627 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:42:03.627 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:42:03.636 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api)'
+2022-12-12 10:42:03.643 +01:00 [INF] Route matched with {action = "UpdateMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UpdateMeeting(Cyon.Domain.DTOs.Meeting.UpdateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:42:03.762 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:42:03.808 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT TOP(1) [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    WHERE [m].[Id] = @__id_0
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 10:42:04.740 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (Size = 4000), @p1='?' (DbType = Guid), @p2='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Agenda] SET [Description] = @p0, [MeetingId] = @p1, [Title] = @p2
+WHERE [Id] = @p3;
+SELECT @@ROWCOUNT;
+2022-12-12 10:42:04.807 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (DbType = Guid), @p3='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Agenda] ([Id], [Description], [MeetingId], [Title])
+VALUES (@p0, @p1, @p2, @p3);
+2022-12-12 10:42:04.839 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (DbType = Guid), @p2='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Meetings] SET [Date] = @p0, [ModifiedBy] = @p1, [ProposedDurationInMinutes] = @p2
+WHERE [Id] = @p3;
+SELECT @@ROWCOUNT;
+2022-12-12 10:42:04.977 +01:00 [INF] Executing StatusCodeResult, setting HTTP status code 200
+2022-12-12 10:42:04.978 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api) in 1335.0787ms
+2022-12-12 10:42:04.978 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.UpdateMeeting (Cyon.Api)'
+2022-12-12 10:42:04.979 +01:00 [INF] Request finished HTTP/2 PUT https://localhost:7271/api/v1/meetings application/json-patch+json 367 - 200 0 - 1369.0024ms
+2022-12-12 10:43:03.025 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/meetings - -
+2022-12-12 10:43:03.041 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 10:43:03.041 +01:00 [INF] Route matched with {action = "GetMeetings", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[Cyon.Domain.Models.Meeting.MeetingModel]]] GetMeetings(Cyon.Domain.Common.Pagination) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:43:03.057 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:43:03.074 +01:00 [INF] Executed DbCommand (11ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    ORDER BY (SELECT 1)
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 10:43:03.075 +01:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Cyon.Domain.Models.Meeting.MeetingModel, Cyon.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-12-12 10:43:03.076 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api) in 29.1375ms
+2022-12-12 10:43:03.076 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetings (Cyon.Api)'
+2022-12-12 10:43:03.076 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/meetings - - - 200 303 application/json;+charset=utf-8 51.4319ms
+2022-12-12 10:43:57.691 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 163
+2022-12-12 10:43:57.691 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:43:57.691 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:43:57.697 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 10:43:57.727 +01:00 [INF] Route matched with {action = "AddMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddMeeting(Cyon.Domain.DTOs.Meeting.CreateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:43:57.937 +01:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2022-12-12 10:43:58.045 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api) in 317.2453ms
+2022-12-12 10:43:58.045 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 10:43:58.046 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 163 - 400 284 application/problem+json;+charset=utf-8 354.9862ms
+2022-12-12 10:44:15.421 +01:00 [INF] Request starting HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 164
+2022-12-12 10:44:15.422 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:44:15.422 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:44:15.423 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 10:44:15.423 +01:00 [INF] Route matched with {action = "AddMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddMeeting(Cyon.Domain.DTOs.Meeting.CreateMeetingDto) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:44:15.467 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:44:15.573 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Guid), @p3='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Meetings] ([Id], [Date], [ModifiedBy], [ProposedDurationInMinutes])
+VALUES (@p0, @p1, @p2, @p3);
+2022-12-12 10:44:15.584 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@p4='?' (DbType = Guid), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Agenda] ([Id], [Description], [MeetingId], [Title])
+VALUES (@p4, @p5, @p6, @p7);
+2022-12-12 10:44:15.600 +01:00 [INF] Executing CreatedAtActionResult, writing value of type 'Cyon.Domain.Models.Meeting.MeetingModel'.
+2022-12-12 10:44:15.691 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api) in 267.7952ms
+2022-12-12 10:44:15.691 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.AddMeeting (Cyon.Api)'
+2022-12-12 10:44:15.692 +01:00 [INF] Request finished HTTP/2 POST https://localhost:7271/api/v1/meetings application/json-patch+json 164 - 201 212 application/json;+charset=utf-8 271.6002ms
+2022-12-12 10:45:01.809 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/meetings/394dd32e-5ddd-4fff-be71-08dadc256eaf - -
+2022-12-12 10:45:01.812 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetingById (Cyon.Api)'
+2022-12-12 10:45:01.839 +01:00 [INF] Route matched with {action = "GetMeetingById", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[Cyon.Domain.Models.Meeting.MeetingModel]] GetMeetingById(System.Guid) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:45:01.850 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:45:01.912 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__meetingId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Meetings] AS [m]
+        WHERE [m].[Id] = @__meetingId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-12-12 10:45:01.934 +01:00 [INF] Executed DbCommand (4ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Date], [t].[ModifiedBy], [t].[ProposedDurationInMinutes], [a].[Id], [a].[Description], [a].[MeetingId], [a].[Title]
+FROM (
+    SELECT TOP(1) [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+    FROM [Meetings] AS [m]
+    WHERE [m].[Id] = @__id_0
+) AS [t]
+LEFT JOIN [Agenda] AS [a] ON [t].[Id] = [a].[MeetingId]
+ORDER BY [t].[Id]
+2022-12-12 10:45:01.934 +01:00 [INF] Executing OkObjectResult, writing value of type 'Cyon.Domain.Models.Meeting.MeetingModel'.
+2022-12-12 10:45:01.935 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.GetMeetingById (Cyon.Api) in 95.6588ms
+2022-12-12 10:45:01.935 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.GetMeetingById (Cyon.Api)'
+2022-12-12 10:45:01.935 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/meetings/394dd32e-5ddd-4fff-be71-08dadc256eaf - - - 200 211 application/json;+charset=utf-8 127.2877ms
+2022-12-12 10:45:22.760 +01:00 [INF] Request starting HTTP/2 DELETE https://localhost:7271/api/v1/meetings/394dd32e-5ddd-4fff-be71-08dadc256eaf - -
+2022-12-12 10:45:22.761 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:45:22.761 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:45:22.771 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api)'
+2022-12-12 10:45:22.782 +01:00 [INF] Route matched with {action = "DeleteMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeleteMeeting(System.Guid) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:45:22.789 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:45:22.795 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__meetingId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Meetings] AS [m]
+        WHERE [m].[Id] = @__meetingId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-12-12 10:45:22.809 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [m].[Id], [m].[Date], [m].[ModifiedBy], [m].[ProposedDurationInMinutes]
+FROM [Meetings] AS [m]
+WHERE [m].[Id] = @__id_0
+2022-12-12 10:45:22.913 +01:00 [INF] Executed DbCommand (69ms) [Parameters=[@p0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+DELETE FROM [Meetings]
+WHERE [Id] = @p0;
+SELECT @@ROWCOUNT;
+2022-12-12 10:45:22.954 +01:00 [INF] Executing StatusCodeResult, setting HTTP status code 204
+2022-12-12 10:45:22.954 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api) in 171.7344ms
+2022-12-12 10:45:22.954 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api)'
+2022-12-12 10:45:22.955 +01:00 [INF] Request finished HTTP/2 DELETE https://localhost:7271/api/v1/meetings/394dd32e-5ddd-4fff-be71-08dadc256eaf - - - 204 - - 194.8968ms
+2022-12-12 10:45:30.155 +01:00 [INF] Request starting HTTP/2 DELETE https://localhost:7271/api/v1/meetings/394dd32e-5ddd-4fff-be71-08dadc256eaf - -
+2022-12-12 10:45:30.156 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:45:30.156 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:45:30.156 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api)'
+2022-12-12 10:45:30.157 +01:00 [INF] Route matched with {action = "DeleteMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeleteMeeting(System.Guid) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:45:30.158 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:45:30.164 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__meetingId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Meetings] AS [m]
+        WHERE [m].[Id] = @__meetingId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-12-12 10:45:31.419 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api) in 1262.2309ms
+2022-12-12 10:45:31.764 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api)'
+2022-12-12 10:45:32.736 +01:00 [ERR] Error processing request
+2022-12-12 10:45:32.737 +01:00 [INF] Request finished HTTP/2 DELETE https://localhost:7271/api/v1/meetings/394dd32e-5ddd-4fff-be71-08dadc256eaf - - - 404 - application/json 2581.8780ms
+2022-12-12 10:45:38.621 +01:00 [INF] Request starting HTTP/2 DELETE https://localhost:7271/api/v1/meetings/394dd32e-5ddd-4fff-be71-08dadc256eaf - -
+2022-12-12 10:45:38.621 +01:00 [INF] CORS policy execution failed.
+2022-12-12 10:45:38.621 +01:00 [INF] Request origin https://localhost:7271 does not have permission to access the resource.
+2022-12-12 10:45:38.621 +01:00 [INF] Executing endpoint 'Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api)'
+2022-12-12 10:45:38.622 +01:00 [INF] Route matched with {action = "DeleteMeeting", controller = "Meetings"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] DeleteMeeting(System.Guid) on controller Cyon.Api.Controllers.v1.MeetingsController (Cyon.Api).
+2022-12-12 10:45:38.623 +01:00 [INF] Entity Framework Core 6.0.11 initialized 'AppDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.11' with options: None
+2022-12-12 10:45:38.626 +01:00 [INF] Executed DbCommand (2ms) [Parameters=[@__meetingId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Meetings] AS [m]
+        WHERE [m].[Id] = @__meetingId_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-12-12 10:45:39.721 +01:00 [INF] Executed action Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api) in 1099.443ms
+2022-12-12 10:45:40.016 +01:00 [INF] Executed endpoint 'Cyon.Api.Controllers.v1.MeetingsController.DeleteMeeting (Cyon.Api)'
+2022-12-12 10:45:40.932 +01:00 [ERR] Error processing request
+2022-12-12 10:45:40.933 +01:00 [INF] Request finished HTTP/2 DELETE https://localhost:7271/api/v1/meetings/394dd32e-5ddd-4fff-be71-08dadc256eaf - - - 404 - application/json 2312.2680ms
+2022-12-12 11:58:16.874 +01:00 [INF] User profile is available. Using 'C:\Users\HP\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-12 11:58:17.248 +01:00 [INF] Now listening on: https://localhost:7271
+2022-12-12 11:58:17.248 +01:00 [INF] Now listening on: http://localhost:5059
+2022-12-12 11:58:17.251 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-12 11:58:17.251 +01:00 [INF] Hosting environment: Development
+2022-12-12 11:58:17.251 +01:00 [INF] Content root path: C:\Users\HP\Desktop\Paid-Projects\Cyon\Cyon.Api\
+2022-12-12 11:58:18.931 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/index.html - -
+2022-12-12 11:58:20.292 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - -
+2022-12-12 11:58:20.299 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/index.html - - - 200 - text/html;charset=utf-8 1370.3500ms
+2022-12-12 11:58:20.299 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 7.2915ms
+2022-12-12 11:58:20.332 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/_vs/browserLink - -
+2022-12-12 11:58:20.356 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 23.3109ms
+2022-12-12 11:58:20.471 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - -
+2022-12-12 11:58:20.697 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 226.0901ms
+2022-12-12 11:58:39.673 +01:00 [INF] Request starting HTTP/2 GET https://localhost:7271/api/v1/minutes - -
+2022-12-12 11:58:39.787 +01:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2022-12-12 11:58:39.797 +01:00 [INF] AuthenticationScheme: Bearer was challenged.
+2022-12-12 11:58:39.797 +01:00 [INF] Request finished HTTP/2 GET https://localhost:7271/api/v1/minutes - - - 401 0 - 123.5738ms
