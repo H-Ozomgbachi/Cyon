@@ -57,5 +57,17 @@ namespace Cyon.Application.Services
 
             return _mapper.Map<IEnumerable<AttendanceRegisterModel>>(attendanceRegisters);
         }
+
+        public async Task<IEnumerable<AttendanceRegisterModel>> GetMyAttendanceRecord(Guid userId, Pagination pagination)
+        {
+            var filter = new List<Expression<Func<AttendanceRegister, bool>>>
+            {
+                p => p.UserId == userId
+            };
+
+            IEnumerable<AttendanceRegister> attendanceRegisters = await _unitOfWork.AttendanceRegisterRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
+
+            return _mapper.Map<IEnumerable<AttendanceRegisterModel>>(attendanceRegisters.OrderByDescending(x => x.DateAdded));
+        }
     }
 }

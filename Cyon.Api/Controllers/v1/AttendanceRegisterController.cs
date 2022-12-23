@@ -4,6 +4,7 @@ using Cyon.Domain.Models.Attendance;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Cyon.Api.Controllers.v1
 {
@@ -25,9 +26,15 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpGet("GetTodayAttendance")]
-        public async Task<ActionResult<AttendanceRegisterModel>> GetTodayAttendance([FromQuery]Pagination pagination)
+        public async Task<ActionResult<IEnumerable<AttendanceRegisterModel>>> GetTodayAttendance([FromQuery]Pagination pagination)
         {
             return Ok(await _attendanceRegisterService.GetCurrentDayAttendance(pagination));
+        }
+        [HttpGet("GetMyAttendanceRecord")]
+        public async Task<ActionResult<IEnumerable<AttendanceRegisterModel>>> GetMyAttendanceRecord([FromQuery] Pagination pagination)
+        {
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return Ok(await _attendanceRegisterService.GetMyAttendanceRecord(userId, pagination));
         }
     }
 }
