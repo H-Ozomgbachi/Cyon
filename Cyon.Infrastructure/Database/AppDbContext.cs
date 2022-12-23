@@ -18,17 +18,19 @@ namespace Cyon.Infrastructure.Database
         public DbSet<Agendum> Agenda { get; set; }
         public DbSet<AttendanceType> AttendanceTypes { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Occupation> Occupations { get; set; }
+        public DbSet<AttendanceRegister> AttendanceRegisters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new ChaplainEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new AnnouncementEntityConfiguration());
             modelBuilder.ApplyConfiguration(new MeetingEntityConfiguration());
             modelBuilder.ApplyConfiguration(new AttendanceTypeEntityConfiguration());
             modelBuilder.ApplyConfiguration(new DepartmentEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new OccupationEntityConfiguration());
         }
     }
 }

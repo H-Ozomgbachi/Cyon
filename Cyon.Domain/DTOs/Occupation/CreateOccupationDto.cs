@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cyon.Domain.DTOs.Occupation
+﻿namespace Cyon.Domain.DTOs.Occupation
 {
-    internal class CreateOccupationDto
+    public class CreateOccupationDto
     {
+        public string JobTitle { get; set; }
+        public string Company { get; set; }
+        public bool IsStudent { get; set; }
+        public bool IsUnemployed { get; set; }
+        public string CanDo { get; set; }
     }
 }

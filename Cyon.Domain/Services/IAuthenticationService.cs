@@ -9,5 +9,7 @@ namespace Cyon.Domain.Services
         Task<string> CreateToken();
         Task<AccountModel> MyAccount(Guid userId);
         Task ChangeRole(IEnumerable<string> roles, Guid userId);
+        Task AddRolesToDb(IEnumerable<string> roles);
+        Task<IEnumerable<AccountIdAWithEmail>> GetAccountIdsWithEmail(string searchKey);
     }
 }

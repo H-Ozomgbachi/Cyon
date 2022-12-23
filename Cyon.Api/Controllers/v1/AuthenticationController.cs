@@ -70,5 +70,17 @@ namespace Cyon.Api.Controllers.v1
             await _authenticationService.ChangeRole(roles, id);
             return StatusCode(201);
         }
+        [HttpPost("create-roles")]
+        public async Task<IActionResult> CreateRoles([FromBody] IEnumerable<string> roles)
+        {
+            await _authenticationService.AddRolesToDb(roles);
+            return Ok();
+        }
+
+        [HttpGet("get-users-email-and-id")]
+        public async Task<ActionResult> GetUsersEmailAndId([FromQuery]string startsWith = "a")
+        {
+            return Ok(await _authenticationService.GetAccountIdsWithEmail(startsWith));
+        }
     }
 }

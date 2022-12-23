@@ -57,7 +57,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 12, 21, 11, 16, 52, 671, DateTimeKind.Local).AddTicks(7451));
+                        .HasDefaultValue(new DateTime(2022, 12, 23, 16, 52, 54, 101, DateTimeKind.Local).AddTicks(6904));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -78,6 +78,38 @@ namespace Cyon.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Announcements");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.AttendanceRegister", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AttendanceTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AttendanceTypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPresent")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AttendanceRegisters");
                 });
 
             modelBuilder.Entity("Cyon.Domain.Entities.AttendanceType", b =>
@@ -104,7 +136,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 12, 21, 11, 16, 52, 671, DateTimeKind.Local).AddTicks(6372));
+                        .HasDefaultValue(new DateTime(2022, 12, 23, 16, 52, 54, 101, DateTimeKind.Local).AddTicks(6182));
 
                     b.Property<string>("EndYear")
                         .IsRequired()
@@ -188,6 +220,50 @@ namespace Cyon.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Minutes");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.Occupation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CanDo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("");
+
+                    b.Property<string>("Company")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsStudent")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsUnemployed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Occupations");
                 });
 
             modelBuilder.Entity("Cyon.Domain.Entities.User", b =>
@@ -303,29 +379,6 @@ namespace Cyon.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "b3454d96-300e-4331-887b-c22d1508e20f",
-                            ConcurrencyStamp = "16bc1e21-e3a1-4f50-bfbe-d74e1f522c37",
-                            Name = "Member",
-                            NormalizedName = "MEMBER"
-                        },
-                        new
-                        {
-                            Id = "736aeae7-17ae-42b1-afe1-c446165c294f",
-                            ConcurrencyStamp = "361266af-b24e-4efc-a9dc-8f84492542ac",
-                            Name = "Executive",
-                            NormalizedName = "EXECUTIVE"
-                        },
-                        new
-                        {
-                            Id = "8781c1d9-8a69-48c0-bf88-31ea4ae6b45b",
-                            ConcurrencyStamp = "c9fc9f7d-d06a-4e30-a5b3-c19470803b7c",
-                            Name = "Super",
-                            NormalizedName = "SUPER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -442,6 +495,15 @@ namespace Cyon.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Meeting");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.Occupation", b =>
+                {
+                    b.HasOne("Cyon.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Cyon.Domain.Entities.User", b =>

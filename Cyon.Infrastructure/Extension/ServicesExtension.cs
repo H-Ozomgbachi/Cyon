@@ -24,6 +24,7 @@ namespace Cyon.Infrastructure.Extension
             });
 
             builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddRoleManager<RoleManager<IdentityRole>>();
             builder.AddEntityFrameworkStores<AppDbContext>();
         }
 

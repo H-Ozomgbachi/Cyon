@@ -15,6 +15,8 @@ namespace Cyon.Infrastructure
         private IAgendumRepository _agendumRepository;
         private IAttendanceTypeRepository _attendanceTypeRepository;
         private IDepartmentRepository _departmentRepository;
+        private IOccupationRepository _occupationRepository;
+        private IAttendanceRegisterRepository _attendanceRegisterRepository;
 
         public UnitOfWork(AppDbContext dbContext)
         {
@@ -118,6 +120,35 @@ namespace Cyon.Infrastructure
                 return _departmentRepository;
             }
         }
+
+        public IOccupationRepository OccupationRepository
+        {
+            get
+            {
+                if (_occupationRepository == null)
+                {
+                    _occupationRepository = new OccupationRepository(_dbContext.Occupations);
+
+                    return _occupationRepository;
+                }
+                return _occupationRepository;
+            }
+        }
+
+        public IAttendanceRegisterRepository AttendanceRegisterRepository
+        {
+            get
+            {
+                if (_attendanceRegisterRepository == null)
+                {
+                    _attendanceRegisterRepository = new AttendanceRegisterRepository(_dbContext.AttendanceRegisters);
+
+                    return _attendanceRegisterRepository;
+                }
+                return _attendanceRegisterRepository;
+            }
+        }
+
         public void Dispose() => _dbContext.Dispose();
 
         public async Task<int> SaveAsync() => await _dbContext.SaveChangesAsync();

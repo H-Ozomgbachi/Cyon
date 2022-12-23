@@ -11,6 +11,8 @@ namespace Cyon.Domain
         IAgendumRepository AgendumRepository { get; }
         IAttendanceTypeRepository AttendanceTypeRepository { get; }
         IDepartmentRepository DepartmentRepository { get; }
+        IOccupationRepository OccupationRepository { get; }
+        IAttendanceRegisterRepository AttendanceRegisterRepository { get; }
         Task<int> SaveAsync();
     }
 }
