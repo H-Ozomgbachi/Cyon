@@ -87,6 +87,11 @@ namespace Cyon.Application.Services
         public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuthentication)
         {
             _user = await _userManager.FindByEmailAsync(userForAuthentication.Email);
+            if (_user != null)
+            {
+                _user.LastLogin = DateTime.Now;
+                await _userManager.UpdateAsync(_user);
+            }
             return (_user != null && await _userManager.CheckPasswordAsync(user: _user, userForAuthentication.Password));
         }
 

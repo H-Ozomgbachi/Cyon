@@ -1,4 +1,5 @@
-﻿using Cyon.Domain.Repositories;
+﻿using Cyon.Domain.Entities;
+using Cyon.Domain.Repositories;
 
 namespace Cyon.Domain
 {
@@ -13,6 +14,8 @@ namespace Cyon.Domain
         IDepartmentRepository DepartmentRepository { get; }
         IOccupationRepository OccupationRepository { get; }
         IAttendanceRegisterRepository AttendanceRegisterRepository { get; }
+        IApologyRepository ApologyRepository { get; }
+        IDeactivateRequestRepository DeactivateRequestRepository { get; }
         Task<int> SaveAsync();
     }
 }

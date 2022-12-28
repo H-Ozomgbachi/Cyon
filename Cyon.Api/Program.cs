@@ -47,6 +47,8 @@ builder.Services.AddScoped<IAttendanceTypeService, AttendanceTypeService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IOccupationService, OccupationService>();
 builder.Services.AddScoped<IAttendanceRegisterService, AttendanceRegisterService>();
+builder.Services.AddScoped<IApologyService, ApologyService>();
+builder.Services.AddScoped<IAccountManagementService, AccountManagementService>();
 
 string client = builder.Configuration.GetSection("ClientHost").Value;
 

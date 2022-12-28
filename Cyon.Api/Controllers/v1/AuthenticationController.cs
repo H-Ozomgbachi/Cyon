@@ -31,6 +31,8 @@ namespace Cyon.Api.Controllers.v1
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistrationDto)
         {
             var user = _mapper.Map<User>(userForRegistrationDto);
+            user.LastModified = DateTime.Now;
+            user.ModifiedBy = Guid.Parse(user.Id);
             
             var result = await _userManager.CreateAsync(user, userForRegistrationDto.Password);
             if (!result.Succeeded)

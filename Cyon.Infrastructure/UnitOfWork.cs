@@ -17,6 +17,8 @@ namespace Cyon.Infrastructure
         private IDepartmentRepository _departmentRepository;
         private IOccupationRepository _occupationRepository;
         private IAttendanceRegisterRepository _attendanceRegisterRepository;
+        private IApologyRepository _apologyRepository;
+        private IDeactivateRequestRepository _deactivateRequestRepository;
 
         public UnitOfWork(AppDbContext dbContext)
         {
@@ -146,6 +148,34 @@ namespace Cyon.Infrastructure
                     return _attendanceRegisterRepository;
                 }
                 return _attendanceRegisterRepository;
+            }
+        }
+
+        public IApologyRepository ApologyRepository
+        {
+            get
+            {
+                if (_apologyRepository == null)
+                {
+                    _apologyRepository = new ApologyRepository(_dbContext.Apologies);
+
+                    return _apologyRepository;
+                }
+                return _apologyRepository;
+            }
+        }
+
+        public IDeactivateRequestRepository DeactivateRequestRepository
+        {
+            get
+            {
+                if (_deactivateRequestRepository == null)
+                {
+                    _deactivateRequestRepository = new DeactivateRequestRepository(_dbContext.DeactivateRequests);
+
+                    return _deactivateRequestRepository;
+                }
+                return _deactivateRequestRepository;
             }
         }
 

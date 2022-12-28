@@ -10,7 +10,14 @@ namespace Cyon.Domain.Entities
         public DateTime DateOfBirth { get; set; }
         public DateTime DateAdded { get; set; } = DateTime.Now;
         public string Rank { get; set; } = "Regular";
+        public bool IsActive { get; set; } = true;
+        public string InactiveReason { get; set; } = string.Empty;
+        public DateTime LastModified { get; set; }
+        public Guid ModifiedBy { get; set; }
+        public DateTime LastLogin { get; set; }
+
         public Guid DepartmentId { get; set; }
         public Department Department { get; set; }
+        public ICollection<Apology> Apologies { get; set; }
     }
 }

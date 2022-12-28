@@ -57,7 +57,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 12, 23, 16, 52, 54, 101, DateTimeKind.Local).AddTicks(6904));
+                        .HasDefaultValue(new DateTime(2022, 12, 28, 18, 37, 30, 798, DateTimeKind.Local).AddTicks(3943));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -78,6 +78,53 @@ namespace Cyon.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Announcements");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.Apology", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AttendanceTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("For")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsRejected")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Apologies");
                 });
 
             modelBuilder.Entity("Cyon.Domain.Entities.AttendanceRegister", b =>
@@ -136,7 +183,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 12, 23, 16, 52, 54, 101, DateTimeKind.Local).AddTicks(6182));
+                        .HasDefaultValue(new DateTime(2022, 12, 28, 18, 37, 30, 798, DateTimeKind.Local).AddTicks(2545));
 
                     b.Property<string>("EndYear")
                         .IsRequired()
@@ -164,6 +211,32 @@ namespace Cyon.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Chaplains");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.DeactivateRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReasonToDeactivate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeactivateRequests");
                 });
 
             modelBuilder.Entity("Cyon.Domain.Entities.Department", b =>
@@ -297,6 +370,18 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("InactiveReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastLogin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -305,6 +390,9 @@ namespace Cyon.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -497,6 +585,15 @@ namespace Cyon.Infrastructure.Migrations
                     b.Navigation("Meeting");
                 });
 
+            modelBuilder.Entity("Cyon.Domain.Entities.Apology", b =>
+                {
+                    b.HasOne("Cyon.Domain.Entities.User", "User")
+                        .WithMany("Apologies")
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Cyon.Domain.Entities.Occupation", b =>
                 {
                     b.HasOne("Cyon.Domain.Entities.User", "User")
@@ -576,6 +673,11 @@ namespace Cyon.Infrastructure.Migrations
             modelBuilder.Entity("Cyon.Domain.Entities.Meeting", b =>
                 {
                     b.Navigation("Agenda");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Apologies");
                 });
 #pragma warning restore 612, 618
         }
