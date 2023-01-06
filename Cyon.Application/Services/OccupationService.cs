@@ -22,6 +22,12 @@ namespace Cyon.Application.Services
 
         public async Task<OccupationModel> AddOccupation(CreateOccupationDto occupationDto, Guid userId)
         {
+            bool doesUserOccupationExist = await _unitOfWork.OccupationRepository.ExistAsync(x => x.UserId == userId);
+            if (doesUserOccupationExist)
+            {
+                throw new ConflictException("Your occupation already exist, you can only modify");
+            }
+
             Occupation occupation = _mapper.Map<Occupation>(occupationDto);
             occupation.UserId = userId;
 

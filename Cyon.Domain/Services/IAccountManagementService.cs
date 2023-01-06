@@ -9,5 +9,7 @@ namespace Cyon.Domain.Services
         Task<IEnumerable<AccountDeactivateRequestModel>> GetAccountDeactivateRequests();
         Task DeactivateAccount(DeactivateAccountDto deactivateAccountDto, Guid modifiedBy);
         Task DeleteAccountDeactivationRequest(Guid id);
+        Task<int> GetNumberOfActiveUsers();
+        Task<IEnumerable<GroupedUsersModel>> GenerateRandomUserGroups(GenerateRandomUserGroupsDto randomUserGroupsDto);
     }
 }

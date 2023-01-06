@@ -57,7 +57,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 12, 28, 18, 37, 30, 798, DateTimeKind.Local).AddTicks(3943));
+                        .HasDefaultValue(new DateTime(2023, 1, 4, 10, 29, 51, 679, DateTimeKind.Local).AddTicks(6315));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -183,7 +183,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 12, 28, 18, 37, 30, 798, DateTimeKind.Local).AddTicks(2545));
+                        .HasDefaultValue(new DateTime(2023, 1, 4, 10, 29, 51, 679, DateTimeKind.Local).AddTicks(4485));
 
                     b.Property<string>("EndYear")
                         .IsRequired()
@@ -339,6 +339,42 @@ namespace Cyon.Infrastructure.Migrations
                     b.ToTable("Occupations");
                 });
 
+            modelBuilder.Entity("Cyon.Domain.Entities.OrganisationFinance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 1, 4, 9, 29, 51, 680, DateTimeKind.Utc).AddTicks(6843));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("FinanceType")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrganisationFinances");
+                });
+
             modelBuilder.Entity("Cyon.Domain.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -370,10 +406,16 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("InactiveReason")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCommunicant")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("LastLogin")
@@ -440,6 +482,42 @@ namespace Cyon.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.UserFinance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<DateTime>("DateCollected")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 1, 4, 10, 29, 51, 680, DateTimeKind.Local).AddTicks(5390));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserFinances");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -614,6 +692,15 @@ namespace Cyon.Infrastructure.Migrations
                     b.Navigation("Department");
                 });
 
+            modelBuilder.Entity("Cyon.Domain.Entities.UserFinance", b =>
+                {
+                    b.HasOne("Cyon.Domain.Entities.User", "User")
+                        .WithMany("UserFinances")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -678,6 +765,8 @@ namespace Cyon.Infrastructure.Migrations
             modelBuilder.Entity("Cyon.Domain.Entities.User", b =>
                 {
                     b.Navigation("Apologies");
+
+                    b.Navigation("UserFinances");
                 });
 #pragma warning restore 612, 618
         }

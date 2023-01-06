@@ -4,8 +4,10 @@ using Cyon.Domain.DTOs.AccountManagement;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Exceptions;
 using Cyon.Domain.Models.AccountManagement;
+using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cyon.Application.Services
 {
@@ -75,6 +77,49 @@ namespace Cyon.Application.Services
             };
             await _unitOfWork.DeactivateRequestRepository.AddAsync(deactivateRequest);
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<int> GetNumberOfActiveUsers()
+        {
+            return await _userManager.Users.CountAsync(x => x.IsActive == true);
+        }
+
+        public async Task<IEnumerable<GroupedUsersModel>> GenerateRandomUserGroups(GenerateRandomUserGroupsDto randomUserGroupsDto)
+        {
+            /*
+             *  This solution needs to be improved
+             */
+            var users = await _userManager.Users.Where(x => x.IsActive).ToListAsync();
+
+            List<GroupedUsersModel> groups = new();
+
+            for (int i = 0; i < randomUserGroupsDto.GroupTitles.Count(); i++)
+            {
+                List<User> formedUsers = new();
+                Random rnd = new();
+
+                for (int j = 0; j < randomUserGroupsDto.NumberOfUsersPerGroup; j++)
+                {
+                    if (users.Count < randomUserGroupsDto.NumberOfUsersPerGroup)
+                    {
+                        formedUsers = users;
+                        break;
+                    }
+
+                    var temp = rnd.Next(0, users.Count);
+                    formedUsers.Add(users.ElementAt(temp));
+                    users.RemoveAt(temp);
+                }
+
+                var resultingGroup = new GroupedUsersModel
+                {
+                    GroupTitle = randomUserGroupsDto.GroupTitles.ElementAt(i),
+                    Members = _mapper.Map<IEnumerable<AccountModel>>(formedUsers)
+                };
+
+                groups.Add(resultingGroup);
+            }
+            return groups;
         }
     }
 }

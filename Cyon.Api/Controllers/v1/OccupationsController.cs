@@ -1,6 +1,5 @@
 ﻿using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Occupation;
-using Cyon.Domain.Entities;
 using Cyon.Domain.Models.Occupation;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Authorization;

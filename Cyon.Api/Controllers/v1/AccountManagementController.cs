@@ -41,5 +41,19 @@ namespace Cyon.Api.Controllers.v1
             await _accountManagementService.DeactivateAccount(deactivateAccountDto, userId);
             return Ok();
         }
+
+        [HttpGet("GetNumberOfActiveUsers")]
+        public async Task<IActionResult> GetNumberOfActiveUsers()
+        {
+            var result = await _accountManagementService.GetNumberOfActiveUsers();
+            return Ok(new {numberOfActiveUsers = result});
+        }
+
+        [HttpPost("GenerateRandomUserGroups")]
+        public async Task<ActionResult<IEnumerable<GroupedUsersModel>>> GenerateRandomUserGroups(GenerateRandomUserGroupsDto randomUserGroupsDto)
+        {
+            var results = await _accountManagementService.GenerateRandomUserGroups(randomUserGroupsDto);
+            return Ok(results);
+        }
     }
 }

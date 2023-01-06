@@ -9,7 +9,7 @@ namespace Cyon.Api.Controllers.v1
 {
     [Route("api/v1/attendanceTypes")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = Roles.Executive)]
     public class AttendanceTypesController : ControllerBase
     {
         private readonly IAttendanceTypeService _attendanceTypeService;

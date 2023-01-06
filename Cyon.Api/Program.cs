@@ -35,6 +35,7 @@ builder.Services.AddValidatorsFromAssemblies(Assembly.GetExecutingAssembly().Get
 builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAutoMapper(typeof(ChaplainMappingProfile).Assembly);
+builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
@@ -49,6 +50,8 @@ builder.Services.AddScoped<IOccupationService, OccupationService>();
 builder.Services.AddScoped<IAttendanceRegisterService, AttendanceRegisterService>();
 builder.Services.AddScoped<IApologyService, ApologyService>();
 builder.Services.AddScoped<IAccountManagementService, AccountManagementService>();
+builder.Services.AddScoped<IUserFinanceService, UserFinanceService>();
+builder.Services.AddScoped<IOrganisationFinanceService, OrganisationFinanceService>();
 
 string client = builder.Configuration.GetSection("ClientHost").Value;
 

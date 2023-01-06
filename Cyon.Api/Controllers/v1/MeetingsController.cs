@@ -21,6 +21,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<MeetingModel>>> GetMeetings([FromQuery] Pagination pagination)
         {
             return Ok(await _meetingService.GetMeetings(pagination));
@@ -33,7 +34,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost]
-        [Authorize(Roles = "Executive")]
+        [Authorize(Roles = $"{Roles.Executive}")]
         public async Task<IActionResult> AddMeeting([FromBody] CreateMeetingDto meetingDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
@@ -42,7 +43,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPut]
-        [Authorize(Roles = "Executive")]
+        [Authorize(Roles = $"{Roles.Executive}")]
         public async Task<IActionResult> UpdateMeeting([FromBody] UpdateMeetingDto meetingDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
@@ -51,7 +52,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpDelete("{meetingId}")]
-        [Authorize(Roles = "Executive")]
+        [Authorize(Roles = $"{Roles.Executive}")]
         public async Task<IActionResult> DeleteMeeting(Guid meetingId)
         {
             await _meetingService.DeleteMeeting(meetingId);

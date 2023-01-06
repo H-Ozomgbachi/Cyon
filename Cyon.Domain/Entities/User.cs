@@ -8,6 +8,8 @@ namespace Cyon.Domain.Entities
         public string LastName { get; set; }
         public string PhotoUrl { get; set; } = "https://api-private.atlassian.com/users/8f525203adb5093c5954b43a5b6420c2/avatar";
         public DateTime DateOfBirth { get; set; }
+        public string Gender { get; set; }
+        public bool IsCommunicant { get; set; }
         public DateTime DateAdded { get; set; } = DateTime.Now;
         public string Rank { get; set; } = "Regular";
         public bool IsActive { get; set; } = true;
@@ -19,5 +21,6 @@ namespace Cyon.Domain.Entities
         public Guid DepartmentId { get; set; }
         public Department Department { get; set; }
         public ICollection<Apology> Apologies { get; set; }
+        public ICollection<UserFinance> UserFinances { get; set; }
     }
 }

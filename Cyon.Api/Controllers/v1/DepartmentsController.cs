@@ -9,7 +9,6 @@ namespace Cyon.Api.Controllers.v1
 {
     [Route("api/v1/departments")]
     [ApiController]
-    [Authorize]
     public class DepartmentsController : ControllerBase
     {
         private readonly IDepartmentService _departmentService;
@@ -28,6 +27,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpGet("{departmentId}", Name = "GetDepartment")]
+        [Authorize]
         public async Task<ActionResult<DepartmentModel>> GetDepartment(Guid departmentId)
         {
             var result = await _departmentService.GetDepartmentByIdAsync(departmentId);

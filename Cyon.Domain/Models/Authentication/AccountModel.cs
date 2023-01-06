@@ -11,6 +11,8 @@ namespace Cyon.Domain.Models.Authentication
         public string PhotoUrl { get; set; }
         public IList<string> Roles { get; set; }
         public string PhoneNumber { get; set; }
+        public string Gender { get; set; }
+        public bool IsCommunicant { get; set; }
         public DepartmentModel Department { get; set; }
         public string Rank { get; set; }
     }

@@ -16,6 +16,8 @@ namespace Cyon.Domain
         IAttendanceRegisterRepository AttendanceRegisterRepository { get; }
         IApologyRepository ApologyRepository { get; }
         IDeactivateRequestRepository DeactivateRequestRepository { get; }
+        IUserFinanceRepository UserFinanceRepository { get; }
+        IOrganisationFinanceRepository OrganisationFinanceRepository { get; }
         Task<int> SaveAsync();
     }
 }

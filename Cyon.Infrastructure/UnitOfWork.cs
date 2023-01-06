@@ -8,6 +8,7 @@ namespace Cyon.Infrastructure
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _dbContext;
+        private readonly DapperContext _dapperContext;
         private IChaplainRepository _chaplainRepository;
         private IMinutesRepository _minutesRepository;
         private IAnnouncementRepository _announcementRepository;
@@ -19,10 +20,13 @@ namespace Cyon.Infrastructure
         private IAttendanceRegisterRepository _attendanceRegisterRepository;
         private IApologyRepository _apologyRepository;
         private IDeactivateRequestRepository _deactivateRequestRepository;
+        private IUserFinanceRepository _userFinanceRepository;
+        private IOrganisationFinanceRepository _organisationFinanceRepository;
 
-        public UnitOfWork(AppDbContext dbContext)
+        public UnitOfWork(AppDbContext dbContext, DapperContext dapperContext)
         {
             _dbContext = dbContext;
+            _dapperContext = dapperContext;
         }
 
         public IChaplainRepository ChaplainRepository
@@ -176,6 +180,33 @@ namespace Cyon.Infrastructure
                     return _deactivateRequestRepository;
                 }
                 return _deactivateRequestRepository;
+            }
+        }
+        public IUserFinanceRepository UserFinanceRepository
+        {
+            get
+            {
+                if (_userFinanceRepository == null)
+                {
+                    _userFinanceRepository = new UserFinanceRepository(_dbContext.UserFinances);
+
+                    return _userFinanceRepository;
+                }
+                return _userFinanceRepository;
+            }
+        }
+
+        public IOrganisationFinanceRepository OrganisationFinanceRepository
+        {
+            get
+            {
+                if (_organisationFinanceRepository == null)
+                {
+                    _organisationFinanceRepository = new OrganisationFinanceRepository(_dbContext.OrganisationFinances, _dapperContext);
+
+                    return _organisationFinanceRepository;
+                }
+                return _organisationFinanceRepository;
             }
         }
 

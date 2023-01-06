@@ -33,7 +33,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost]
-        [Authorize(Roles = "Executive")]
+        [Authorize(Roles = $"{Roles.Executive}")]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<IActionResult> AddMinute([FromBody] CreateMinuteDto createMinuteDto)
         {
@@ -43,7 +43,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPut]
-        [Authorize(Roles = "Executive")]
+        [Authorize(Roles = $"{Roles.Executive}")]
         public async Task<IActionResult> UpdateMinute([FromBody] UpdateMinuteDto updateMinuteDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
@@ -52,7 +52,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpDelete("{minuteId}")]
-        [Authorize(Roles = "Executive")]
+        [Authorize(Roles = $"{Roles.Executive}")]
         public async Task<IActionResult> DeleteMinute(Guid minuteId)
         {
             await _minutesService.DeleteMinute(minuteId);

@@ -8,5 +8,6 @@
         public bool IsStudent { get; set; }
         public bool IsUnemployed { get; set; }
         public string CanDo { get; set; }
+        public Guid UserId { get; set; }
     }
 }

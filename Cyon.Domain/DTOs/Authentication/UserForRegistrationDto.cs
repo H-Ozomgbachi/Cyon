@@ -10,5 +10,7 @@
         public string PhoneNumber { get; set; }
         public Guid DepartmentId { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public string Gender { get; set; }
+        public bool IsCommunicant { get; set; }
     }
 }

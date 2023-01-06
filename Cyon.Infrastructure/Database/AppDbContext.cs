@@ -22,6 +22,8 @@ namespace Cyon.Infrastructure.Database
         public DbSet<AttendanceRegister> AttendanceRegisters { get; set; }
         public DbSet<Apology> Apologies { get; set; }
         public DbSet<DeactivateRequest> DeactivateRequests { get; set; }
+        public DbSet<UserFinance> UserFinances { get; set; }
+        public DbSet<OrganisationFinance> OrganisationFinances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +36,8 @@ namespace Cyon.Infrastructure.Database
             modelBuilder.ApplyConfiguration(new DepartmentEntityConfiguration());
             modelBuilder.ApplyConfiguration(new OccupationEntityConfiguration());
             modelBuilder.ApplyConfiguration(new ApologyEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserFinanceEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new OrganisationFinanceEntityConfiguration());
         }
     }
 }

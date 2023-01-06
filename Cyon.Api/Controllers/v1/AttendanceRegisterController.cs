@@ -36,5 +36,13 @@ namespace Cyon.Api.Controllers.v1
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             return Ok(await _attendanceRegisterService.GetMyAttendanceRecord(userId, pagination));
         }
+
+        [HttpPost("MarkAbsentees")]
+        [AllowAnonymous]
+        public async Task<IActionResult> MarkAbsentees(MarkAbsentDto markAbsentDto)
+        {
+            string result = await _attendanceRegisterService.MarkAbsent(markAbsentDto);
+            return Ok(new {result});
+        }
     }
 }

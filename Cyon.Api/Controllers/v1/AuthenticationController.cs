@@ -66,7 +66,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("account/{id}/change-role")]
-        [Authorize(Roles = Roles.Super)]
+        [Authorize(Roles = $"{Roles.Super},{Roles.Executive}")]
         public async Task<IActionResult> ChangeRole(Guid id, [FromBody] IEnumerable<string> roles)
         {
             await _authenticationService.ChangeRole(roles, id);

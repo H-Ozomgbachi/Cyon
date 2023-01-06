@@ -40,7 +40,7 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        [Authorize(Roles = "Executive,Super")]
+        [Authorize(Roles = $"{Roles.Executive},{Roles.Super}")]
         public async Task<IActionResult> AddChaplain([FromBody] ChaplainCreateDto chaplainDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
@@ -49,7 +49,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPut]
-        [Authorize(Roles = "Executive,Super")]
+        [Authorize(Roles = $"{Roles.Executive},{Roles.Super}")]
         public async Task<IActionResult> UpdateChaplain(ChaplainUpdateDto chaplainUpdateDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
@@ -58,7 +58,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpDelete("{chaplainId}")]
-        [Authorize(Roles = "Executive,Super")]
+        [Authorize(Roles = $"{Roles.Executive},{Roles.Super}")]
         public async Task<IActionResult> DeleteChaplain(Guid chaplainId)
         {
             await _chaplainService.DeleteChaplain(chaplainId);
