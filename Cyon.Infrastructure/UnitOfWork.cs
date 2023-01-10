@@ -133,7 +133,7 @@ namespace Cyon.Infrastructure
             {
                 if (_occupationRepository == null)
                 {
-                    _occupationRepository = new OccupationRepository(_dbContext.Occupations);
+                    _occupationRepository = new OccupationRepository(_dbContext.Occupations, _dapperContext);
 
                     return _occupationRepository;
                 }

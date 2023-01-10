@@ -84,5 +84,28 @@ namespace Cyon.Api.Controllers.v1
         {
             return Ok(await _authenticationService.GetAccountIdsWithEmail(startsWith));
         }
+
+        [HttpPost("forgot-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+        {
+            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+            if (user == null)
+            {
+                return NotFound(new {message = $"User with email: {forgotPasswordDto.Email} not found"});
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // TODO: Send and email to continue with password reset.
+            
+            return Ok(new {resetToken = token });
+        }
+
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        {
+            return Ok();
+        }
     }
 }

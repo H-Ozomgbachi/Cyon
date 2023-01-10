@@ -11,6 +11,7 @@ namespace Cyon.Infrastructure.Mappers
         {
             CreateMap<UserForRegistrationDto, User>().ReverseMap();
             CreateMap<AccountModel, User>().ReverseMap();
+            CreateMap<AccountModelConcise, User>().ReverseMap();
         }
     }
 }

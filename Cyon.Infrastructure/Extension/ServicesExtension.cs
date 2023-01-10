@@ -26,6 +26,7 @@ namespace Cyon.Infrastructure.Extension
             builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
             builder.AddRoleManager<RoleManager<IdentityRole>>();
             builder.AddEntityFrameworkStores<AppDbContext>();
+            builder.AddDefaultTokenProviders();
         }
 
         public static void ConfigureJwt(this IServiceCollection services, IConfiguration config)

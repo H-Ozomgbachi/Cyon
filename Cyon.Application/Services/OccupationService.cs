@@ -4,8 +4,11 @@ using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Occupation;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Exceptions;
+using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Models.Occupation;
 using Cyon.Domain.Services;
+using Microsoft.AspNetCore.Identity;
+using System.Linq.Expressions;
 
 namespace Cyon.Application.Services
 {
@@ -54,6 +57,21 @@ namespace Cyon.Application.Services
             IEnumerable<Occupation> occupations = await _unitOfWork.OccupationRepository.GetAllAsync(pagination.Skip, pagination.Limit);
 
             return _mapper.Map<IEnumerable<OccupationModel>>(occupations);
+        }
+
+        public async Task<IEnumerable<AccountModelConcise>> PeopleWithSimilarOccupation(string jobKeyWord, Pagination pagination, Guid currentUser)
+        {
+
+            var results = await _unitOfWork.OccupationRepository.PeopleWithSimilarOccupation(jobKeyWord, pagination, currentUser);
+
+            return results.Select(x => new AccountModelConcise()
+            {
+                Id = Guid.Parse(x.User.Id),
+                FirstName = x.User.FirstName,
+                LastName = x.User.LastName,
+                PhoneNumber = x.User.PhoneNumber,
+                PhotoUrl = x.User.PhotoUrl,
+            });
         }
 
         public async Task UpdateOccupation(UpdateOccupationDto occupationDto)

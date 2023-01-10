@@ -1,5 +1,6 @@
 ﻿using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Occupation;
+using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Models.Occupation;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -8,10 +9,8 @@ using System.Security.Claims;
 
 namespace Cyon.Api.Controllers.v1
 {
-    [Route("api/v1/occupations")]
-    [ApiController]
     [Authorize]
-    public class OccupationsController : ControllerBase
+    public class OccupationsController : BaseController
     {
         private readonly IOccupationService _occupationService;
 
@@ -20,7 +19,7 @@ namespace Cyon.Api.Controllers.v1
             _occupationService = occupationService;
         }
 
-        [HttpGet]
+        [HttpGet("GetOccupations")]
         [Authorize(Roles = $"{Roles.Executive},{Roles.Super}")]
         public async Task<ActionResult<IEnumerable<OccupationModel>>> GetOccupations([FromQuery] Pagination pagination)
         {
@@ -28,27 +27,35 @@ namespace Cyon.Api.Controllers.v1
             return Ok(occupations);
         }
 
-        [HttpGet("get-user-occupation")]
-        public async Task<ActionResult<OccupationModel>> GetOccupation()
+        [HttpGet("GetOccupationByUser")]
+        public async Task<ActionResult<OccupationModel>> GetOccupationByUser()
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             var occupation = await _occupationService.GetOccupationByUser(activeUserId);
             return Ok(occupation);
         }
 
-        [HttpPost]
+        [HttpPost("AddOccupation")]
         public async Task<IActionResult> AddOccupation([FromBody] CreateOccupationDto occupationDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             var occupation = await _occupationService.AddOccupation(occupationDto, activeUserId);
-            return CreatedAtAction(nameof(GetOccupation), new { occupationId = occupation.Id }, occupation);
+            return CreatedAtAction(nameof(GetOccupationByUser), new { occupationId = occupation.Id }, occupation);
         }
 
-        [HttpPut]
+        [HttpPut("UpdateOccupation")]
         public async Task<IActionResult> UpdateOccupation([FromBody] UpdateOccupationDto occupationDto)
         {
             await _occupationService.UpdateOccupation(occupationDto);
             return Ok();
+        }
+
+        [HttpGet("PeopleWithSimilarOccupation/{jobKeyWord}")]
+        public async Task<ActionResult<IEnumerable<AccountModelConcise>>> PeopleWithSimilarOccupation([FromQuery] Pagination pagination, string jobKeyWord)
+        {
+            Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            var result = await _occupationService.PeopleWithSimilarOccupation(jobKeyWord, pagination, activeUserId);
+            return Ok(result);
         }
     }
 }
