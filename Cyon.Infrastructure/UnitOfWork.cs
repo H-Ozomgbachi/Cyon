@@ -22,6 +22,7 @@ namespace Cyon.Infrastructure
         private IDeactivateRequestRepository _deactivateRequestRepository;
         private IUserFinanceRepository _userFinanceRepository;
         private IOrganisationFinanceRepository _organisationFinanceRepository;
+        private IYearProgrammeRepository _yearProgrammeRepository;
 
         public UnitOfWork(AppDbContext dbContext, DapperContext dapperContext)
         {
@@ -207,6 +208,20 @@ namespace Cyon.Infrastructure
                     return _organisationFinanceRepository;
                 }
                 return _organisationFinanceRepository;
+            }
+        }
+
+        public IYearProgrammeRepository YearProgrammeRepository
+        {
+            get
+            {
+                if (_yearProgrammeRepository == null)
+                {
+                    _yearProgrammeRepository = new YearProgrammeRepository(_dbContext.YearProgrammes);
+
+                    return _yearProgrammeRepository;
+                }
+                return _yearProgrammeRepository;
             }
         }
 

@@ -14,6 +14,7 @@ namespace Cyon.Domain.Entities
         public string Rank { get; set; } = "Regular";
         public bool IsActive { get; set; } = true;
         public string InactiveReason { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
         public DateTime LastModified { get; set; }
         public Guid ModifiedBy { get; set; }
         public DateTime LastLogin { get; set; }

@@ -8,6 +8,7 @@
         public Guid ModifiedBy { get; set; }
         public DateTime DateModified { get; set; }
 
+        public string UserId { get; set; }
         public User User { get; set; }
     }
 }

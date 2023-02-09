@@ -34,7 +34,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAnnouncement([FromBody] CreateAnnouncementDto announcementDto)
+        public async Task<IActionResult> AddAnnouncement([FromForm] CreateAnnouncementDto announcementDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             var announcement = await _announcementService.AddAnnouncement(announcementDto, activeUserId);

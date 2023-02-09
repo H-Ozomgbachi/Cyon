@@ -1,6 +1,8 @@
 ﻿using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.AccountManagement;
+using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Models.AccountManagement;
+using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,6 +56,14 @@ namespace Cyon.Api.Controllers.v1
         {
             var results = await _accountManagementService.GenerateRandomUserGroups(randomUserGroupsDto);
             return Ok(results);
+        }
+
+        [HttpPost("UploadProfilePicture")]
+        public async Task<IActionResult> UploadProfilePicture([FromForm] PictureDto pictureDto)
+        {
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            await _accountManagementService.UploadProfilePicture(pictureDto, userId);
+            return Ok();
         }
     }
 }

@@ -13,17 +13,20 @@ namespace Cyon.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IPhotoService _photoService;
 
-        public AnnouncementService(IUnitOfWork unitOfWork, IMapper mapper)
+        public AnnouncementService(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _photoService = photoService;
         }
 
         public async Task<AnnouncementModel> AddAnnouncement(CreateAnnouncementDto announcementDto, Guid modifiedBy)
         {
             Announcement announcement = _mapper.Map<Announcement>(announcementDto);
-            announcement.ModifiedBy = modifiedBy;
+            string photoUrl = await _photoService.UploadOneImage(announcementDto.Photo);
+            announcement.ModifiedBy = modifiedBy; announcement.PhotoUrl = photoUrl;
 
             await _unitOfWork.AnnouncementRepository.AddAsync(announcement);
             await _unitOfWork.SaveAsync();

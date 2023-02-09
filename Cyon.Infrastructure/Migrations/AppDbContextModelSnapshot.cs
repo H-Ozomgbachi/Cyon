@@ -57,7 +57,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 1, 4, 10, 29, 51, 679, DateTimeKind.Local).AddTicks(6315));
+                        .HasDefaultValue(new DateTime(2023, 2, 9, 12, 38, 23, 799, DateTimeKind.Local).AddTicks(4815));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -183,7 +183,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 1, 4, 10, 29, 51, 679, DateTimeKind.Local).AddTicks(4485));
+                        .HasDefaultValue(new DateTime(2023, 2, 9, 12, 38, 23, 799, DateTimeKind.Local).AddTicks(3696));
 
                     b.Property<string>("EndYear")
                         .IsRequired()
@@ -355,7 +355,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 1, 4, 9, 29, 51, 680, DateTimeKind.Utc).AddTicks(6843));
+                        .HasDefaultValue(new DateTime(2023, 2, 9, 11, 38, 23, 800, DateTimeKind.Utc).AddTicks(1026));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -382,6 +382,9 @@ namespace Cyon.Infrastructure.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -500,7 +503,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 1, 4, 10, 29, 51, 680, DateTimeKind.Local).AddTicks(5390));
+                        .HasDefaultValue(new DateTime(2023, 2, 9, 12, 38, 23, 799, DateTimeKind.Local).AddTicks(9996));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -518,6 +521,35 @@ namespace Cyon.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserFinances");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.YearProgramme", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Scope")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("YearProgrammes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

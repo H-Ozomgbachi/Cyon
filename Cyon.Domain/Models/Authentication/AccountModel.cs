@@ -15,5 +15,6 @@ namespace Cyon.Domain.Models.Authentication
         public bool IsCommunicant { get; set; }
         public DepartmentModel Department { get; set; }
         public string Rank { get; set; }
+        public string Address { get; set; }
     }
 }

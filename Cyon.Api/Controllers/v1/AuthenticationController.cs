@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Authentication;
+using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Services;

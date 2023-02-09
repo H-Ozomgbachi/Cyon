@@ -59,15 +59,6 @@ namespace Cyon.Api.Controllers.v1
             return NoContent();
         }
 
-        //[HttpPost("PayDuesByMonths")]
-        //[Authorize(Roles = Roles.Executive)]
-        //public async Task<IActionResult> PayDuesByMonths(PayDuesByMonthDto duesByMonthDto)
-        //{
-        //    Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
-        //    await _userFinanceService.PayDuesByMonths(duesByMonthDto, userId);
-        //    return Ok();
-        //}
-
         [HttpPost("PayDuesByAmount")]
         [Authorize(Roles = Roles.Executive)]
         public async Task<IActionResult> PayDuesByAmount(PayDuesByAmountDto duesByAmountDto)

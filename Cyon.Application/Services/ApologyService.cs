@@ -108,7 +108,8 @@ namespace Cyon.Application.Services
         {
             var filter = new List<Expression<Func<Apology, bool>>>
             {
-                x => x.UserId == userId
+                x => x.UserId == userId,
+                x => x.IsResolved == true
             };
 
             IEnumerable<Apology> apologies = await _unitOfWork.ApologyRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);

@@ -6,6 +6,7 @@ using Cyon.Domain.Entities;
 using Cyon.Domain.Exceptions;
 using Cyon.Domain.Models.Minutes;
 using Cyon.Domain.Services;
+using System.Linq.Expressions;
 
 namespace Cyon.Application.Services
 {
@@ -56,6 +57,18 @@ namespace Cyon.Application.Services
             Minutes minutes = await _unitOfWork.MinutesRepository.GetByIdAsync(minuteId);
 
             return _mapper.Map<MinutesModel>(minutes);
+        }
+
+        public async Task<IEnumerable<MinutesModel>> GetMinuteByMeetingDate(DateTime date)
+        {
+            var filter = new List<Expression<Func<Minutes, bool>>>
+            {
+                x => x.DateOfMeeting.Day == date.Day,
+            };
+
+            IEnumerable<Minutes> minutes = await _unitOfWork.MinutesRepository.GetAllAsync(0, 1, null, filter);
+
+            return _mapper.Map<IEnumerable<MinutesModel>>(minutes);
         }
 
         public async Task<IEnumerable<MinutesModel>> GetMinutes(Pagination pagination)

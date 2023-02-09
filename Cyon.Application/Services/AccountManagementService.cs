@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cyon.Domain;
 using Cyon.Domain.DTOs.AccountManagement;
+using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Exceptions;
 using Cyon.Domain.Models.AccountManagement;
@@ -16,12 +17,14 @@ namespace Cyon.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly IPhotoService _photoService;
 
-        public AccountManagementService(IUnitOfWork unitOfWork, UserManager<User> userManager, IMapper mapper)
+        public AccountManagementService(IUnitOfWork unitOfWork, UserManager<User> userManager, IMapper mapper, IPhotoService photoService)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;
             _mapper = mapper;
+            _photoService = photoService;
         }
 
         public async Task DeleteAccountDeactivationRequest(Guid id)
@@ -120,6 +123,20 @@ namespace Cyon.Application.Services
                 groups.Add(resultingGroup);
             }
             return groups;
+        }
+
+        public async Task UploadProfilePicture(PictureDto pictureDto, Guid userId)
+        {
+            string imgUrl = await _photoService.UploadProfilePicture(pictureDto);
+
+            if (string.IsNullOrEmpty(imgUrl))
+            {
+                throw new ConflictException("Problem uploading image");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            user.ModifiedBy = userId; user.LastModified = DateTime.UtcNow; user.PhotoUrl = imgUrl;
+            await _userManager.UpdateAsync(user);
         }
     }
 }

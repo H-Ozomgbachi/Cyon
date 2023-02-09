@@ -38,7 +38,7 @@ builder.Services.AddAutoMapper(typeof(ChaplainMappingProfile).Assembly);
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IChaplainService, ChaplainService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IMinutesService, MinutesService>();
@@ -52,6 +52,7 @@ builder.Services.AddScoped<IApologyService, ApologyService>();
 builder.Services.AddScoped<IAccountManagementService, AccountManagementService>();
 builder.Services.AddScoped<IUserFinanceService, UserFinanceService>();
 builder.Services.AddScoped<IOrganisationFinanceService, OrganisationFinanceService>();
+builder.Services.AddScoped<IYearProgrammeService, YearProgrammeService>();
 
 string client = builder.Configuration.GetSection("ClientHost").Value;
 

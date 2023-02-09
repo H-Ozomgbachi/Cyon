@@ -18,6 +18,7 @@ namespace Cyon.Domain
         IDeactivateRequestRepository DeactivateRequestRepository { get; }
         IUserFinanceRepository UserFinanceRepository { get; }
         IOrganisationFinanceRepository OrganisationFinanceRepository { get; }
+        IYearProgrammeRepository YearProgrammeRepository { get; }
         Task<int> SaveAsync();
     }
 }

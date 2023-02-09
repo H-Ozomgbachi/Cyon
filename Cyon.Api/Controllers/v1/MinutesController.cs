@@ -8,10 +8,8 @@ using System.Security.Claims;
 
 namespace Cyon.Api.Controllers.v1
 {
-    [Route("api/v1/minutes")]
     [Authorize]
-    [ApiController]
-    public class MinutesController : ControllerBase
+    public class MinutesController : BaseController
     {
         private readonly IMinutesService _minutesService;
 
@@ -57,6 +55,12 @@ namespace Cyon.Api.Controllers.v1
         {
             await _minutesService.DeleteMinute(minuteId);
             return NoContent();
+        }
+
+        [HttpGet("GetMinuteByMeetingDate/{date}")]
+        public async Task<ActionResult<IEnumerable<MinutesModel>>> GetMinuteByMeetingDate(DateTime date)
+        {
+            return Ok(await _minutesService.GetMinuteByMeetingDate(date));
         }
     }
 }

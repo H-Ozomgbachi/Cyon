@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cyon.Domain.DTOs.Authentication;
+using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Exceptions;
 using Cyon.Domain.Models.Authentication;
@@ -189,6 +190,11 @@ namespace Cyon.Application.Services
                 accountIdAWithEmails.Add(accountIdAWithEmail);
             }
             return accountIdAWithEmails;
+        }
+
+        public Task<AccountModel> UploadProfilePicture(PictureDto profilePictureDto, Guid userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

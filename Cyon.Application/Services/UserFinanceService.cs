@@ -154,11 +154,11 @@ namespace Cyon.Application.Services
         {
             var filter = new List<Expression<Func<UserFinance, bool>>>
             {
-                f => f.User.Id == userId.ToString()
+                f => f.UserId == userId.ToString()
             };
 
-            IEnumerable<UserFinance> userFinances = await _unitOfWork.UserFinanceRepository.GetAllAsync(pagination.Skip, pagination.Limit,null, filter);
-            return _mapper.Map<IEnumerable<UserFinanceModel>>(userFinances);
+            IEnumerable<UserFinance> userFinances = await _unitOfWork.UserFinanceRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
+            return _mapper.Map<IEnumerable<UserFinanceModel>>(userFinances.OrderByDescending(x => x.DateCollected));
         }
 
         public async Task UpdateUserFinance(UpdateUserFinanceDto userFinanceDto, Guid modifiedBy)

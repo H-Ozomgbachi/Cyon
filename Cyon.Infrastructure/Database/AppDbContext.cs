@@ -24,6 +24,7 @@ namespace Cyon.Infrastructure.Database
         public DbSet<DeactivateRequest> DeactivateRequests { get; set; }
         public DbSet<UserFinance> UserFinances { get; set; }
         public DbSet<OrganisationFinance> OrganisationFinances { get; set; }
+        public DbSet<YearProgramme> YearProgrammes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

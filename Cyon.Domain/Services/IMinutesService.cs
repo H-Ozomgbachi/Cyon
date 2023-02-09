@@ -11,5 +11,6 @@ namespace Cyon.Domain.Services
         Task DeleteMinute(Guid minuteId);
         Task<MinutesModel> GetMinute(Guid minuteId);
         Task<IEnumerable<MinutesModel>> GetMinutes(Pagination pagination);
+        Task<IEnumerable<MinutesModel>> GetMinuteByMeetingDate(DateTime date);
     }
 }
