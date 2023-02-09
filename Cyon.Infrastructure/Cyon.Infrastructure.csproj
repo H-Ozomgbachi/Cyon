@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Cyon.Domain\Cyon.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\Occupation\" />
+  </ItemGroup>
+
 </Project>

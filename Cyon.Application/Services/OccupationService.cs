@@ -31,6 +31,15 @@ namespace Cyon.Application.Services
                 throw new ConflictException("Your occupation already exist, you can only modify");
             }
 
+            if (occupationDto.IsUnemployed)
+            {
+                occupationDto.JobTitle = string.Empty; occupationDto.Company = string.Empty;
+            }
+            if (occupationDto.IsStudent)
+            {
+                occupationDto.IsUnemployed = false; occupationDto.CanDo = string.Empty;
+            }
+
             Occupation occupation = _mapper.Map<Occupation>(occupationDto);
             occupation.UserId = userId;
 
@@ -43,11 +52,6 @@ namespace Cyon.Application.Services
         public async Task<OccupationModel> GetOccupationByUser(Guid userId)
         {
             Occupation occupation = await _unitOfWork.OccupationRepository.GetOccupationByUserId(userId);
-
-            if (occupation == null)
-            {
-                throw new NotFoundException("Occupation does not exist");
-            }
 
             return _mapper.Map<OccupationModel>(occupation);
         }
@@ -81,6 +85,14 @@ namespace Cyon.Application.Services
             if (occupation == null)
             {
                 throw new NotFoundException("Occupation does not exist");
+            }
+            if (occupationDto.IsUnemployed)
+            {
+                occupationDto.JobTitle = string.Empty; occupationDto.Company = string.Empty;
+            }
+            if (occupationDto.IsStudent)
+            {
+                occupationDto.IsUnemployed = false; occupationDto.CanDo = string.Empty;
             }
             _mapper.Map(occupationDto, occupation);
             await _unitOfWork.OccupationRepository.UpdateAsync(occupation);
