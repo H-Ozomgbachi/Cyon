@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Authentication;
-using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Services;
@@ -54,7 +53,7 @@ namespace Cyon.Api.Controllers.v1
         {
             if (!(await _authenticationService.ValidateUser(userForAuthenticationDto)))
             {
-                return Unauthorized();
+                return Unauthorized("Invalid email or password");
             }
             return Ok(new {Message = "Login successful", Token = await _authenticationService.CreateToken()});
         }
@@ -66,14 +65,24 @@ namespace Cyon.Api.Controllers.v1
             return Ok(await _authenticationService.MyAccount(activeUserId));
         }
 
+        [HttpPut("update-account")]
+        public async Task<ActionResult<bool>> UpdateMyAccount([FromBody] UserForUpdateDto userForUpdateDto)
+        {
+            Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            
+            return Ok(await _authenticationService.UpdateMyAccount(userForUpdateDto, activeUserId));
+        }
+
         [HttpPost("account/{id}/change-role")]
-        [Authorize(Roles = $"{Roles.Super},{Roles.Executive}")]
+        //[Authorize(Roles = $"{Roles.Super},{Roles.Executive}")]
+        [AllowAnonymous]
         public async Task<IActionResult> ChangeRole(Guid id, [FromBody] IEnumerable<string> roles)
         {
             await _authenticationService.ChangeRole(roles, id);
             return StatusCode(201);
         }
         [HttpPost("create-roles")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateRoles([FromBody] IEnumerable<string> roles)
         {
             await _authenticationService.AddRolesToDb(roles);

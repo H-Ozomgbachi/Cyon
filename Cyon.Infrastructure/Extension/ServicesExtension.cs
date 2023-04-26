@@ -17,8 +17,6 @@ namespace Cyon.Infrastructure.Extension
             var builder = services.AddIdentityCore<User>(o =>
             {
                 o.Password.RequiredLength = 8;
-                o.Password.RequireUppercase = true;
-                o.Password.RequireLowercase = true;
                 o.Password.RequireDigit = true;
                 o.User.RequireUniqueEmail = true;
             });

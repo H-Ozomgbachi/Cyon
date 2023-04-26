@@ -12,5 +12,6 @@ namespace Cyon.Domain.Services
         Task ChangeRole(IEnumerable<string> roles, Guid userId);
         Task AddRolesToDb(IEnumerable<string> roles);
         Task<IEnumerable<AccountIdAWithEmail>> GetAccountIdsWithEmail(string searchKey);
+        Task<bool> UpdateMyAccount(UserForUpdateDto userForUpdateDto, Guid modifiedBy);
     }
 }

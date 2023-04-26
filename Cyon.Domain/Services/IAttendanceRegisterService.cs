@@ -10,5 +10,6 @@ namespace Cyon.Domain.Services
         Task<IEnumerable<AttendanceRegisterModel>> GetCurrentDayAttendance(Pagination pagination);
         Task<IEnumerable<AttendanceRegisterModel>> GetMyAttendanceRecord(Guid userId, Pagination pagination);
         Task<string> MarkAbsent(MarkAbsentDto markAbsentDto);
+        Task<AttendanceSummaryModel> GetAttendanceSummary(Guid userId);
     }
 }

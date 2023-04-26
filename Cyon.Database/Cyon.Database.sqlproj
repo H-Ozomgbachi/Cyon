@@ -64,5 +64,7 @@
     <Build Include="StoreProcedure\Sp_GetBalanceBroughtForward.sql" />
     <Build Include="StoreProcedure\Sp_GetFinancesForGivenDateRange.sql" />
     <Build Include="StoreProcedure\Sp_GetPeopleWithSimilarOccupation.sql" />
+    <Build Include="StoreProcedure\Sp_GetAttendanceSummary.sql" />
+    <Build Include="StoreProcedure\Sp_GetApologySummary.sql" />
   </ItemGroup>
 </Project>

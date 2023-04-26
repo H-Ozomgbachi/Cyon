@@ -35,7 +35,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost]
-        [Authorize(Roles = $"{Roles.Executive},{Roles.Super}")]
+        //[Authorize(Roles = $"{Roles.Executive},{Roles.Super}")]
         public async Task<ActionResult<DepartmentModel>> AddDepartment([FromBody] DepartmentCreateDto department)
         {
             var result = await _departmentService.CreateDepartmentAsync(department);

@@ -52,6 +52,30 @@ namespace Cyon.Application.Services
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task<AttendanceSummaryModel> GetAttendanceSummary(Guid userId)
+        {
+            var attendanceSummary = await _unitOfWork.AttendanceRegisterRepository.GetAttendanceSummary(userId.ToString());
+
+            int total = attendanceSummary.TotalPresent + attendanceSummary.TotalAbsent;
+            if (total == 0)
+            {
+                return new AttendanceSummaryModel()
+                {
+                    Presence = "0%",
+                    Absence = "0%"
+                };
+            }
+
+            decimal presence = Math.Round((decimal)attendanceSummary.TotalPresent / total * 100);
+            decimal absence = Math.Round((decimal)attendanceSummary.TotalAbsent / total * 100);
+
+            return new AttendanceSummaryModel()
+            {
+                Presence = $"{presence}%",
+                Absence = $"{absence}%"
+            };
+        }
+
         public async Task<IEnumerable<AttendanceRegisterModel>> GetCurrentDayAttendance(Pagination pagination)
         {
             var filter = new List<Expression<Func<AttendanceRegister, bool>>>

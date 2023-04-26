@@ -148,7 +148,7 @@ namespace Cyon.Infrastructure
             {
                 if (_attendanceRegisterRepository == null)
                 {
-                    _attendanceRegisterRepository = new AttendanceRegisterRepository(_dbContext.AttendanceRegisters);
+                    _attendanceRegisterRepository = new AttendanceRegisterRepository(_dbContext.AttendanceRegisters, _dapperContext);
 
                     return _attendanceRegisterRepository;
                 }
@@ -162,7 +162,7 @@ namespace Cyon.Infrastructure
             {
                 if (_apologyRepository == null)
                 {
-                    _apologyRepository = new ApologyRepository(_dbContext.Apologies);
+                    _apologyRepository = new ApologyRepository(_dbContext.Apologies, _dapperContext);
 
                     return _apologyRepository;
                 }
@@ -189,7 +189,7 @@ namespace Cyon.Infrastructure
             {
                 if (_userFinanceRepository == null)
                 {
-                    _userFinanceRepository = new UserFinanceRepository(_dbContext.UserFinances);
+                    _userFinanceRepository = new UserFinanceRepository(_dbContext.UserFinances, _dapperContext);
 
                     return _userFinanceRepository;
                 }

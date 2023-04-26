@@ -63,5 +63,12 @@ namespace Cyon.Api.Controllers.v1
             await _apologyService.DeclineApology(approveApologyDto);
             return Ok();
         }
+
+        [HttpGet("GetApologySummary")]
+        public async Task<ActionResult<ApologySummaryModel>> GetApologySummary()
+        {
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return Ok(await _apologyService.GetApologySummary(userId));
+        }
     }
 }

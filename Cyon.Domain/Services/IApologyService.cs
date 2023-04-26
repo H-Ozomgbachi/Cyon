@@ -14,5 +14,6 @@ namespace Cyon.Domain.Services
         Task<IEnumerable<ApologyModel>> GetApologiesByUser(Guid userId, Pagination pagination);
         Task ApproveApology(ResolveApologyDto apology);
         Task DeclineApology(ResolveApologyDto apology);
+        Task<ApologySummaryModel> GetApologySummary(Guid userId);
     }
 }

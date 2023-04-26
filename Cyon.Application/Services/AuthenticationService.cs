@@ -196,5 +196,20 @@ namespace Cyon.Application.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<bool> UpdateMyAccount(UserForUpdateDto userForUpdateDto, Guid modifiedBy)
+        {
+            var user = await _userManager.FindByIdAsync(userForUpdateDto.Id);
+
+            if (user == null)
+            {
+                throw new NotFoundException("User doesn't exist or is deleted");
+            }
+            var userToUpdate = _mapper.Map(userForUpdateDto, user);
+            userToUpdate.ModifiedBy = modifiedBy; userToUpdate.LastModified = DateTime.UtcNow;
+
+            var result = await _userManager.UpdateAsync(userToUpdate);
+            return result.Succeeded;
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace Cyon.Domain.Repositories
     {
         Task<decimal> GetOrganisationFinanceBalance();
         Task<OrganisationAccountStatementModel> GetStatementOfAccount(DateTime startDate, DateTime endDate);
+        Task<OrganizationAccountBalance> GetOrganizationAccountBalance();
     }
 }

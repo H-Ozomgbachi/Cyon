@@ -117,6 +117,30 @@ namespace Cyon.Application.Services
             return _mapper.Map<IEnumerable<ApologyModel>>(apologies);
         }
 
+        public async Task<ApologySummaryModel> GetApologySummary(Guid userId)
+        {
+            var apologySummary = await _unitOfWork.ApologyRepository.GetApologySummary(userId.ToString());
+
+            int total = apologySummary.TotalApproved + apologySummary.TotalDeclined;
+            if (total == 0)
+            {
+                return new ApologySummaryModel()
+                {
+                    Approved = "0%",
+                    Declined = "0%"
+                };
+            }
+
+            decimal approved = Math.Round((decimal)apologySummary.TotalApproved / total * 100);
+            decimal declined = Math.Round((decimal)apologySummary.TotalDeclined / total * 100);
+
+            return new ApologySummaryModel()
+            {
+                Approved = $"{approved}%",
+                Declined = $"{declined}%"
+            };
+        }
+
         public async Task UpdateApology(Apology apology)
         {
             await _unitOfWork.ApologyRepository.UpdateAsync(apology);
