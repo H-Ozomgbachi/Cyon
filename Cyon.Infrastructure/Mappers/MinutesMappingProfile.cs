@@ -10,7 +10,6 @@ namespace Cyon.Infrastructure.Mappers
         public MinutesMappingProfile()
         {
             CreateMap<CreateMinuteDto, Minutes>().ReverseMap();
-            CreateMap<UpdateMinuteDto, Minutes>().ReverseMap();
             CreateMap<MinutesModel, Minutes>().ReverseMap();
         }
     }

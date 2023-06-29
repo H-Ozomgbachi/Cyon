@@ -2,7 +2,7 @@
 {
     public class GetAccountStatementDto
     {
-        public DateTime StartDate { get; set; } = DateTime.Now;
-        public DateTime EndDate { get; set; } = DateTime.Now.AddDays(-30);
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
     }
 }

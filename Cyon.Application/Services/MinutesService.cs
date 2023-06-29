@@ -5,6 +5,7 @@ using Cyon.Domain.DTOs.Minutes;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Exceptions;
 using Cyon.Domain.Models.Minutes;
+using Cyon.Domain.Repositories;
 using Cyon.Domain.Services;
 using System.Linq.Expressions;
 
@@ -14,17 +15,20 @@ namespace Cyon.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUtilityRepository _utilityRepository;
 
-        public MinutesService(IUnitOfWork unitOfWork, IMapper mapper)
+        public MinutesService(IUnitOfWork unitOfWork, IMapper mapper, IUtilityRepository utilityRepository)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _utilityRepository = utilityRepository;
         }
 
         public async Task<MinutesModel> AddMinute(CreateMinuteDto minuteDto, Guid modifiedBy)
         {
             Minutes minutes = _mapper.Map<Minutes>(minuteDto);
             minutes.ModifiedBy = modifiedBy;
+            minutes.Content = await _utilityRepository.UploadFile(minuteDto.Content);
 
             await _unitOfWork.MinutesRepository.AddAsync(minutes);
             await _unitOfWork.SaveAsync();
@@ -76,20 +80,6 @@ namespace Cyon.Application.Services
             IEnumerable<Minutes> minutes = await _unitOfWork.MinutesRepository.GetAllAsync(pagination.Skip, pagination.Limit);
 
             return _mapper.Map<IEnumerable<MinutesModel>>(minutes);
-        }
-
-        public async Task UpdateMinute(UpdateMinuteDto minuteDto, Guid modifiedBy)
-        {
-            bool exists = await _unitOfWork.MinutesRepository.ExistAsync(x => x.Id == minuteDto.Id);
-
-            if (!exists)
-            {
-                throw new NotFoundException("Minute doesn't exist");
-            }
-
-            Minutes minutes = _mapper.Map<Minutes>(minuteDto);
-            await _unitOfWork.MinutesRepository.UpdateAsync(minutes);
-            await _unitOfWork.SaveAsync();
         }
     }
 }

@@ -2,7 +2,9 @@
 using Cyon.Domain.Models.Finance;
 using Cyon.Domain.Repositories;
 using Cyon.Infrastructure.Database;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Cyon.Infrastructure.Repositories
 {
@@ -15,9 +17,19 @@ namespace Cyon.Infrastructure.Repositories
             _dapperContext = dapperContext;
         }
 
-        public async Task<UserFinanceSummary> GetUserFinanceSummary(string userId)
+        public async Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId)
         {
-            throw new NotImplementedException();
+            string sp = "Sp_GetUserFinanceSummary";
+
+            var parameters1 = new DynamicParameters();
+            parameters1.Add("UserId", userId, DbType.Guid, ParameterDirection.Input);
+
+            using (var connection = _dapperContext.CreateConnection())
+            {
+                var result = await connection.QueryFirstOrDefaultAsync<UserFinanceSummary>(sp, parameters1, commandType: CommandType.StoredProcedure);
+
+                return result;
+            }
         }
     }
 }

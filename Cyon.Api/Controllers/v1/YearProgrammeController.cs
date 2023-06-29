@@ -40,7 +40,7 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPut("UpdateYearProgramme")]
         [Authorize(Roles = Roles.Executive)]
-        public async Task<IActionResult> UpdateYearProgramme([FromBody] UpdateYearProgrammeDto updateYearProgrammeDto)
+        public async Task<IActionResult> UpdateYearProgramme([FromForm] UpdateYearProgrammeDto updateYearProgrammeDto)
         {
             await _yearProgrammeService.UpdateYearProgramme(updateYearProgrammeDto);
             return Ok();

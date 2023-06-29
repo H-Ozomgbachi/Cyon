@@ -12,6 +12,9 @@ using Cyon.Domain;
 using Cyon.Infrastructure;
 using Serilog;
 using Cyon.Infrastructure.Extension;
+using Cyon.Domain.Entities;
+using Cyon.Domain.Repositories;
+using Cyon.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +40,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(ChaplainMappingProfile).Assembly);
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddOptions<AppSettings>().Bind(builder.Configuration.GetSection("AppSettings"));
 
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<IChaplainService, ChaplainService>();
@@ -53,6 +57,7 @@ builder.Services.AddScoped<IAccountManagementService, AccountManagementService>(
 builder.Services.AddScoped<IUserFinanceService, UserFinanceService>();
 builder.Services.AddScoped<IOrganisationFinanceService, OrganisationFinanceService>();
 builder.Services.AddScoped<IYearProgrammeService, YearProgrammeService>();
+builder.Services.AddScoped<IUtilityRepository, UtilityRepository>();
 
 string client = builder.Configuration.GetSection("ClientHost").Value;
 
@@ -70,6 +75,7 @@ builder.Services.AddCors(options =>
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.ConfigureSwagger();
+builder.Services.ConfigureClientFactory(builder.Configuration);
 
 builder.Host.UseSerilog();
 

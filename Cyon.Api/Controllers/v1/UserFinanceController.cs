@@ -35,7 +35,7 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPost("AddUserFinance")]
         [Authorize(Roles = Roles.Executive)]
-        public async Task<IActionResult> AddUserFinance(CreateUserFinanceDto userFinanceDto)
+        public async Task<IActionResult> AddUserFinance([FromForm] CreateUserFinanceDto userFinanceDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             var result = await _userFinanceService.AddUserFinance(userFinanceDto, userId);
@@ -44,7 +44,7 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPut("UpdateUserFinance")]
         [Authorize(Roles = Roles.Executive)]
-        public async Task<IActionResult> UpdateUserFinance(UpdateUserFinanceDto userFinanceDto)
+        public async Task<IActionResult> UpdateUserFinance([FromForm] UpdateUserFinanceDto userFinanceDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             await _userFinanceService.UpdateUserFinance(userFinanceDto, userId);
@@ -61,11 +61,18 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPost("PayDuesByAmount")]
         [Authorize(Roles = Roles.Executive)]
-        public async Task<IActionResult> PayDuesByAmount(PayDuesByAmountDto duesByAmountDto)
+        public async Task<IActionResult> PayDuesByAmount([FromForm] PayDuesByAmountDto duesByAmountDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             await _userFinanceService.PayDuesByAmount(duesByAmountDto, userId);
             return Ok();
+        }
+
+        [HttpGet("GetUserFinanceSummary")]
+        public async Task<ActionResult<UserFinanceSummary>> GetUserFinanceSummary()
+        {
+            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            return Ok(await _userFinanceService.GetUserFinanceSummary(userId));
         }
     }
 }

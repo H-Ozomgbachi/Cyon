@@ -32,11 +32,6 @@ namespace Cyon.Infrastructure.Repositories
             return balance;
         }
 
-        public Task<OrganizationAccountBalance> GetOrganizationAccountBalance()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<OrganisationAccountStatementModel> GetStatementOfAccount(DateTime startDate, DateTime endDate)
         {
             string sp1 = "Sp_GetBalanceBroughtForward";

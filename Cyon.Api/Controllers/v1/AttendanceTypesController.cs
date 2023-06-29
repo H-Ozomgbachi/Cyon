@@ -32,7 +32,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<ActionResult<AttendanceTypeModel>> AddAttendanceType([FromBody] CreateAttendanceTypeDto attendanceTypeDto)
+        public async Task<ActionResult<AttendanceTypeModel>> AddAttendanceType([FromForm] CreateAttendanceTypeDto attendanceTypeDto)
         {
             var result = await _attendanceTypeService.AddAttendanceType(attendanceTypeDto);
 
@@ -40,7 +40,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAttendanceType([FromBody] UpdateAttendanceTypeDto attendanceTypeDto)
+        public async Task<IActionResult> UpdateAttendanceType([FromForm] UpdateAttendanceTypeDto attendanceTypeDto)
         {
             await _attendanceTypeService.UpdateAttendanceType(attendanceTypeDto);
             return Ok();

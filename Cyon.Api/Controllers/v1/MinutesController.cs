@@ -33,20 +33,11 @@ namespace Cyon.Api.Controllers.v1
         [HttpPost]
         [Authorize(Roles = $"{Roles.Executive}")]
         [ProducesResponseType((int)HttpStatusCode.Created)]
-        public async Task<IActionResult> AddMinute([FromBody] CreateMinuteDto createMinuteDto)
+        public async Task<IActionResult> AddMinute([FromForm] CreateMinuteDto createMinuteDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             var minutes = await _minutesService.AddMinute(createMinuteDto, activeUserId);
             return CreatedAtAction(nameof(GetMinuteById), new { minuteId = minutes.Id }, minutes);
-        }
-
-        [HttpPut]
-        [Authorize(Roles = $"{Roles.Executive}")]
-        public async Task<IActionResult> UpdateMinute([FromBody] UpdateMinuteDto updateMinuteDto)
-        {
-            Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
-            await _minutesService.UpdateMinute(updateMinuteDto, activeUserId);
-            return Ok();
         }
 
         [HttpDelete("{minuteId}")]

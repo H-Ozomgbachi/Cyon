@@ -6,5 +6,6 @@
         public DateTime DateCollected { get; set; }
         public decimal Amount { get; set; }
         public Guid UserId { get; set; }
+        public string FinanceType { get; set; }
     }
 }

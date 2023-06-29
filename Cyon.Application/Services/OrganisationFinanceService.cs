@@ -46,7 +46,7 @@ namespace Cyon.Application.Services
 
         public async Task<OrganisationAccountStatementModel> GetOrganisationAccountStatement(GetAccountStatementDto accountStatementDto)
         {
-            return await _unitOfWork.OrganisationFinanceRepository.GetStatementOfAccount(accountStatementDto.StartDate, accountStatementDto.EndDate);
+            return await _unitOfWork.OrganisationFinanceRepository.GetStatementOfAccount(Convert.ToDateTime(accountStatementDto.StartDate), Convert.ToDateTime(accountStatementDto.EndDate));
         }
 
         public async Task<OrganisationFinanceModel> GetOrganisationFinance(Guid id)

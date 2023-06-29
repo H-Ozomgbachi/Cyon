@@ -7,7 +7,7 @@ namespace Cyon.Infrastructure.Validators.Minutes
     {
         public CreateMinutesDtoValidator()
         {
-            RuleFor(x => x.Content).NotEmpty().WithMessage("Minutes content is required");
+            RuleFor(x => x.Content).NotNull().WithMessage("Minutes content is required");
         }
     }
 }

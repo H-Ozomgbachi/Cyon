@@ -66,5 +66,6 @@
     <Build Include="StoreProcedure\Sp_GetPeopleWithSimilarOccupation.sql" />
     <Build Include="StoreProcedure\Sp_GetAttendanceSummary.sql" />
     <Build Include="StoreProcedure\Sp_GetApologySummary.sql" />
+    <Build Include="StoreProcedure\Sp_GetUserFinanceSummary.sql" />
   </ItemGroup>
 </Project>

@@ -80,5 +80,19 @@ namespace Cyon.Infrastructure.Extension
                 });
             });
         }
+
+        public static void ConfigureClientFactory(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddHttpClient("FileServer", c =>
+            {
+                c.BaseAddress = new Uri(config["AppSettings:FileServerBaseUrl"]);
+            }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                }
+            });
+        }
     }
 }

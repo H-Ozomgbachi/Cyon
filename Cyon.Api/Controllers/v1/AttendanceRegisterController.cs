@@ -19,7 +19,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("TakeAttendance")]
-        public async Task<IActionResult> CollectAttendance([FromBody]CollectAttendanceDto collectAttendanceDto)
+        public async Task<IActionResult> CollectAttendance([FromForm]CollectAttendanceDto collectAttendanceDto)
         {
             await _attendanceRegisterService.CollectAttendance(collectAttendanceDto);
             return Ok();

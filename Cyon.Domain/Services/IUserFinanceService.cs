@@ -13,5 +13,6 @@ namespace Cyon.Domain.Services
         Task DeleteUserFinance(Guid id);
         Task PayDuesByMonths(PayDuesByMonthDto duesByMonthDto, Guid modifiedBy);
         Task PayDuesByAmount(PayDuesByAmountDto duesByAmountDto, Guid modifiedBy);
+        Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId);
     }
 }

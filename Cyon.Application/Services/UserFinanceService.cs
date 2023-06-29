@@ -61,6 +61,7 @@ namespace Cyon.Application.Services
                         DateCollected = dateCollected.AddMonths(i),
                         Amount = duesByAmountDto.DuesCostMonthly,
                         ModifiedBy = modifiedBy,
+                        FinanceType = "Pay",
                         User = user
                     };
                     userFinances.Add(userFinance);
@@ -82,6 +83,7 @@ namespace Cyon.Application.Services
                         DateCollected = dateCollected.AddMonths(i),
                         Amount = duesByAmountDto.DuesCostMonthly,
                         ModifiedBy = modifiedBy,
+                        FinanceType = "Pay",
                         User = user
                     };
                     userFinances.Add(userFinance);
@@ -172,6 +174,11 @@ namespace Cyon.Application.Services
             _mapper.Map(userFinanceDto, userFinance);
             await _unitOfWork.UserFinanceRepository.UpdateAsync(userFinance);
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId)
+        {
+            return await _unitOfWork.UserFinanceRepository.GetUserFinanceSummary(userId);
         }
     }
 }

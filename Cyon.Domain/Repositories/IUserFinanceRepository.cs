@@ -5,6 +5,6 @@ namespace Cyon.Domain.Repositories
 {
     public interface IUserFinanceRepository : IRepository<UserFinance>
     {
-        Task<UserFinanceSummary> GetUserFinanceSummary(string userId);
+        Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId);
     }
 }
