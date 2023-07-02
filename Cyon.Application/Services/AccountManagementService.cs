@@ -70,6 +70,12 @@ namespace Cyon.Application.Services
             {
                 throw new NotFoundException("User account doesn't exist");
             }
+
+            if ((await _unitOfWork.DeactivateRequestRepository.ExistAsync(x => x.UserId == user.Id)))
+            {
+                throw new BadRequestException("You already have a pending request");
+            }
+
             DeactivateRequest deactivateRequest = new()
             {
                 UserId = user.Id,
@@ -131,7 +137,7 @@ namespace Cyon.Application.Services
 
             if (string.IsNullOrEmpty(imgUrl))
             {
-                throw new ConflictException("Problem uploading image");
+                throw new BadRequestException("Problem uploading image");
             }
 
             var user = await _userManager.FindByIdAsync(userId.ToString());

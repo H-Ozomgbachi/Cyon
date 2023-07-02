@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Authentication;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Models.Authentication;
@@ -33,6 +32,7 @@ namespace Cyon.Api.Controllers.v1
             var user = _mapper.Map<User>(userForRegistrationDto);
             user.LastModified = DateTime.Now;
             user.ModifiedBy = Guid.Parse(user.Id);
+            user.UniqueCode = await _authenticationService.GenerateUniqueId();
             
             var result = await _userManager.CreateAsync(user, userForRegistrationDto.Password);
             if (!result.Succeeded)

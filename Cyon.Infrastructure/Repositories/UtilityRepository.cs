@@ -50,7 +50,7 @@ namespace Cyon.Infrastructure.Repositories
             catch (Exception ex)
             {
                 _logger.LogError("Error sending file to File Storage Server", ex.Message);
-                throw new ConflictException("A third party service did not respond properly");
+                throw new BadRequestException("A third party service did not respond properly");
             }
             return result;
         }

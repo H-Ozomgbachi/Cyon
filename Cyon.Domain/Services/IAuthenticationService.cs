@@ -1,5 +1,4 @@
 ﻿using Cyon.Domain.DTOs.Authentication;
-using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Models.Authentication;
 
 namespace Cyon.Domain.Services
@@ -13,5 +12,6 @@ namespace Cyon.Domain.Services
         Task AddRolesToDb(IEnumerable<string> roles);
         Task<IEnumerable<AccountIdAWithEmail>> GetAccountIdsWithEmail(string searchKey);
         Task<bool> UpdateMyAccount(UserForUpdateDto userForUpdateDto, Guid modifiedBy);
+        Task<string> GenerateUniqueId();
     }
 }

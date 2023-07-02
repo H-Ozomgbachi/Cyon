@@ -2,7 +2,6 @@
 using Cyon.Domain.DTOs.AccountManagement;
 using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Models.AccountManagement;
-using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -66,7 +66,7 @@ namespace Cyon.Application.Services
         {
             if (string.IsNullOrWhiteSpace(apologyDto.RejectionReason))
             {
-                throw new ConflictException("No rejection reason was provided");
+                throw new BadRequestException("No rejection reason was provided");
             }
             Apology apologyToUpdate = _mapper.Map<Apology>(apologyDto);
             apologyToUpdate.IsResolved = true;

@@ -7,8 +7,6 @@ using Cyon.Domain.Exceptions;
 using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Models.Occupation;
 using Cyon.Domain.Services;
-using Microsoft.AspNetCore.Identity;
-using System.Linq.Expressions;
 
 namespace Cyon.Application.Services
 {
@@ -28,7 +26,7 @@ namespace Cyon.Application.Services
             bool doesUserOccupationExist = await _unitOfWork.OccupationRepository.ExistAsync(x => x.UserId == userId);
             if (doesUserOccupationExist)
             {
-                throw new ConflictException("Your occupation already exist, you can only modify");
+                throw new BadRequestException("Your occupation already exist, you can only modify");
             }
 
             if (occupationDto.IsUnemployed)

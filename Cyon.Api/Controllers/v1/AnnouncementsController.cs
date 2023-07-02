@@ -1,5 +1,4 @@
-﻿using Cyon.Application.Services;
-using Cyon.Domain.Common;
+﻿using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Announcement;
 using Cyon.Domain.Models.Announcement;
 using Cyon.Domain.Services;
@@ -36,7 +35,7 @@ namespace Cyon.Api.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> AddAnnouncement([FromForm] CreateAnnouncementDto announcementDto)
         {
-            Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            string activeUserId = User.FindFirstValue(ClaimTypes.Actor);
             var announcement = await _announcementService.AddAnnouncement(announcementDto, activeUserId);
             return CreatedAtAction(nameof(GetAnnouncement), new { announcementId = announcement.Id }, announcement);
         }
@@ -44,7 +43,7 @@ namespace Cyon.Api.Controllers.v1
         [HttpPut]
         public async Task<IActionResult> UpdateAnnouncement([FromBody] UpdateAnnouncementDto announcementDto)
         {
-            Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            string activeUserId = User.FindFirstValue(ClaimTypes.Actor);
             await _announcementService.UpdateAnnouncement(announcementDto, activeUserId);
             return Ok();
         }
@@ -54,6 +53,14 @@ namespace Cyon.Api.Controllers.v1
         {
             await _announcementService.DeleteAnnouncement(announcementId);
             return NoContent();
+        }
+
+        [HttpPost("ReadAnnouncement/{announcementId}")]
+        public async Task<IActionResult> ReadAnnouncement(Guid announcementId)
+        {
+            string activeUserId = User.FindFirstValue(ClaimTypes.Actor);
+            await _announcementService.ReadAnnouncement(announcementId, activeUserId);
+            return Ok();
         }
     }
 }

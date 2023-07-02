@@ -7,7 +7,7 @@ namespace Cyon.Infrastructure.Validators.Announcement
     {
         public UpdateAnnouncementDtoValidator()
         {
-            RuleFor(x => x.Title).NotEmpty().WithMessage("Title is required");
+            RuleFor(x => x.Title).NotEmpty().WithMessage("Title is required").MaximumLength(100);
             RuleFor(x => x.Content).NotEmpty().WithMessage("Content is required");
             RuleFor(x => x.Id).NotEmpty().WithMessage("Id is required");
             RuleFor(x => x.IsActive).NotEmpty().WithMessage("Active status is required");

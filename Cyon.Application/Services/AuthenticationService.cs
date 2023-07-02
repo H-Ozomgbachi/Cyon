@@ -74,6 +74,7 @@ namespace Cyon.Application.Services
             {
                 new Claim(ClaimTypes.Name, _user.Id),
                 new Claim(ClaimTypes.Email, _user.Email),
+                new Claim(ClaimTypes.Actor, _user.UniqueCode)
             };
 
             var roles = await _userManager.GetRolesAsync(_user);
@@ -210,6 +211,14 @@ namespace Cyon.Application.Services
 
             var result = await _userManager.UpdateAsync(userToUpdate);
             return result.Succeeded;
+        }
+
+        public async Task<string> GenerateUniqueId()
+        {
+            int num = await _userManager.Users.Where(x => x.DateAdded.Year == DateTime.Now.Year).CountAsync();
+            string year = DateTime.Now.Year.ToString()[2..];
+
+            return $"CYS{year}{(num + 1).ToString().PadLeft(3, '0')}";
         }
     }
 }

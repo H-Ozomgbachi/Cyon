@@ -18,6 +18,7 @@ namespace Cyon.Domain.Entities
         public DateTime LastModified { get; set; }
         public Guid ModifiedBy { get; set; }
         public DateTime LastLogin { get; set; }
+        public string UniqueCode { get; set; }
 
         public Guid DepartmentId { get; set; }
         public Department Department { get; set; }

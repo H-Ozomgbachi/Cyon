@@ -25,6 +25,7 @@ namespace Cyon.Infrastructure.Database
         public DbSet<UserFinance> UserFinances { get; set; }
         public DbSet<OrganisationFinance> OrganisationFinances { get; set; }
         public DbSet<YearProgramme> YearProgrammes { get; set; }
+        public DbSet<UpcomingEvent> UpcomingEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +40,7 @@ namespace Cyon.Infrastructure.Database
             modelBuilder.ApplyConfiguration(new ApologyEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UserFinanceEntityConfiguration());
             modelBuilder.ApplyConfiguration(new OrganisationFinanceEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UpcomingEventEntityConfiguration());
         }
     }
 }

@@ -57,18 +57,18 @@ builder.Services.AddScoped<IAccountManagementService, AccountManagementService>(
 builder.Services.AddScoped<IUserFinanceService, UserFinanceService>();
 builder.Services.AddScoped<IOrganisationFinanceService, OrganisationFinanceService>();
 builder.Services.AddScoped<IYearProgrammeService, YearProgrammeService>();
+builder.Services.AddScoped<IUpcomingEventService, UpcomingEventService>();
 builder.Services.AddScoped<IUtilityRepository, UtilityRepository>();
 
-string client = builder.Configuration.GetSection("ClientHost").Value;
+//string client = builder.Configuration.GetSection("ClientHost").Value;
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
        builder => builder
-        .WithOrigins(client)
+        .AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .AllowCredentials()
       );
 });
 

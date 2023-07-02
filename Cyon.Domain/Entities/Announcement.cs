@@ -4,9 +4,9 @@
     {
         public string Title { get; set; }
         public string Content { get; set; }
-        public string PhotoUrl { get; set; }
-        public DateTime DateAdded { get; set; }
+        public DateTime DateAdded { get; set; } = DateTime.Now;
         public bool IsActive { get; set; } = true;
-        public Guid ModifiedBy { get; set; }
+        public string ReadBy { get; set; } = string.Empty;
+        public string ModifiedBy { get; set; }
     }
 }

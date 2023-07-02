@@ -106,7 +106,7 @@ namespace Cyon.Application.Services
 
             if (doesExist == false)
             {
-                throw new ConflictException("No activity held for the function or date you selected");
+                throw new BadRequestException("No activity held for the function or date you selected");
             }
 
             var filter = new List<Expression<Func<AttendanceRegister, bool>>>

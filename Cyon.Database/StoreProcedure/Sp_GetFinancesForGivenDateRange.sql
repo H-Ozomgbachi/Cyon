@@ -5,5 +5,5 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	SELECT * FROM [OrganisationFinances]
-	WHERE CAST([Date] AS DATE) >= @StartDate and CAST([Date] AS DATE) <= @EndDate
+	WHERE CAST([Date] AS DATE) >= CONVERT(DATE, @StartDate) and CAST([Date] AS DATE) <= CONVERT(DATE, @EndDate)
 END

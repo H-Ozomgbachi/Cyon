@@ -16,5 +16,6 @@ namespace Cyon.Domain.Models.Authentication
         public DepartmentModel Department { get; set; }
         public string Rank { get; set; }
         public string Address { get; set; }
+        public string UniqueCode { get; set; }
     }
 }

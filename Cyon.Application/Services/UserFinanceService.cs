@@ -104,7 +104,7 @@ namespace Cyon.Application.Services
 
             if (endDate < startDate)
             {
-                throw new ConflictException("start date cannot be greater than end date");
+                throw new BadRequestException("start date cannot be greater than end date");
             }
 
             var user = await _userManager.FindByIdAsync(duesByMonthDto.UserId.ToString());

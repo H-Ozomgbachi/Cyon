@@ -57,18 +57,17 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 29, 19, 50, 46, 503, DateTimeKind.Local).AddTicks(4705));
+                        .HasDefaultValue(new DateTime(2023, 7, 2, 0, 38, 39, 656, DateTimeKind.Local).AddTicks(9815));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhotoUrl")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("");
+                    b.Property<string>("ReadBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -183,7 +182,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateAdded")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 29, 19, 50, 46, 503, DateTimeKind.Local).AddTicks(3459));
+                        .HasDefaultValue(new DateTime(2023, 7, 2, 0, 38, 39, 656, DateTimeKind.Local).AddTicks(9043));
 
                     b.Property<string>("EndYear")
                         .IsRequired()
@@ -260,6 +259,9 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdditionalInfo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -355,7 +357,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 29, 18, 50, 46, 504, DateTimeKind.Utc).AddTicks(2066));
+                        .HasDefaultValue(new DateTime(2023, 7, 1, 23, 38, 39, 657, DateTimeKind.Utc).AddTicks(6755));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -373,6 +375,39 @@ namespace Cyon.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OrganisationFinances");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.UpcomingEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UpcomingEvents");
                 });
 
             modelBuilder.Entity("Cyon.Domain.Entities.User", b =>
@@ -468,6 +503,9 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("UniqueCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -503,7 +541,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateModified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 29, 19, 50, 46, 504, DateTimeKind.Local).AddTicks(964));
+                        .HasDefaultValue(new DateTime(2023, 7, 2, 0, 38, 39, 657, DateTimeKind.Local).AddTicks(5873));
 
                     b.Property<string>("Description")
                         .IsRequired()

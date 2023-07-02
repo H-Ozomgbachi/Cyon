@@ -23,6 +23,7 @@ namespace Cyon.Infrastructure
         private IUserFinanceRepository _userFinanceRepository;
         private IOrganisationFinanceRepository _organisationFinanceRepository;
         private IYearProgrammeRepository _yearProgrammeRepository;
+        private IUpcomingEventRepository _upcomingEventRepository;
 
         public UnitOfWork(AppDbContext dbContext, DapperContext dapperContext)
         {
@@ -225,6 +226,19 @@ namespace Cyon.Infrastructure
             }
         }
 
+        public IUpcomingEventRepository UpcomingEventRepository
+        {
+            get
+            {
+                if (_upcomingEventRepository == null)
+                {
+                    _upcomingEventRepository = new UpcomingEventRepository(_dbContext.UpcomingEvents);
+
+                    return _upcomingEventRepository;
+                }
+                return _upcomingEventRepository;
+            }
+        }
         public void Dispose() => _dbContext.Dispose();
 
         public async Task<int> SaveAsync() => await _dbContext.SaveChangesAsync();

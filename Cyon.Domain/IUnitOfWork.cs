@@ -1,5 +1,4 @@
-﻿using Cyon.Domain.Entities;
-using Cyon.Domain.Repositories;
+﻿using Cyon.Domain.Repositories;
 
 namespace Cyon.Domain
 {
@@ -19,6 +18,7 @@ namespace Cyon.Domain
         IUserFinanceRepository UserFinanceRepository { get; }
         IOrganisationFinanceRepository OrganisationFinanceRepository { get; }
         IYearProgrammeRepository YearProgrammeRepository { get; }
+        IUpcomingEventRepository UpcomingEventRepository { get; }
         Task<int> SaveAsync();
     }
 }

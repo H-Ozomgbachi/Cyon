@@ -4,6 +4,7 @@
     {
         public DateTime Date { get; set; }
         public double ProposedDurationInMinutes { get; set; }
+        public string AdditionalInfo { get; set; }
         public IEnumerable<CreateAgendumDto> Agenda { get; set; }
     }
 

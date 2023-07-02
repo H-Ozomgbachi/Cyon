@@ -13,20 +13,18 @@ namespace Cyon.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService;
 
-        public AnnouncementService(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
+        public AnnouncementService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _photoService = photoService;
         }
 
-        public async Task<AnnouncementModel> AddAnnouncement(CreateAnnouncementDto announcementDto, Guid modifiedBy)
+        public async Task<AnnouncementModel> AddAnnouncement(CreateAnnouncementDto announcementDto, string modifiedBy)
         {
             Announcement announcement = _mapper.Map<Announcement>(announcementDto);
-            string photoUrl = await _photoService.UploadOneImage(announcementDto.Photo);
-            announcement.ModifiedBy = modifiedBy; announcement.PhotoUrl = photoUrl;
+            announcement.ModifiedBy = modifiedBy;
+            announcement.ReadBy = string.Join(',', new List<string> { modifiedBy });
 
             await _unitOfWork.AnnouncementRepository.AddAsync(announcement);
             await _unitOfWork.SaveAsync();
@@ -65,10 +63,31 @@ namespace Cyon.Application.Services
         {
             IEnumerable<Announcement> announcements = await _unitOfWork.AnnouncementRepository.GetAllAsync(pagination.Skip, pagination.Limit);
 
-            return _mapper.Map<IEnumerable<AnnouncementModel>>(announcements);
+            return _mapper.Map<IEnumerable<AnnouncementModel>>(announcements).OrderByDescending(x => x.DateAdded);
         }
 
-        public async Task UpdateAnnouncement(UpdateAnnouncementDto announcementDto, Guid modifiedBy)
+        public async Task ReadAnnouncement(Guid announcementId, string readBy)
+        {
+            var announcement = await _unitOfWork.AnnouncementRepository.GetByIdAsync(announcementId);
+
+            if (announcement == null)
+            {
+                throw new NotFoundException("Announcement was not found");
+            }
+
+            if(announcement.ReadBy.Contains(readBy))
+            {
+                return;
+            }
+
+            var previousList = announcement.ReadBy.Split(',').ToList();
+            previousList.Add(readBy);
+            announcement.ReadBy = string.Join(',', previousList);
+            await _unitOfWork.AnnouncementRepository.UpdateAsync(announcement);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task UpdateAnnouncement(UpdateAnnouncementDto announcementDto, string modifiedBy)
         {
             bool exists = await _unitOfWork.AnnouncementRepository.ExistAsync(x => x.Id == announcementDto.Id);
 
@@ -78,6 +97,7 @@ namespace Cyon.Application.Services
             }
 
             Announcement announcement = _mapper.Map<Announcement>(announcementDto);
+            announcement.ModifiedBy = modifiedBy;
             await _unitOfWork.AnnouncementRepository.UpdateAsync(announcement);
             await _unitOfWork.SaveAsync();
         }

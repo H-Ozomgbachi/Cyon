@@ -5,6 +5,7 @@
         public DateTime Date { get; set; }
         public ICollection<Agendum> Agenda { get; set; }
         public double ProposedDurationInMinutes { get; set; }
+        public string AdditionalInfo { get; set; }
         public Guid ModifiedBy { get; set; }
     }
 
