@@ -8,6 +8,6 @@
         public DateTime EndDate { get; set; }
         public string ImageUrl { get; set; }
         public string Scope { get; set; }
-        public int Year { get; set; }
+        public string Year { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Cyon.Domain.Entities;
-using Cyon.Infrastructure.Database.EntityConfigurations;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Cyon.Infrastructure.Database
 {
@@ -26,21 +26,14 @@ namespace Cyon.Infrastructure.Database
         public DbSet<OrganisationFinance> OrganisationFinances { get; set; }
         public DbSet<YearProgramme> YearProgrammes { get; set; }
         public DbSet<UpcomingEvent> UpcomingEvents { get; set; }
+        public DbSet<Decision> Decisions { get; set; }
+        public DbSet<DecisionResponse> DecisionResponses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new ChaplainEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new AnnouncementEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new MeetingEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new AttendanceTypeEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new DepartmentEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new OccupationEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new ApologyEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new UserFinanceEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new OrganisationFinanceEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new UpcomingEventEntityConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

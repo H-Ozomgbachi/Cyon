@@ -198,6 +198,12 @@ namespace Cyon.Application.Services
             throw new NotImplementedException();
         }
 
+        public async Task<IEnumerable<AccountModel>> GetAllUsers()
+        {
+            var user = await _userManager.Users.Where(x => x.IsActive).ToListAsync();
+            return _mapper.Map<IEnumerable<AccountModel>>(user);
+        }
+
         public async Task<bool> UpdateMyAccount(UserForUpdateDto userForUpdateDto, Guid modifiedBy)
         {
             var user = await _userManager.FindByIdAsync(userForUpdateDto.Id);

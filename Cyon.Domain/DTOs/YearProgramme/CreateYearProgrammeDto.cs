@@ -9,6 +9,6 @@ namespace Cyon.Domain.DTOs.YearProgramme
         public DateTime EndDate { get; set; }
         public IFormFile Image { get; set; }
         public string Scope { get; set; }
-        public int Year { get; set; }
+        public string Year { get; set; }
     }
 }

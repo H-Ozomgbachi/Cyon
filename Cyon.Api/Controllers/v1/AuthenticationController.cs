@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Authentication;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Models.Authentication;
@@ -116,6 +117,13 @@ namespace Cyon.Api.Controllers.v1
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
             return Ok();
+        }
+
+        [HttpGet("GetAllUsers/")]
+        [Authorize(Roles = $"{Roles.Executive}")]
+        public async Task<ActionResult<IEnumerable<AccountModel>>> GetAllUsers()
+        {
+            return Ok(await _authenticationService.GetAllUsers());
         }
     }
 }

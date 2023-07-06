@@ -35,7 +35,7 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPost("AddUserFinance")]
         [Authorize(Roles = Roles.Executive)]
-        public async Task<IActionResult> AddUserFinance([FromForm] CreateUserFinanceDto userFinanceDto)
+        public async Task<IActionResult> AddUserFinance([FromBody] CreateUserFinanceDto userFinanceDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             var result = await _userFinanceService.AddUserFinance(userFinanceDto, userId);
@@ -61,7 +61,7 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPost("PayDuesByAmount")]
         [Authorize(Roles = Roles.Executive)]
-        public async Task<IActionResult> PayDuesByAmount([FromForm] PayDuesByAmountDto duesByAmountDto)
+        public async Task<IActionResult> PayDuesByAmount([FromBody] PayDuesByAmountDto duesByAmountDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             await _userFinanceService.PayDuesByAmount(duesByAmountDto, userId);

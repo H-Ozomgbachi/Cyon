@@ -7,7 +7,7 @@ namespace Cyon.Domain.Services
 {
     public interface IApologyService
     {
-        Task<ApologyModel> AddApology(CreateApologyDto apologyDto, Guid userId);
+        Task<ApologyModel> AddApology(CreateApologyDto apologyDto, Guid userId, string userCode);
         Task<IEnumerable<ApologyModel>> GetApologies(Pagination pagination, bool isPending);
         Task UpdateApology(Apology apology);
         Task DeleteApology(Guid id);

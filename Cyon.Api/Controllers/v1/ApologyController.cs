@@ -36,8 +36,8 @@ namespace Cyon.Api.Controllers.v1
         public async Task<ActionResult<ApologyModel>> AddApology(CreateApologyDto apologyDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
-            apologyDto.UserEmail = User.FindFirstValue(ClaimTypes.Email);
-            var result = await _apologyService.AddApology(apologyDto, userId);
+
+            var result = await _apologyService.AddApology(apologyDto, userId, User.FindFirstValue(ClaimTypes.Actor));
             return Ok(result);
         }
 

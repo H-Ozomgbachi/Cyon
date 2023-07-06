@@ -10,6 +10,7 @@ namespace Cyon.Domain.Repositories
         Task UpdateRangeAsync(IEnumerable<TEntity> entitiesToUpdate);
         Task<TEntity> GetByIdAsync(Guid id, IEnumerable<string> entitiesToInclude = null);
         Task<IEnumerable<TEntity>> GetAllAsync(IEnumerable<Expression<Func<TEntity, bool>>> predicates = null, IEnumerable<string> entitiesToInclude = null);
+        Task<TEntity> GetFirstMatchAsync(IEnumerable<Expression<Func<TEntity, bool>>> predicates = null, IEnumerable<string> entitiesToInclude = null);
         Task<IEnumerable<TEntity>> GetAllAsync(int skip, int limit, IEnumerable<string> entitiesToInclude = null, IEnumerable<Expression<Func<TEntity, bool>>> predicates = null);
         void Delete(TEntity entity);
         Task DeleteAsync(TEntity entity);

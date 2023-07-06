@@ -34,7 +34,7 @@ namespace Cyon.Infrastructure.Repositories
                     data = br.ReadBytes((int)formFile.OpenReadStream().Length);
                 }
                 ByteArrayContent bytes = new(data);
-                StringContent projectName = new("spcy");
+                StringContent projectName = new("cyon");
 
                 MultipartFormDataContent multiContent = new()
                 {

@@ -8,10 +8,7 @@ namespace Cyon.Infrastructure.Database.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Announcement> builder)
         {
-            builder.Property(x => x.Title).IsRequired().HasMaxLength(256);
-            builder.Property(x => x.Content).IsRequired();
-            builder.Property(x => x.ModifiedBy).IsRequired();
-            builder.Property(x => x.DateAdded).IsRequired().HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.Title).IsRequired().HasMaxLength(100);
         }
     }
 }

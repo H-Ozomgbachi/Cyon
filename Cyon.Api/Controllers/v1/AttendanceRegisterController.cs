@@ -33,8 +33,8 @@ namespace Cyon.Api.Controllers.v1
         [HttpGet("GetMyAttendanceRecord")]
         public async Task<ActionResult<IEnumerable<AttendanceRegisterModel>>> GetMyAttendanceRecord([FromQuery] Pagination pagination)
         {
-            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return Ok(await _attendanceRegisterService.GetMyAttendanceRecord(userId, pagination));
+            string userCode = User.FindFirstValue(ClaimTypes.Actor);
+            return Ok(await _attendanceRegisterService.GetMyAttendanceRecord(userCode, pagination));
         }
 
         [HttpPost("MarkAbsentees")]
@@ -48,8 +48,8 @@ namespace Cyon.Api.Controllers.v1
         [HttpGet("GetAttendanceSummary")]
         public async Task<ActionResult<AttendanceSummaryModel>> GetAttendanceSummary()
         {
-            Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
-            return Ok(await _attendanceRegisterService.GetAttendanceSummary(userId));
+            string userCode = User.FindFirstValue(ClaimTypes.Name);
+            return Ok(await _attendanceRegisterService.GetAttendanceSummary(userCode));
         }
     }
 }

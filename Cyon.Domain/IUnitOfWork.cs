@@ -19,6 +19,8 @@ namespace Cyon.Domain
         IOrganisationFinanceRepository OrganisationFinanceRepository { get; }
         IYearProgrammeRepository YearProgrammeRepository { get; }
         IUpcomingEventRepository UpcomingEventRepository { get; }
+        IDecisionRepository DecisionRepository { get; }
+        IDecisionResponseRepository DecisionResponseRepository { get; }
         Task<int> SaveAsync();
     }
 }

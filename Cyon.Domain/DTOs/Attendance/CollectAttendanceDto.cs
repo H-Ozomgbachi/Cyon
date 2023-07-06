@@ -9,8 +9,8 @@
 
     public class AttendanceDatum
     {
-        public Guid UserId { get; set; }
+        public string UserCode { get; set; }
         public ushort Rating { get; set; }
-        public string UserEmail { get; set; }
+        public string Name { get; set; }
     }
 }

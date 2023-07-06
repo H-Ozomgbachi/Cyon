@@ -58,6 +58,9 @@ builder.Services.AddScoped<IUserFinanceService, UserFinanceService>();
 builder.Services.AddScoped<IOrganisationFinanceService, OrganisationFinanceService>();
 builder.Services.AddScoped<IYearProgrammeService, YearProgrammeService>();
 builder.Services.AddScoped<IUpcomingEventService, UpcomingEventService>();
+builder.Services.AddScoped<IDecisionService, DecisionService>();
+builder.Services.AddScoped<IDecisionResponseService, DecisionResponseService>();
+
 builder.Services.AddScoped<IUtilityRepository, UtilityRepository>();
 
 //string client = builder.Configuration.GetSection("ClientHost").Value;

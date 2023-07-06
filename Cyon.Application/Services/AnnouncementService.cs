@@ -24,7 +24,6 @@ namespace Cyon.Application.Services
         {
             Announcement announcement = _mapper.Map<Announcement>(announcementDto);
             announcement.ModifiedBy = modifiedBy;
-            announcement.ReadBy = string.Join(',', new List<string> { modifiedBy });
 
             await _unitOfWork.AnnouncementRepository.AddAsync(announcement);
             await _unitOfWork.SaveAsync();

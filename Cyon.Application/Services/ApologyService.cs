@@ -23,7 +23,7 @@ namespace Cyon.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ApologyModel> AddApology(CreateApologyDto apologyDto, Guid userId)
+        public async Task<ApologyModel> AddApology(CreateApologyDto apologyDto, Guid userId, string userCode)
         {
             AttendanceTypeModel attendanceType = await _attendanceTypeService.GetAttendanceType(apologyDto.AttendanceTypeId);
 
@@ -34,7 +34,8 @@ namespace Cyon.Application.Services
                 Date = apologyDto.Date,
                 Reason = apologyDto.AbsenteeReason,
                 UserId = userId,
-                UserEmail = apologyDto.UserEmail,
+                Name = apologyDto.Name,
+                UserCode = userCode
             };
 
             await _unitOfWork.ApologyRepository.AddAsync(apology);
@@ -50,8 +51,8 @@ namespace Cyon.Application.Services
                 AttendanceTypeId = apology.AttendanceTypeId,
                 AttendanceTypeName = apology.For,
                 DateAdded = apology.Date,
-                UserId = apology.UserId,
-                UserEmail = apology.UserEmail,
+                UserCode = apology.UserCode,
+                Name = apology.Name,
                 IsPresent = true,
                 Rating = 3,
             };

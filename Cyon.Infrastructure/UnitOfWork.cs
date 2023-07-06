@@ -24,6 +24,8 @@ namespace Cyon.Infrastructure
         private IOrganisationFinanceRepository _organisationFinanceRepository;
         private IYearProgrammeRepository _yearProgrammeRepository;
         private IUpcomingEventRepository _upcomingEventRepository;
+        private IDecisionRepository _decisionRepository;
+        private IDecisionResponseRepository _decisionResponseRepository;
 
         public UnitOfWork(AppDbContext dbContext, DapperContext dapperContext)
         {
@@ -237,6 +239,31 @@ namespace Cyon.Infrastructure
                     return _upcomingEventRepository;
                 }
                 return _upcomingEventRepository;
+            }
+        }
+
+        public IDecisionRepository DecisionRepository
+        {
+            get
+            {
+                if (_decisionRepository == null)
+                {
+                    _decisionRepository = new DecisionRepository(_dbContext.Decisions);
+                    return _decisionRepository;
+                }
+                return _decisionRepository;
+            }
+        }
+        public IDecisionResponseRepository DecisionResponseRepository
+        {
+            get
+            {
+                if (_decisionResponseRepository == null)
+                {
+                    _decisionResponseRepository = new DecisionResponseRepository(_dbContext.DecisionResponses);
+                    return _decisionResponseRepository;
+                }
+                return _decisionResponseRepository;
             }
         }
         public void Dispose() => _dbContext.Dispose();

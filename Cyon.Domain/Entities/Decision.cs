@@ -6,7 +6,8 @@
         public string Options { get; set; }
         public string Result { get; set; } = string.Empty;
         public bool IsClosed { get; set; } = false;
-        public bool IsActive { get; set; }
-        public DateTime DateAdded { get; set; } = DateTime.Now;
+        public bool IsActive { get; set; } = true;
+
+        public ICollection<DecisionResponse> DecisionResponses { get; set; }
     }
 }

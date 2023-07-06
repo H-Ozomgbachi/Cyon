@@ -22,7 +22,7 @@ namespace Cyon.Infrastructure.Repositories
         {
             string sp1 = "Sp_GetAttendanceSummary";
             var parameters = new DynamicParameters();
-            parameters.Add("UserId", userId, DbType.String, ParameterDirection.Input);
+            parameters.Add("UserCode", userId, DbType.String, ParameterDirection.Input);
 
             using var connection = _dapperContext.CreateConnection();
 

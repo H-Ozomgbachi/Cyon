@@ -6,7 +6,6 @@
         public DateTime DateCollected { get; set; }
         public decimal Amount { get; set; }
         public Guid ModifiedBy { get; set; }
-        public DateTime DateModified { get; set; }
         public string FinanceType { get; set; }
 
         public string UserId { get; set; }

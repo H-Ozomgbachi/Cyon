@@ -10,7 +10,7 @@ namespace Cyon.Domain.Entities
         public DateTime DateOfBirth { get; set; }
         public string Gender { get; set; }
         public bool IsCommunicant { get; set; }
-        public DateTime DateAdded { get; set; } = DateTime.Now;
+        public DateTime DateAdded { get; set; } = DateTime.UtcNow;
         public string Rank { get; set; } = "Regular";
         public bool IsActive { get; set; } = true;
         public string InactiveReason { get; set; } = string.Empty;
@@ -19,6 +19,7 @@ namespace Cyon.Domain.Entities
         public Guid ModifiedBy { get; set; }
         public DateTime LastLogin { get; set; }
         public string UniqueCode { get; set; }
+        public string FeatureAccess { get; set; } = string.Empty;
 
         public Guid DepartmentId { get; set; }
         public Department Department { get; set; }

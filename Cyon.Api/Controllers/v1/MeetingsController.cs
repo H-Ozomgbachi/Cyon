@@ -35,7 +35,7 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPost]
         [Authorize(Roles = $"{Roles.Executive}")]
-        public async Task<IActionResult> AddMeeting([FromForm] CreateMeetingDto meetingDto)
+        public async Task<IActionResult> AddMeeting([FromBody] CreateMeetingDto meetingDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             var meeting = await _meetingService.AddMeeting(meetingDto, activeUserId);
@@ -44,7 +44,7 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPut]
         [Authorize(Roles = $"{Roles.Executive}")]
-        public async Task<IActionResult> UpdateMeeting([FromForm] UpdateMeetingDto meetingDto)
+        public async Task<IActionResult> UpdateMeeting([FromBody] UpdateMeetingDto meetingDto)
         {
             Guid activeUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             await _meetingService.UpdateMeeting(meetingDto, activeUserId);

@@ -11,7 +11,6 @@ namespace Cyon.Infrastructure.Database.EntityConfigurations
             builder.Property(x => x.Description).IsRequired().HasMaxLength(256);
             builder.Property(x => x.Amount).HasPrecision(10, 2);
             builder.Property(x => x.FinanceType).IsRequired().HasMaxLength(12);
-            builder.Property(x => x.DateModified).HasDefaultValue(DateTime.UtcNow);
         }
     }
 }

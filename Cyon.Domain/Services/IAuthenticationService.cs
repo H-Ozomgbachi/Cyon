@@ -13,5 +13,6 @@ namespace Cyon.Domain.Services
         Task<IEnumerable<AccountIdAWithEmail>> GetAccountIdsWithEmail(string searchKey);
         Task<bool> UpdateMyAccount(UserForUpdateDto userForUpdateDto, Guid modifiedBy);
         Task<string> GenerateUniqueId();
+        Task<IEnumerable<AccountModel>> GetAllUsers();
     }
 }

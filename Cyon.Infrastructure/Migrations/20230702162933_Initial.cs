@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cyon.Infrastructure.Migrations
 {
-    public partial class Upcom : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,12 +14,15 @@ namespace Cyon.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 7, 2, 0, 38, 39, 656, DateTimeKind.Local).AddTicks(9815)),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     ReadBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,11 +50,14 @@ namespace Cyon.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AttendanceTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AttendanceTypeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsPresent = table.Column<bool>(type: "bit", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false)
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,7 +69,11 @@ namespace Cyon.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,12 +85,15 @@ namespace Cyon.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Fullname = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     StartYear = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
                     EndYear = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
-                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 7, 2, 0, 38, 39, 656, DateTimeKind.Local).AddTicks(9043)),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,7 +109,11 @@ namespace Cyon.Infrastructure.Migrations
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReasonToDeactivate = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,11 +121,35 @@ namespace Cyon.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Decisions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Question = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Options = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Result = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IsClosed = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Decisions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,7 +164,11 @@ namespace Cyon.Infrastructure.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProposedDurationInMinutes = table.Column<double>(type: "float", nullable: false),
                     AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,7 +182,11 @@ namespace Cyon.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfMeeting = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -154,7 +203,10 @@ namespace Cyon.Infrastructure.Migrations
                     Amount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 7, 1, 23, 38, 39, 657, DateTimeKind.Utc).AddTicks(6755))
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -170,8 +222,11 @@ namespace Cyon.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -188,7 +243,11 @@ namespace Cyon.Infrastructure.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Scope = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Year = table.Column<int>(type: "int", nullable: false)
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,6 +276,29 @@ namespace Cyon.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DecisionResponses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Response = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DecisionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DecisionResponses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DecisionResponses_Decisions_DecisionId",
+                        column: x => x.DecisionId,
+                        principalTable: "Decisions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -236,6 +318,7 @@ namespace Cyon.Infrastructure.Migrations
                     ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LastLogin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UniqueCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FeatureAccess = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -270,7 +353,11 @@ namespace Cyon.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MeetingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    MeetingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -295,9 +382,14 @@ namespace Cyon.Infrastructure.Migrations
                     IsRejected = table.Column<bool>(type: "bit", nullable: false),
                     RejectionReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsResolved = table.Column<bool>(type: "bit", nullable: false),
+                    UserCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -405,7 +497,11 @@ namespace Cyon.Infrastructure.Migrations
                     IsUnemployed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CanDo = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: ""),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -426,9 +522,12 @@ namespace Cyon.Infrastructure.Migrations
                     DateCollected = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2023, 7, 2, 0, 38, 39, 657, DateTimeKind.Local).AddTicks(5873)),
                     FinanceType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -495,6 +594,11 @@ namespace Cyon.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DecisionResponses_DecisionId",
+                table: "DecisionResponses",
+                column: "DecisionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Occupations_UserId1",
                 table: "Occupations",
                 column: "UserId1");
@@ -544,6 +648,9 @@ namespace Cyon.Infrastructure.Migrations
                 name: "DeactivateRequests");
 
             migrationBuilder.DropTable(
+                name: "DecisionResponses");
+
+            migrationBuilder.DropTable(
                 name: "Minutes");
 
             migrationBuilder.DropTable(
@@ -566,6 +673,9 @@ namespace Cyon.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Decisions");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -33,7 +33,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAnnouncement([FromForm] CreateAnnouncementDto announcementDto)
+        public async Task<IActionResult> AddAnnouncement([FromBody] CreateAnnouncementDto announcementDto)
         {
             string activeUserId = User.FindFirstValue(ClaimTypes.Actor);
             var announcement = await _announcementService.AddAnnouncement(announcementDto, activeUserId);

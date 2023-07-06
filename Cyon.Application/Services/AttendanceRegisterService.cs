@@ -41,8 +41,8 @@ namespace Cyon.Application.Services
                     AttendanceTypeId = attendanceType.Id,
                     AttendanceTypeName = attendanceType.Name,
                     DateAdded = collectAttendanceDto.Date,
-                    UserId = item.UserId,
-                    UserEmail = item.UserEmail,
+                    UserCode = item.UserCode,
+                    Name = item.Name,
                     IsPresent = true,
                     Rating = item.Rating,
                 };
@@ -52,9 +52,9 @@ namespace Cyon.Application.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<AttendanceSummaryModel> GetAttendanceSummary(Guid userId)
+        public async Task<AttendanceSummaryModel> GetAttendanceSummary(string userCode)
         {
-            var attendanceSummary = await _unitOfWork.AttendanceRegisterRepository.GetAttendanceSummary(userId.ToString());
+            var attendanceSummary = await _unitOfWork.AttendanceRegisterRepository.GetAttendanceSummary(userCode);
 
             int total = attendanceSummary.TotalPresent + attendanceSummary.TotalAbsent;
             if (total == 0)
@@ -88,11 +88,11 @@ namespace Cyon.Application.Services
             return _mapper.Map<IEnumerable<AttendanceRegisterModel>>(attendanceRegisters);
         }
 
-        public async Task<IEnumerable<AttendanceRegisterModel>> GetMyAttendanceRecord(Guid userId, Pagination pagination)
+        public async Task<IEnumerable<AttendanceRegisterModel>> GetMyAttendanceRecord(string userCode, Pagination pagination)
         {
             var filter = new List<Expression<Func<AttendanceRegister, bool>>>
             {
-                p => p.UserId == userId
+                p => p.UserCode == userCode
             };
 
             IEnumerable<AttendanceRegister> attendanceRegisters = await _unitOfWork.AttendanceRegisterRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
@@ -117,7 +117,7 @@ namespace Cyon.Application.Services
 
             IEnumerable<AttendanceRegister> attendances = await _unitOfWork.AttendanceRegisterRepository.GetAllAsync(filter);
 
-            List<string> attendeeIds = attendances.Select(m => m.UserId.ToString()).ToList();
+            List<string> attendeeIds = attendances.Select(m => m.UserCode).ToList();
 
             var absentUsers = await _dbContext.Users.FromSqlRaw("Sp_GetUsersWhoWereAbsent @PresentUsersIds",
                 new SqlParameter("@PresentUsersIds", string.Join(',', attendeeIds))
@@ -140,8 +140,8 @@ namespace Cyon.Application.Services
                         AttendanceTypeId = markAbsentDto.AttendanceTypeId,
                         AttendanceTypeName = oneAttendee!.AttendanceTypeName,
                         DateAdded = markAbsentDto.DateEventHeld,
-                        UserId = Guid.Parse(user.Id),
-                        UserEmail = user.Email,
+                        UserCode = user.UniqueCode,
+                        Name = $"{user.FirstName} {user.LastName}",
                         IsPresent = false,
                         Rating = 0,
                     };

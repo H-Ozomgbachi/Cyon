@@ -9,7 +9,6 @@ namespace Cyon.Infrastructure.Database.EntityConfigurations
         public void Configure(EntityTypeBuilder<UserFinance> builder)
         {
             builder.Property(x => x.Description).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.DateModified).IsRequired().HasDefaultValue(DateTime.Now);
             builder.Property(x => x.Amount).IsRequired().HasPrecision(10, 2);
         }
     }

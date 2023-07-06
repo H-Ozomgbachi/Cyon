@@ -57,7 +57,7 @@ namespace Cyon.Application.Services
                 {
                     UserFinance userFinance = new()
                     {
-                        Description = duesByAmountDto.Description,
+                        Description = "Monthly Due",
                         DateCollected = dateCollected.AddMonths(i),
                         Amount = duesByAmountDto.DuesCostMonthly,
                         ModifiedBy = modifiedBy,
@@ -79,7 +79,7 @@ namespace Cyon.Application.Services
                 {
                     UserFinance userFinance = new()
                     {
-                        Description = duesByAmountDto.Description,
+                        Description = "Monthly Due",
                         DateCollected = dateCollected.AddMonths(i),
                         Amount = duesByAmountDto.DuesCostMonthly,
                         ModifiedBy = modifiedBy,

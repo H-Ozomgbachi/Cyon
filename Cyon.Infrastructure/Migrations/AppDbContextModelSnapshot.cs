@@ -28,7 +28,19 @@ namespace Cyon.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("MeetingId")
@@ -51,19 +63,24 @@ namespace Cyon.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateAdded")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 7, 2, 0, 38, 39, 656, DateTimeKind.Local).AddTicks(9815));
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ModifiedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReadBy")
@@ -71,8 +88,8 @@ namespace Cyon.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -88,7 +105,16 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<Guid>("AttendanceTypeId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("For")
@@ -102,6 +128,12 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<bool>("IsResolved")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -110,7 +142,7 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<string>("RejectionReason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("UserCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
@@ -138,20 +170,29 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<string>("AttendanceTypeName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsPresent")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("UserCode")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -163,6 +204,18 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
@@ -179,17 +232,21 @@ namespace Cyon.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateAdded")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 7, 2, 0, 38, 39, 656, DateTimeKind.Local).AddTicks(9043));
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EndYear")
                         .IsRequired()
                         .HasMaxLength(7)
                         .HasColumnType("nvarchar(7)");
 
-                    b.Property<string>("Fullname")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
@@ -198,6 +255,9 @@ namespace Cyon.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -217,6 +277,18 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
@@ -238,11 +310,100 @@ namespace Cyon.Infrastructure.Migrations
                     b.ToTable("DeactivateRequests");
                 });
 
+            modelBuilder.Entity("Cyon.Domain.Entities.Decision", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Options")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Decisions");
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.DecisionResponse", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DecisionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Response")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DecisionId");
+
+                    b.ToTable("DecisionResponses");
+                });
+
             modelBuilder.Entity("Cyon.Domain.Entities.Department", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -263,8 +424,20 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<string>("AdditionalInfo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -286,8 +459,20 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateOfMeeting")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -313,6 +498,15 @@ namespace Cyon.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsStudent")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -327,6 +521,9 @@ namespace Cyon.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -351,13 +548,17 @@ namespace Cyon.Infrastructure.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateModified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 7, 1, 23, 38, 39, 657, DateTimeKind.Utc).AddTicks(6755));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -368,6 +569,9 @@ namespace Cyon.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(12)
                         .HasColumnType("nvarchar(12)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -383,7 +587,13 @@ namespace Cyon.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -396,6 +606,9 @@ namespace Cyon.Infrastructure.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
@@ -440,6 +653,9 @@ namespace Cyon.Infrastructure.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FeatureAccess")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -535,13 +751,17 @@ namespace Cyon.Infrastructure.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateCollected")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateModified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 7, 2, 0, 38, 39, 657, DateTimeKind.Local).AddTicks(5873));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -549,6 +769,9 @@ namespace Cyon.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FinanceType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModifiedBy")
@@ -570,10 +793,22 @@ namespace Cyon.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Scope")
@@ -585,8 +820,8 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -745,6 +980,17 @@ namespace Cyon.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Cyon.Domain.Entities.DecisionResponse", b =>
+                {
+                    b.HasOne("Cyon.Domain.Entities.Decision", "Decision")
+                        .WithMany("DecisionResponses")
+                        .HasForeignKey("DecisionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Decision");
+                });
+
             modelBuilder.Entity("Cyon.Domain.Entities.Occupation", b =>
                 {
                     b.HasOne("Cyon.Domain.Entities.User", "User")
@@ -823,6 +1069,11 @@ namespace Cyon.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Cyon.Domain.Entities.Decision", b =>
+                {
+                    b.Navigation("DecisionResponses");
                 });
 
             modelBuilder.Entity("Cyon.Domain.Entities.Department", b =>
