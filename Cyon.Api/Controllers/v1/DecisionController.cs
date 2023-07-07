@@ -33,7 +33,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("AddDecision/")]
-        public async Task<ActionResult<DecisionModel>> AddDecision([FromForm]CreateDecisionDto decisionDto)
+        public async Task<ActionResult<DecisionModel>> AddDecision([FromBody]CreateDecisionDto decisionDto)
         {
             string userCode = User.FindFirstValue(ClaimTypes.Actor);
             var response = await _decisionService.AddDecision(decisionDto, userCode);

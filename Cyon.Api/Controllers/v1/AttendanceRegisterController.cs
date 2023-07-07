@@ -19,7 +19,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("TakeAttendance")]
-        public async Task<IActionResult> CollectAttendance([FromForm]CollectAttendanceDto collectAttendanceDto)
+        public async Task<IActionResult> CollectAttendance([FromBody]CollectAttendanceDto collectAttendanceDto)
         {
             await _attendanceRegisterService.CollectAttendance(collectAttendanceDto);
             return Ok();
@@ -39,16 +39,16 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPost("MarkAbsentees")]
         [Authorize(Roles = Roles.Executive)]
-        public async Task<IActionResult> MarkAbsentees(MarkAbsentDto markAbsentDto)
+        public async Task<ActionResult<string>> MarkAbsentees([FromBody]MarkAbsentDto markAbsentDto)
         {
             string result = await _attendanceRegisterService.MarkAbsent(markAbsentDto);
-            return Ok(new {result});
+            return Ok(result);
         }
 
         [HttpGet("GetAttendanceSummary")]
         public async Task<ActionResult<AttendanceSummaryModel>> GetAttendanceSummary()
         {
-            string userCode = User.FindFirstValue(ClaimTypes.Name);
+            string userCode = User.FindFirstValue(ClaimTypes.Actor);
             return Ok(await _attendanceRegisterService.GetAttendanceSummary(userCode));
         }
     }

@@ -46,8 +46,12 @@ namespace Cyon.Application.Services
                     IsPresent = true,
                     Rating = item.Rating,
                 };
-                attendanceRegisters.Add(attendanceRegister);
+                if (!(await _unitOfWork.AttendanceRegisterRepository.ExistAsync(x => x.UserCode == attendanceRegister.UserCode && x.AttendanceTypeId == attendanceRegister.AttendanceTypeId && x.DateAdded.Date == attendanceRegister.DateAdded.Date)))
+                {
+                    attendanceRegisters.Add(attendanceRegister);
+                }
             }
+
             await _unitOfWork.AttendanceRegisterRepository.AddRangeAsync(attendanceRegisters);
             await _unitOfWork.SaveAsync();
         }
@@ -80,7 +84,7 @@ namespace Cyon.Application.Services
         {
             var filter = new List<Expression<Func<AttendanceRegister, bool>>>
             {
-                p => p.DateAdded.Day == DateTime.Now.Day
+                p => p.DateAdded.Date == DateTime.Now.Date
             };
 
             IEnumerable<AttendanceRegister> attendanceRegisters = await _unitOfWork.AttendanceRegisterRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
@@ -102,7 +106,7 @@ namespace Cyon.Application.Services
 
         public async Task<string> MarkAbsent(MarkAbsentDto markAbsentDto)
         {
-            bool doesExist = await _unitOfWork.AttendanceRegisterRepository.ExistAsync(x => x.AttendanceTypeId == markAbsentDto.AttendanceTypeId && x.DateAdded.Day == markAbsentDto.DateEventHeld.Day);
+            bool doesExist = await _unitOfWork.AttendanceRegisterRepository.ExistAsync(x => x.AttendanceTypeId == markAbsentDto.AttendanceTypeId && x.DateAdded.Date == markAbsentDto.DateEventHeld.Date);
 
             if (doesExist == false)
             {
@@ -112,7 +116,7 @@ namespace Cyon.Application.Services
             var filter = new List<Expression<Func<AttendanceRegister, bool>>>
             {
                 p => p.AttendanceTypeId == markAbsentDto.AttendanceTypeId,
-                p => p.DateAdded.Day == markAbsentDto.DateEventHeld.Day
+                p => p.DateAdded.Date == markAbsentDto.DateEventHeld.Date
             };
 
             IEnumerable<AttendanceRegister> attendances = await _unitOfWork.AttendanceRegisterRepository.GetAllAsync(filter);
@@ -145,12 +149,15 @@ namespace Cyon.Application.Services
                         IsPresent = false,
                         Rating = 0,
                     };
-                    attendanceRegisters.Add(attendanceRegister);
+                    if (!(await _unitOfWork.AttendanceRegisterRepository.ExistAsync(x => x.UserCode == attendanceRegister.UserCode && x.AttendanceTypeId == attendanceRegister.AttendanceTypeId && x.DateAdded.Date == attendanceRegister.DateAdded.Date)))
+                    {
+                        attendanceRegisters.Add(attendanceRegister);
+                    }
                 }
                 await _unitOfWork.AttendanceRegisterRepository.AddRangeAsync(attendanceRegisters);
                 await _unitOfWork.SaveAsync();
 
-                return $"{absentUsers.Count} user(s) marked absent";
+                return $"{absentUsers.Count} member(s) marked absent";
             }
             else
             {

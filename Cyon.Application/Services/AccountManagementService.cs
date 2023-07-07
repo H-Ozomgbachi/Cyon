@@ -95,9 +95,6 @@ namespace Cyon.Application.Services
 
         public async Task<IEnumerable<GroupedUsersModel>> GenerateRandomUserGroups(GenerateRandomUserGroupsDto randomUserGroupsDto)
         {
-            /*
-             *  This solution needs to be improved
-             */
             var users = await _userManager.Users.Where(x => x.IsActive).ToListAsync();
 
             List<GroupedUsersModel> groups = new();
@@ -107,17 +104,18 @@ namespace Cyon.Application.Services
                 List<User> formedUsers = new();
                 Random rnd = new();
 
-                for (int j = 0; j < randomUserGroupsDto.NumberOfUsersPerGroup; j++)
+                if (users.Count < randomUserGroupsDto.NumberOfUsersPerGroup)
                 {
-                    if (users.Count < randomUserGroupsDto.NumberOfUsersPerGroup)
+                    formedUsers = users;
+                }
+                else
+                {
+                    for (int j = 0; j < randomUserGroupsDto.NumberOfUsersPerGroup; j++)
                     {
-                        formedUsers = users;
-                        break;
+                        var temp = rnd.Next(0, users.Count);
+                        formedUsers.Add(users.ElementAt(temp));
+                        users.RemoveAt(temp);
                     }
-
-                    var temp = rnd.Next(0, users.Count);
-                    formedUsers.Add(users.ElementAt(temp));
-                    users.RemoveAt(temp);
                 }
 
                 var resultingGroup = new GroupedUsersModel
@@ -128,8 +126,10 @@ namespace Cyon.Application.Services
 
                 groups.Add(resultingGroup);
             }
+
             return groups;
         }
+
 
         public async Task UploadProfilePicture(PictureDto pictureDto, Guid userId)
         {

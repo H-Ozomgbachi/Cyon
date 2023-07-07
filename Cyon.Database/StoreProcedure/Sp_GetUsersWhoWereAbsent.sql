@@ -4,5 +4,5 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	SELECT * FROM [AspNetUsers]
-	WHERE IsActive = 1 AND Id NOT IN (SELECT value FROM STRING_SPLIT(@PresentUsersIds, ','))
+	WHERE IsActive = 1 AND UniqueCode NOT IN (SELECT value FROM STRING_SPLIT(@PresentUsersIds, ','))
 END

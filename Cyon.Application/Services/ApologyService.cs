@@ -54,7 +54,7 @@ namespace Cyon.Application.Services
                 UserCode = apology.UserCode,
                 Name = apology.Name,
                 IsPresent = true,
-                Rating = 3,
+                Rating = 2,
             };
             await _unitOfWork.AttendanceRegisterRepository.AddAsync(attendanceRegister);
 

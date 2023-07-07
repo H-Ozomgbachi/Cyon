@@ -79,7 +79,7 @@ namespace Cyon.Application.Services
             }
 
             Decision updatedDecision = _mapper.Map(decisionDto, decision);
-            updatedDecision.Options = string.Join(',', decisionDto.Options);
+            updatedDecision.Options = decisionDto.Options;
             updatedDecision.LastModifiedBy = modifiedBy; updatedDecision.DateModified = DateTime.UtcNow;
 
             if (updatedDecision.IsClosed)
