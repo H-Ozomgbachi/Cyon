@@ -28,7 +28,7 @@ namespace Cyon.Application.Services
             _dbContext = dbContext;
         }
 
-        public async Task CollectAttendance(CollectAttendanceDto collectAttendanceDto)
+        public async Task CollectAttendance(CollectAttendanceDto collectAttendanceDto, string userCode)
         {
             AttendanceTypeModel attendanceType = await _attendanceTypeService.GetAttendanceType(collectAttendanceDto.AttendanceTypeId);
 
@@ -45,6 +45,7 @@ namespace Cyon.Application.Services
                     Name = item.Name,
                     IsPresent = true,
                     Rating = item.Rating,
+                    CreatedBy = userCode
                 };
                 if (!(await _unitOfWork.AttendanceRegisterRepository.ExistAsync(x => x.UserCode == attendanceRegister.UserCode && x.AttendanceTypeId == attendanceRegister.AttendanceTypeId && x.DateAdded.Date == attendanceRegister.DateAdded.Date)))
                 {
@@ -84,7 +85,7 @@ namespace Cyon.Application.Services
         {
             var filter = new List<Expression<Func<AttendanceRegister, bool>>>
             {
-                p => p.DateAdded.Date == DateTime.Now.Date
+                p => p.DateAdded.Date == DateTime.UtcNow.Date
             };
 
             IEnumerable<AttendanceRegister> attendanceRegisters = await _unitOfWork.AttendanceRegisterRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
@@ -104,7 +105,7 @@ namespace Cyon.Application.Services
             return _mapper.Map<IEnumerable<AttendanceRegisterModel>>(attendanceRegisters.OrderByDescending(x => x.DateAdded));
         }
 
-        public async Task<string> MarkAbsent(MarkAbsentDto markAbsentDto)
+        public async Task<string> MarkAbsent(MarkAbsentDto markAbsentDto, string userCode)
         {
             bool doesExist = await _unitOfWork.AttendanceRegisterRepository.ExistAsync(x => x.AttendanceTypeId == markAbsentDto.AttendanceTypeId && x.DateAdded.Date == markAbsentDto.DateEventHeld.Date);
 
@@ -148,6 +149,7 @@ namespace Cyon.Application.Services
                         Name = $"{user.FirstName} {user.LastName}",
                         IsPresent = false,
                         Rating = 0,
+                        CreatedBy = userCode
                     };
                     if (!(await _unitOfWork.AttendanceRegisterRepository.ExistAsync(x => x.UserCode == attendanceRegister.UserCode && x.AttendanceTypeId == attendanceRegister.AttendanceTypeId && x.DateAdded.Date == attendanceRegister.DateAdded.Date)))
                     {

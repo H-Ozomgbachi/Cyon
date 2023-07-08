@@ -22,6 +22,10 @@ namespace Cyon.Infrastructure.Repositories
 
         public async Task<string> UploadFile(IFormFile formFile)
         {
+            if (formFile.Length > (3 * 1024))
+            {
+                throw new BadRequestException("File size too large, maximum is 3MB");
+            }
             string result;
             try
             {

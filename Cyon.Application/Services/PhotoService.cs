@@ -2,6 +2,7 @@
 using CloudinaryDotNet.Actions;
 using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Entities;
+using Cyon.Domain.Exceptions;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -28,12 +29,17 @@ namespace Cyon.Application.Services
         {
             if (file.Length > 0)
             {
+                if (file.Length > (3 * 1024))
+                {
+                    throw new BadRequestException("File size too large, maximum is 3MB");
+                }
                 ImageUploadResult uploadResult = new();
 
                 using var stream = file.OpenReadStream();
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new FileDescription(file.Name, stream),
+                    
                 };
 
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);

@@ -32,6 +32,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<AttendanceTypeModel>> AddAttendanceType([FromForm] CreateAttendanceTypeDto attendanceTypeDto)
         {
             var result = await _attendanceTypeService.AddAttendanceType(attendanceTypeDto);

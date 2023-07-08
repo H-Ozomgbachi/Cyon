@@ -21,7 +21,7 @@ namespace Cyon.Api.Controllers.v1
         [HttpPost("TakeAttendance")]
         public async Task<IActionResult> CollectAttendance([FromBody]CollectAttendanceDto collectAttendanceDto)
         {
-            await _attendanceRegisterService.CollectAttendance(collectAttendanceDto);
+            await _attendanceRegisterService.CollectAttendance(collectAttendanceDto, User.FindFirstValue(ClaimTypes.Actor));
             return Ok();
         }
 
@@ -41,7 +41,7 @@ namespace Cyon.Api.Controllers.v1
         [Authorize(Roles = Roles.Executive)]
         public async Task<ActionResult<string>> MarkAbsentees([FromBody]MarkAbsentDto markAbsentDto)
         {
-            string result = await _attendanceRegisterService.MarkAbsent(markAbsentDto);
+            string result = await _attendanceRegisterService.MarkAbsent(markAbsentDto, User.FindFirstValue(ClaimTypes.Actor));
             return Ok(result);
         }
 
