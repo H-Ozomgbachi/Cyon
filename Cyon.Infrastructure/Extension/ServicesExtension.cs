@@ -19,6 +19,7 @@ namespace Cyon.Infrastructure.Extension
                 o.Password.RequiredLength = 8;
                 o.Password.RequireDigit = true;
                 o.User.RequireUniqueEmail = true;
+                o.Password.RequireUppercase = false;
                 o.Password.RequireNonAlphanumeric = false;
             });
 

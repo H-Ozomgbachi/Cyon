@@ -74,5 +74,20 @@ namespace Cyon.Api.Controllers.v1
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             return Ok(await _userFinanceService.GetUserFinanceSummary(userId));
         }
+
+        [HttpGet("GetDebts/{userId}")]
+        [Authorize(Roles = $"{Roles.Executive}")]
+        public async Task<ActionResult<UserFinanceModel>> GetDebts([FromQuery]Pagination pagination, Guid userId)
+        {
+            var result = await _userFinanceService.GetDebts(userId, pagination);
+            return Ok(result);
+        }
+
+        [HttpPost("ClearDebt/")]
+        public async Task<IActionResult> ClearDebt([FromBody]DebtPaymentDto debtPaymentDto)
+        {
+            await _userFinanceService.ClearDebt(debtPaymentDto, User.FindFirstValue(ClaimTypes.Actor));
+            return Ok();
+        }
     }
 }

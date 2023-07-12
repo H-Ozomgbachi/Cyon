@@ -31,7 +31,7 @@ namespace Cyon.Application.Services
             {
                 For = attendanceType.Name,
                 AttendanceTypeId = apologyDto.AttendanceTypeId,
-                Date = apologyDto.Date,
+                Date = apologyDto.Date.ToUniversalTime(),
                 Reason = apologyDto.AbsenteeReason,
                 UserId = userId,
                 Name = apologyDto.Name,

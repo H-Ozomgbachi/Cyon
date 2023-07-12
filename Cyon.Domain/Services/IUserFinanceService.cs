@@ -14,5 +14,7 @@ namespace Cyon.Domain.Services
         Task PayDuesByMonths(PayDuesByMonthDto duesByMonthDto, Guid modifiedBy);
         Task PayDuesByAmount(PayDuesByAmountDto duesByAmountDto, Guid modifiedBy);
         Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId);
+        Task<IEnumerable<UserFinanceModel>> GetDebts(Guid userId, Pagination pagination);
+        Task ClearDebt(DebtPaymentDto debtPaymentDto, string ModifiedBy);
     }
 }

@@ -125,5 +125,12 @@ namespace Cyon.Api.Controllers.v1
         {
             return Ok(await _authenticationService.GetAllUsers());
         }
+
+        [HttpGet("GetUserById/{userId}")]
+        [Authorize(Roles = $"{Roles.Executive}")]
+        public async Task<ActionResult<AccountModel>> GetUserById(Guid userId)
+        {
+            return Ok(await _authenticationService.MyAccount(userId));
+        }
     }
 }

@@ -40,12 +40,12 @@ namespace Cyon.Application.Services
                 {
                     AttendanceTypeId = attendanceType.Id,
                     AttendanceTypeName = attendanceType.Name,
-                    DateAdded = collectAttendanceDto.Date,
+                    DateAdded = collectAttendanceDto.Date.ToUniversalTime(),
                     UserCode = item.UserCode,
                     Name = item.Name,
                     IsPresent = true,
                     Rating = item.Rating,
-                    CreatedBy = userCode
+                    CreatedBy = userCode,
                 };
                 if (!(await _unitOfWork.AttendanceRegisterRepository.ExistAsync(x => x.UserCode == attendanceRegister.UserCode && x.AttendanceTypeId == attendanceRegister.AttendanceTypeId && x.DateAdded.Date == attendanceRegister.DateAdded.Date)))
                 {
@@ -159,7 +159,9 @@ namespace Cyon.Application.Services
                 await _unitOfWork.AttendanceRegisterRepository.AddRangeAsync(attendanceRegisters);
                 await _unitOfWork.SaveAsync();
 
-                return $"{absentUsers.Count} member(s) marked absent";
+                string rightWord = absentUsers.Count == 1 ? "member" : "members";
+
+                return $"{absentUsers.Count} {rightWord} marked absent";
             }
             else
             {

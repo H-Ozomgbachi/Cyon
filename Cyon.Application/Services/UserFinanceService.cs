@@ -152,11 +152,14 @@ namespace Cyon.Application.Services
             return _mapper.Map<UserFinanceModel>(userFinance);
         }
 
+
         public async Task<IEnumerable<UserFinanceModel>> GetUserFinances(Guid userId, Pagination pagination)
         {
             var filter = new List<Expression<Func<UserFinance, bool>>>
             {
-                f => f.UserId == userId.ToString()
+                f => f.UserId == userId.ToString(),
+                f => f.DateCollected.Year == DateTime.UtcNow.Year,
+                f => f.DateCollected.Month <= DateTime.UtcNow.Month,
             };
 
             IEnumerable<UserFinance> userFinances = await _unitOfWork.UserFinanceRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
@@ -179,6 +182,44 @@ namespace Cyon.Application.Services
         public async Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId)
         {
             return await _unitOfWork.UserFinanceRepository.GetUserFinanceSummary(userId);
+        }
+
+        public async Task<IEnumerable<UserFinanceModel>> GetDebts(Guid userId, Pagination pagination)
+        {
+            var filter = new List<Expression<Func<UserFinance, bool>>>
+            {
+                f => f.UserId == userId.ToString(),
+                f => f.FinanceType == "Debt"
+            };
+
+            IEnumerable<UserFinance> userFinances = await _unitOfWork.UserFinanceRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
+
+            return _mapper.Map<IEnumerable<UserFinanceModel>>(userFinances.OrderByDescending(x => x.DateCollected));
+        }
+
+        public async Task ClearDebt(DebtPaymentDto debtPaymentDto, string ModifiedBy)
+        {
+            var filter = new List<Expression<Func<UserFinance, bool>>>
+            {
+                f => f.Id == debtPaymentDto.DebtId,
+                f => f.FinanceType == "Debt"
+            };
+
+            var userFinance = await _unitOfWork.UserFinanceRepository.GetFirstMatchAsync(filter);
+
+            if (userFinance == null)
+            {
+                throw new BadRequestException("Debt does not exist");
+            }
+            decimal amountRemaining = userFinance.Amount - debtPaymentDto.AmountToClear;
+            if (amountRemaining < 0)
+            {
+                throw new BadRequestException("You cannot pay more than the remaining debt balance");
+            }
+            userFinance.Amount = amountRemaining; userFinance.LastModifiedBy = ModifiedBy; userFinance.DateModified = DateTime.UtcNow;
+
+            await _unitOfWork.UserFinanceRepository.UpdateAsync(userFinance);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

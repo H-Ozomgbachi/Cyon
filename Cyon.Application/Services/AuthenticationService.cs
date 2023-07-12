@@ -124,13 +124,38 @@ namespace Cyon.Application.Services
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
 
-
             if (user == null)
             {
                 throw new NotFoundException("User doesn't exist or is deleted");
             }
-            
-            await _userManager.AddToRolesAsync(user, roles);
+
+            if (roles.IsNullOrEmpty())
+            {
+                throw new BadRequestException("One or more roles are required");
+            }
+
+            var existingRoles = await _userManager.GetRolesAsync(user);
+
+            var combined = existingRoles.Union(roles).ToList();
+
+            foreach (var role in combined)
+            {
+                if (await _userManager.IsInRoleAsync(user, role))
+                {
+                    await _userManager.RemoveFromRoleAsync(user, role);
+                }
+            }
+
+            IdentityResult result = await _userManager.AddToRolesAsync(user, roles);
+
+            if (result.Succeeded)
+            {
+                return;
+            }
+            else
+            {
+                throw new BadRequestException("Could not change roles");
+            }
         }
 
         public async Task AddRolesToDb(IEnumerable<string> roles)
