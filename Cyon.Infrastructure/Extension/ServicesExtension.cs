@@ -1,6 +1,8 @@
 ﻿using Cyon.Domain.Entities;
 using Cyon.Infrastructure.Database;
+using Cyon.Infrastructure.EmailManager;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +29,8 @@ namespace Cyon.Infrastructure.Extension
             builder.AddRoleManager<RoleManager<IdentityRole>>();
             builder.AddEntityFrameworkStores<AppDbContext>();
             builder.AddDefaultTokenProviders();
+
+            builder.Services.Configure<DataProtectionTokenProviderOptions>(opt => opt.TokenLifespan = TimeSpan.FromMinutes(6));
         }
 
         public static void ConfigureJwt(this IServiceCollection services, IConfiguration config)
@@ -94,6 +98,21 @@ namespace Cyon.Infrastructure.Extension
                 {
                     return true;
                 }
+            });
+        }
+
+        public static void ConfigureEmailService(this IServiceCollection services, IConfiguration config)
+        {
+            var emailConfig = config.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+
+            services.AddScoped<IEmailSender, EmailSender>();
+
+            services.Configure<FormOptions>(o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
             });
         }
     }

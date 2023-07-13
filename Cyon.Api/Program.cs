@@ -79,6 +79,7 @@ builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.ConfigureSwagger();
 builder.Services.ConfigureClientFactory(builder.Configuration);
+builder.Services.ConfigureEmailService(builder.Configuration);
 
 builder.Host.UseSerilog();
 

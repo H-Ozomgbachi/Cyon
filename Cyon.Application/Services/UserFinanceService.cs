@@ -219,7 +219,22 @@ namespace Cyon.Application.Services
             userFinance.Amount = amountRemaining; userFinance.LastModifiedBy = ModifiedBy; userFinance.DateModified = DateTime.UtcNow;
 
             await _unitOfWork.UserFinanceRepository.UpdateAsync(userFinance);
-            await _unitOfWork.SaveAsync();
+
+            int changes = await _unitOfWork.SaveAsync();
+
+            if (changes > 0)
+            {
+                //Add it as Payment
+                UserFinance userFinanceToAdd = _mapper.Map<UserFinance>(userFinance);
+                userFinanceToAdd.Id = Guid.Empty;
+                userFinanceToAdd.LastModifiedBy = ModifiedBy; userFinanceToAdd.Amount = debtPaymentDto.AmountToClear;
+                userFinanceToAdd.Description = $"Paid {userFinance.Description}";
+                userFinanceToAdd.CreatedBy = ModifiedBy; userFinanceToAdd.FinanceType = "Pay";
+                userFinanceToAdd.User = await _userManager.FindByIdAsync(userFinanceToAdd.UserId.ToString());
+
+                await _unitOfWork.UserFinanceRepository.AddAsync(userFinanceToAdd);
+                await _unitOfWork.SaveAsync();
+            }
         }
     }
 }

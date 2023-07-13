@@ -1,4 +1,5 @@
 ﻿using Cyon.Domain.DTOs.Authentication;
+using Cyon.Domain.Entities;
 using Cyon.Domain.Models.Authentication;
 
 namespace Cyon.Domain.Services
@@ -14,5 +15,7 @@ namespace Cyon.Domain.Services
         Task<bool> UpdateMyAccount(UserForUpdateDto userForUpdateDto, Guid modifiedBy);
         Task<string> GenerateUniqueId();
         Task<IEnumerable<AccountModel>> GetAllUsers();
+        Task SendPasswordResetMail(User user, string token);
+        Task<string> ResetPassword(ResetPasswordDto resetPasswordDto);
     }
 }

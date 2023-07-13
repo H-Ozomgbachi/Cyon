@@ -2,6 +2,7 @@
 using Cyon.Domain.DTOs.AccountManagement;
 using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Models.AccountManagement;
+using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,10 +37,34 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("DeactivateAccount")]
+        [Authorize(Roles = $"{Roles.Executive},{Roles.Super}")]
         public async Task<IActionResult> DeactivateAccount([FromBody] DeactivateAccountDto deactivateAccountDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
             await _accountManagementService.DeactivateAccount(deactivateAccountDto, userId);
+            return Ok();
+        }
+        [HttpDelete("DeleteAccountDeactivationRequest/{id}")]
+        [Authorize(Roles = $"{Roles.Executive},{Roles.Super}")]
+        public async Task<IActionResult> DeleteAccountDeactivationRequest(Guid id)
+        {
+            await _accountManagementService.DeleteAccountDeactivationRequest(id);
+            return NoContent();
+        }
+
+        [HttpGet("GetInactiveUsers/")]
+        [Authorize(Roles = $"{Roles.Executive}")]
+        public async Task<ActionResult<AccountModel>> GetInactiveUsers()
+        {
+            return Ok(await _accountManagementService.GetInactiveUsers());
+        }
+
+        [HttpPost("ReactivateAccount/{userId}")]
+        public async Task<IActionResult> ReactivateAccount(string userId)
+        {
+            Guid modifier = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
+            await _accountManagementService.ReactivateAccount(userId, modifier);
+
             return Ok();
         }
 

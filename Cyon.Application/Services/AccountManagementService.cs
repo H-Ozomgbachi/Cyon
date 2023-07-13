@@ -47,7 +47,7 @@ namespace Cyon.Application.Services
             {
                 throw new NotFoundException("User account doesn't exist");
             }
-            user.LastModified = DateTime.Now;
+            user.LastModified = DateTime.UtcNow;
             user.ModifiedBy = modifiedBy;
             user.IsActive = false;
             user.InactiveReason = deactivateAccountDto.ReasonToDeactivate;
@@ -69,6 +69,11 @@ namespace Cyon.Application.Services
             if (user == null)
             {
                 throw new NotFoundException("User account doesn't exist");
+            }
+
+            if (!user.IsActive)
+            {
+                throw new BadRequestException("Your account is already inactive");
             }
 
             if ((await _unitOfWork.DeactivateRequestRepository.ExistAsync(x => x.UserId == user.Id)))
@@ -142,6 +147,28 @@ namespace Cyon.Application.Services
 
             var user = await _userManager.FindByIdAsync(userId.ToString());
             user.ModifiedBy = userId; user.LastModified = DateTime.UtcNow; user.PhotoUrl = imgUrl;
+            await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<IEnumerable<AccountModel>> GetInactiveUsers()
+        {
+            var inactiveUsers = await _userManager.Users.Where(x => x.IsActive == false).ToListAsync();
+            return _mapper.Map<IEnumerable<AccountModel>>(inactiveUsers);
+        }
+
+        public async Task ReactivateAccount(string id, Guid modifiedBy)
+        {
+            User user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                throw new NotFoundException("User account doesn't exist");
+            }
+
+            user.LastModified = DateTime.UtcNow;
+            user.ModifiedBy = modifiedBy;
+            user.IsActive = true;
+            user.InactiveReason = string.Empty;
+
             await _userManager.UpdateAsync(user);
         }
     }

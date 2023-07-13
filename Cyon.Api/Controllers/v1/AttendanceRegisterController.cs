@@ -19,16 +19,18 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("TakeAttendance")]
+        [Authorize(Roles = Roles.Executive)]
         public async Task<IActionResult> CollectAttendance([FromBody]CollectAttendanceDto collectAttendanceDto)
         {
             await _attendanceRegisterService.CollectAttendance(collectAttendanceDto, User.FindFirstValue(ClaimTypes.Actor));
             return Ok();
         }
 
-        [HttpGet("GetTodayAttendance")]
-        public async Task<ActionResult<IEnumerable<AttendanceRegisterModel>>> GetTodayAttendance([FromQuery]Pagination pagination)
+        [HttpPost("GetAttendanceRecord")]
+        [Authorize(Roles = Roles.Executive)]
+        public async Task<ActionResult<IEnumerable<AttendanceRecordModel>>> GetAttendanceRecord([FromBody]AttendanceRecordDto attendanceRecordDto)
         {
-            return Ok(await _attendanceRegisterService.GetCurrentDayAttendance(pagination));
+            return Ok(await _attendanceRegisterService.GetAttendanceRecord(attendanceRecordDto));
         }
         [HttpGet("GetMyAttendanceRecord")]
         public async Task<ActionResult<IEnumerable<AttendanceRegisterModel>>> GetMyAttendanceRecord([FromQuery] Pagination pagination)

@@ -81,16 +81,18 @@ namespace Cyon.Application.Services
             };
         }
 
-        public async Task<IEnumerable<AttendanceRegisterModel>> GetCurrentDayAttendance(Pagination pagination)
+        public async Task<IEnumerable<AttendanceRecordModel>> GetAttendanceRecord(AttendanceRecordDto attendanceRecordDto)
         {
             var filter = new List<Expression<Func<AttendanceRegister, bool>>>
             {
-                p => p.DateAdded.Date == DateTime.UtcNow.Date
+                p => p.DateAdded.Date == attendanceRecordDto.DateOfActivity.Date
             };
 
-            IEnumerable<AttendanceRegister> attendanceRegisters = await _unitOfWork.AttendanceRegisterRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
+            IEnumerable<AttendanceRegister> attendanceRegisters = await _unitOfWork.AttendanceRegisterRepository.GetAllAsync(filter);
 
-            return _mapper.Map<IEnumerable<AttendanceRegisterModel>>(attendanceRegisters);
+            var attendanceModels = _mapper.Map<IEnumerable<AttendanceRegisterModel>>(attendanceRegisters);
+
+            return attendanceModels.GroupBy(x => x.AttendanceTypeName).Select(x => new AttendanceRecordModel {AttendanceTypeName = x.Key, Attendances = x.ToList()});
         }
 
         public async Task<IEnumerable<AttendanceRegisterModel>> GetMyAttendanceRecord(string userCode, Pagination pagination)

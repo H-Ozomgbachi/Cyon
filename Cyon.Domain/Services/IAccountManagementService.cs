@@ -1,6 +1,7 @@
 ﻿using Cyon.Domain.DTOs.AccountManagement;
 using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Models.AccountManagement;
+using Cyon.Domain.Models.Authentication;
 
 namespace Cyon.Domain.Services
 {
@@ -13,6 +14,7 @@ namespace Cyon.Domain.Services
         Task<int> GetNumberOfActiveUsers();
         Task<IEnumerable<GroupedUsersModel>> GenerateRandomUserGroups(GenerateRandomUserGroupsDto randomUserGroupsDto);
         Task UploadProfilePicture(PictureDto pictureDto, Guid userId);
-
+        Task<IEnumerable<AccountModel>> GetInactiveUsers();
+        Task ReactivateAccount(string id, Guid modifiedBy);
     }
 }

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Cyon.Domain.DTOs.Authentication;
-using Cyon.Domain.DTOs.Photos;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Exceptions;
 using Cyon.Domain.Models.Authentication;
 using Cyon.Domain.Services;
 using Cyon.Infrastructure.Database;
+using Cyon.Infrastructure.EmailManager;
+using Cyon.Infrastructure.EmailManager.Templates;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -25,9 +26,10 @@ namespace Cyon.Application.Services
         private readonly IDepartmentService _departmentService;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AppDbContext _dbContext;
+        private readonly IEmailSender _emailSender;
         private User? _user;
 
-        public AuthenticationService(UserManager<User> userManager, IConfiguration config, IMapper mapper, IDepartmentService departmentService, RoleManager<IdentityRole> roleManager, AppDbContext dbContext)
+        public AuthenticationService(UserManager<User> userManager, IConfiguration config, IMapper mapper, IDepartmentService departmentService, RoleManager<IdentityRole> roleManager, AppDbContext dbContext, IEmailSender emailSender)
         {
             _userManager = userManager;
             _config = config;
@@ -35,6 +37,7 @@ namespace Cyon.Application.Services
             _departmentService = departmentService;
             _roleManager = roleManager;
             _dbContext = dbContext;
+            _emailSender = emailSender;
         }
 
         public async Task<string> CreateToken()
@@ -218,11 +221,6 @@ namespace Cyon.Application.Services
             return accountIdAWithEmails;
         }
 
-        public Task<AccountModel> UploadProfilePicture(PictureDto profilePictureDto, Guid userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<AccountModel>> GetAllUsers()
         {
             var user = await _userManager.Users.Where(x => x.IsActive).ToListAsync();
@@ -250,6 +248,28 @@ namespace Cyon.Application.Services
             string year = DateTime.Now.Year.ToString()[2..];
 
             return $"CYS{year}{(num + 1).ToString().PadLeft(3, '0')}";
+        }
+
+        public async Task SendPasswordResetMail(User user, string token)
+        {
+            await _emailSender.SendEmail(AuthenticationEmailTemplate.PasswordResetEmail(user, _config["AppSettings:PasswordResetUrl"], token));
+        }
+
+        public async Task<string> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+            if (user == null)
+            {
+                throw new NotFoundException($"User with email: {resetPasswordDto.Email} not found");
+            }
+            var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                throw new BadRequestException(result.Errors.First().Description);
+            }
+
+            return "Password reset successful";
         }
     }
 }

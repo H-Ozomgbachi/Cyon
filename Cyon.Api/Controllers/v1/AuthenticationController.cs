@@ -107,16 +107,16 @@ namespace Cyon.Api.Controllers.v1
             }
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            // TODO: Send and email to continue with password reset.
-            
-            return Ok(new {resetToken = token });
+            await _authenticationService.SendPasswordResetMail(user, token);
+
+            return Ok();
         }
 
         [HttpPost("reset-password")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        public async Task<ActionResult<string>> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
-            return Ok();
+            return Ok(await _authenticationService.ResetPassword(resetPasswordDto));
         }
 
         [HttpGet("GetAllUsers/")]

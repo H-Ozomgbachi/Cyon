@@ -7,7 +7,7 @@ namespace Cyon.Domain.Services
     public interface IAttendanceRegisterService
     {
         Task CollectAttendance(CollectAttendanceDto collectAttendanceDto, string userCode);
-        Task<IEnumerable<AttendanceRegisterModel>> GetCurrentDayAttendance(Pagination pagination);
+        Task<IEnumerable<AttendanceRecordModel>> GetAttendanceRecord(AttendanceRecordDto attendanceRecordDto);
         Task<IEnumerable<AttendanceRegisterModel>> GetMyAttendanceRecord(string userCode, Pagination pagination);
         Task<string> MarkAbsent(MarkAbsentDto markAbsentDto, string userCode);
         Task<AttendanceSummaryModel> GetAttendanceSummary(string userCode);
