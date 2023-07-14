@@ -29,7 +29,7 @@ namespace Cyon.Application.Services
         {
             if (file.Length > 0)
             {
-                if (file.Length > (3 * 1024))
+                if (file.Length > (3 * 1000 * 1024))
                 {
                     throw new BadRequestException("File size too large, maximum is 3MB");
                 }

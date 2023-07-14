@@ -14,19 +14,19 @@ namespace Cyon.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IUtilityRepository _utilityRepository;
+        private readonly IPhotoService _photoService;
 
-        public UpcomingEventService(IUnitOfWork unitOfWork, IMapper mapper, IUtilityRepository utilityRepository)
+        public UpcomingEventService(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _utilityRepository = utilityRepository;
+            _photoService = photoService;
         }
 
         public async Task<UpcomingEventModel> AddUpcomingEvent(CreateUpcomingEventDto upcomingEventDto, string modifiedBy)
         {
             UpcomingEvent upcomingEvent = _mapper.Map<UpcomingEvent>(upcomingEventDto);
-            upcomingEvent.ImageUrl = await _utilityRepository.UploadFile(upcomingEventDto.Image);
+            upcomingEvent.ImageUrl = await _photoService.UploadOneImage(upcomingEventDto.Image);
             upcomingEvent.ModifiedBy = modifiedBy;
 
             await _unitOfWork.UpcomingEventRepository.AddAsync(upcomingEvent);
