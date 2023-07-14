@@ -160,6 +160,7 @@ namespace Cyon.Application.Services
                 f => f.UserId == userId.ToString(),
                 f => f.DateCollected.Year == DateTime.UtcNow.Year,
                 f => f.DateCollected.Month <= DateTime.UtcNow.Month,
+                f => f.Amount > 0
             };
 
             IEnumerable<UserFinance> userFinances = await _unitOfWork.UserFinanceRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);
