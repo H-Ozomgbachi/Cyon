@@ -30,7 +30,8 @@ namespace Cyon.Application.Services
             var filter = new List<Expression<Func<Apology, bool>>>
             {
                 f => f.For == attendanceType.Name,
-                f => f.Date.Date == apologyDto.Date.Date
+                f => f.Date.Date == apologyDto.Date.Date,
+                f => f.UserCode == userCode
             };
             if ((await _unitOfWork.ApologyRepository.GetFirstMatchAsync(filter)) != null)
             {
@@ -66,6 +67,7 @@ namespace Cyon.Application.Services
                 IsPresent = true,
                 Rating = 2,
             };
+
             await _unitOfWork.AttendanceRegisterRepository.AddAsync(attendanceRegister);
 
             Apology apologyToUpdate = _mapper.Map<Apology>(apology);

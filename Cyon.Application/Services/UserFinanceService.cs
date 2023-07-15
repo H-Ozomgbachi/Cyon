@@ -44,7 +44,10 @@ namespace Cyon.Application.Services
         {
             int numberOfMonths = duesByAmountDto.AmountPaid / duesByAmountDto.DuesCostMonthly;
 
-            var lastPayment = await _dbContext.UserFinances.Where(x => x.Description.Contains("Monthly Due", StringComparison.OrdinalIgnoreCase)).OrderByDescending(x => x.DateCollected).FirstOrDefaultAsync();
+            var lastPayment = await _dbContext.UserFinances
+                .Where(x => x.Description.Contains("Monthly Due") && x.UserId == duesByAmountDto.UserId.ToString())
+                .OrderByDescending(x => x.DateCollected)
+                .FirstOrDefaultAsync();
 
             var user = await _userManager.FindByIdAsync(duesByAmountDto.UserId.ToString());
 
