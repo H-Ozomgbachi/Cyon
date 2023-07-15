@@ -44,7 +44,7 @@ namespace Cyon.Application.Services
         {
             int numberOfMonths = duesByAmountDto.AmountPaid / duesByAmountDto.DuesCostMonthly;
 
-            var lastPayment = await _dbContext.UserFinances.OrderByDescending(x => x.DateCollected).FirstOrDefaultAsync();
+            var lastPayment = await _dbContext.UserFinances.Where(x => x.Description.Contains("Monthly Due", StringComparison.OrdinalIgnoreCase)).OrderByDescending(x => x.DateCollected).FirstOrDefaultAsync();
 
             var user = await _userManager.FindByIdAsync(duesByAmountDto.UserId.ToString());
 
@@ -190,7 +190,8 @@ namespace Cyon.Application.Services
             var filter = new List<Expression<Func<UserFinance, bool>>>
             {
                 f => f.UserId == userId.ToString(),
-                f => f.FinanceType == "Debt"
+                f => f.FinanceType == "Debt",
+                f => f.Amount > 0
             };
 
             IEnumerable<UserFinance> userFinances = await _unitOfWork.UserFinanceRepository.GetAllAsync(pagination.Skip, pagination.Limit, null, filter);

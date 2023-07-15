@@ -27,6 +27,16 @@ namespace Cyon.Application.Services
         {
             AttendanceTypeModel attendanceType = await _attendanceTypeService.GetAttendanceType(apologyDto.AttendanceTypeId);
 
+            var filter = new List<Expression<Func<Apology, bool>>>
+            {
+                f => f.For == attendanceType.Name,
+                f => f.Date.Date == apologyDto.Date.Date
+            };
+            if ((await _unitOfWork.ApologyRepository.GetFirstMatchAsync(filter)) != null)
+            {
+                throw new BadRequestException("You've already sent an apology for this activity");
+            }
+
             Apology apology = new()
             {
                 For = attendanceType.Name,

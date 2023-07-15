@@ -70,7 +70,7 @@ namespace Cyon.Application.Services
         {
             IEnumerable<OrganisationFinance> organisationFinances = await _unitOfWork.OrganisationFinanceRepository.GetAllAsync(pagination.Skip, pagination.Limit);
 
-            return _mapper.Map<IEnumerable<OrganisationFinanceModel>>(organisationFinances);
+            return _mapper.Map<IEnumerable<OrganisationFinanceModel>>(organisationFinances.OrderByDescending(x => x.Date));
         }
 
         public async Task UpdateOrganisationFinance(UpdateOrganisationFinanceDto organisationFinanceDto, Guid modifiedBy)

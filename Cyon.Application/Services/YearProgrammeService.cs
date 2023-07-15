@@ -62,7 +62,7 @@ namespace Cyon.Application.Services
         {
             IEnumerable<YearProgramme> yearProgrammes = await _unitOfWork.YearProgrammeRepository.GetAllAsync(pagination.Skip, pagination.Limit);
 
-            return _mapper.Map<IEnumerable<YearProgrammeModel>>(yearProgrammes);
+            return _mapper.Map<IEnumerable<YearProgrammeModel>>(yearProgrammes.OrderBy(x => x.StartDate));
         }
 
         public async Task UpdateYearProgramme(UpdateYearProgrammeDto updateYearProgrammeDto)
