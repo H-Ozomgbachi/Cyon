@@ -56,7 +56,7 @@ namespace Cyon.Application.Services
         {
             IEnumerable<Department> departments = await _unitOfWork.DepartmentRepository.GetAllAsync(pagination.Skip, pagination.Limit);
 
-            return _mapper.Map<IEnumerable<DepartmentModel>>(departments);
+            return _mapper.Map<IEnumerable<DepartmentModel>>(departments.OrderBy(x => x.Name));
         }
 
         public async Task UpdateDepartmentAsync(DepartmentUpdateDto department)

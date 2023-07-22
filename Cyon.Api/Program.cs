@@ -60,6 +60,7 @@ builder.Services.AddScoped<IYearProgrammeService, YearProgrammeService>();
 builder.Services.AddScoped<IUpcomingEventService, UpcomingEventService>();
 builder.Services.AddScoped<IDecisionService, DecisionService>();
 builder.Services.AddScoped<IDecisionResponseService, DecisionResponseService>();
+builder.Services.AddScoped<INotificationsService, NotificationsService>();
 
 builder.Services.AddScoped<IUtilityRepository, UtilityRepository>();
 

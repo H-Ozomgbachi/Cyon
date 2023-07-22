@@ -30,6 +30,10 @@ namespace Cyon.Application.Services
 
         public async Task<UserFinanceModel> AddUserFinance(CreateUserFinanceDto userFinanceDto, Guid modifiedBy)
         {
+            if (await IsSameExisting(userFinanceDto))
+            {
+                throw new BadRequestException("An exact finance seems to have been entered for this user today");
+            }
             UserFinance userFinance = _mapper.Map<UserFinance>(userFinanceDto);
             userFinance.ModifiedBy = modifiedBy;
             userFinance.User = await _userManager.FindByIdAsync(userFinanceDto.UserId.ToString());
@@ -240,6 +244,16 @@ namespace Cyon.Application.Services
                 await _unitOfWork.UserFinanceRepository.AddAsync(userFinanceToAdd);
                 await _unitOfWork.SaveAsync();
             }
+        }
+
+        private async Task<bool> IsSameExisting(CreateUserFinanceDto userFinanceDto)
+        {
+            return await _unitOfWork.UserFinanceRepository.ExistAsync(x => x.UserId == userFinanceDto.UserId.ToString() && x.Description == userFinanceDto.Description && x.DateCollected.Date == userFinanceDto.DateCollected.Date && x.Amount == userFinanceDto.Amount && x.FinanceType == userFinanceDto.FinanceType);
+        }
+
+        public async Task<IEnumerable<UserFinanceModel>> GetUserFinancesByDateRange(UserFinanceByDateDto userFinanceByDateDto)
+        {
+            return await _unitOfWork.UserFinanceRepository.GetUserFinancesByRange(userFinanceByDateDto.UserId, userFinanceByDateDto.StartDate, userFinanceByDateDto.EndDate);
         }
     }
 }

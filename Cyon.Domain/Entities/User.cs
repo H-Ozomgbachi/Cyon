@@ -20,6 +20,8 @@ namespace Cyon.Domain.Entities
         public DateTime LastLogin { get; set; }
         public string UniqueCode { get; set; }
         public string FeatureAccess { get; set; } = string.Empty;
+        public bool IsWelcomed { get; set; } = false;
+        public string EmailConfirmationPasscode { get; set; } = string.Empty;
 
         public Guid DepartmentId { get; set; }
         public Department Department { get; set; }

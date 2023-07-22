@@ -7,6 +7,7 @@ using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Cyon.Api.Controllers.v1
@@ -75,7 +76,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("account/{id}/change-role")]
-        //[Authorize(Roles = $"{Roles.Super},{Roles.Executive}")]
+        [Authorize(Roles = $"{Roles.Super}")]
         [AllowAnonymous]
         public async Task<IActionResult> ChangeRole(Guid id, [FromBody] IEnumerable<string> roles)
         {
@@ -119,6 +120,20 @@ namespace Cyon.Api.Controllers.v1
             return Ok(await _authenticationService.ResetPassword(resetPasswordDto));
         }
 
+        [HttpPost("SendConfirmEmailMessage/{email}")]
+        public async Task<IActionResult> SendConfirmEmailMessage(string email)
+        {
+            await _authenticationService.SendConfirmEmailMessage(email);
+            return Ok();
+        }
+
+        [HttpPost("ConfirmEmail/{email}/{passcode}")]
+        public async Task<IActionResult> ConfirmEmail(string email, string passcode)
+        {
+            await _authenticationService.ConfirmEmail(email, passcode);
+            return Ok();
+        }
+
         [HttpGet("GetAllUsers/")]
         [Authorize(Roles = $"{Roles.Executive}")]
         public async Task<ActionResult<IEnumerable<AccountModel>>> GetAllUsers()
@@ -131,6 +146,24 @@ namespace Cyon.Api.Controllers.v1
         public async Task<ActionResult<AccountModel>> GetUserById(Guid userId)
         {
             return Ok(await _authenticationService.MyAccount(userId));
+        }
+
+        [HttpGet("NumberOfUnwelcomedUsers")]
+        [Authorize(Roles = $"{Roles.Executive}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<int>> NumberOfUnwelcomedUsers()
+        {
+            int result = await _userManager.Users.CountAsync(x => x.IsWelcomed == false);
+            return Ok(result);
+        }
+
+        [HttpGet("NumberOfBirthdayCelebrants")]
+        [Authorize(Roles = $"{Roles.Executive}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<int>> NumberOfBirthdayCelebrants()
+        {
+            int result = await _userManager.Users.CountAsync(x => x.DateOfBirth.Day == DateTime.UtcNow.Day && x.DateOfBirth.Month == DateTime.UtcNow.Month);
+            return Ok(result);
         }
     }
 }

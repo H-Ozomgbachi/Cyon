@@ -17,6 +17,22 @@ namespace Cyon.Infrastructure.Repositories
             _dapperContext = dapperContext;
         }
 
+        public async Task<IEnumerable<UserFinanceModel>> GetUserFinancesByRange(string userId, DateTime startDate, DateTime endDate)
+        {
+            var sp = "Sp_GetUserFinanceByRange";
+
+            using var connection = _dapperContext.CreateConnection();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("UserId", userId, DbType.String, ParameterDirection.Input);
+            parameters.Add("StartDate", startDate, DbType.DateTime, ParameterDirection.Input);
+            parameters.Add("EndDate", endDate, DbType.DateTime, ParameterDirection.Input);
+
+            var finances = await connection.QueryAsync<UserFinanceModel>(sp, parameters, commandType: CommandType.StoredProcedure);
+
+            return finances;
+        }
+
         public async Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId)
         {
             string sp = "Sp_GetUserFinanceSummary";

@@ -42,6 +42,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpDelete("DeleteApology/{apologyId}")]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<IActionResult> DeleteApology(Guid apologyId)
         {
             await _apologyService.DeleteApology(apologyId);
@@ -57,7 +58,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("DeclineApology")]
-        [Authorize(Roles = $"{Roles.Super},{Roles.Executive}")]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<IActionResult> DeclineApology(ResolveApologyDto approveApologyDto)
         {
             await _apologyService.DeclineApology(approveApologyDto);

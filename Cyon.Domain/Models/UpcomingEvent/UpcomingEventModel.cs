@@ -8,5 +8,6 @@
         public string ImageUrl { get; set; }
         public bool IsActive { get; set; }
         public DateTime DateAdded { get; set; }
+        public DateTime ImportantDate { get; set; }
     }
 }

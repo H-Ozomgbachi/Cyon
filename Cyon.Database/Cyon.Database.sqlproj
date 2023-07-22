@@ -67,5 +67,6 @@
     <Build Include="StoreProcedure\Sp_GetAttendanceSummary.sql" />
     <Build Include="StoreProcedure\Sp_GetApologySummary.sql" />
     <Build Include="StoreProcedure\Sp_GetUserFinanceSummary.sql" />
+    <Build Include="StoreProcedure\Sp_GetUserFinanceByRange.sql" />
   </ItemGroup>
 </Project>

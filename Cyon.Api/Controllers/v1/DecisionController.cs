@@ -33,6 +33,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("AddDecision/")]
+        [Authorize(Roles = $"{Roles.Executive}")]
         public async Task<ActionResult<DecisionModel>> AddDecision([FromBody]CreateDecisionDto decisionDto)
         {
             string userCode = User.FindFirstValue(ClaimTypes.Actor);
@@ -42,6 +43,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPut("UpdateDecision/")]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<IActionResult> UpdateDecision([FromBody]UpdateDecisionDto updateDecisionDto)
         {
             string userCode = User.FindFirstValue(ClaimTypes.Actor);
@@ -50,6 +52,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpDelete("DeleteDecision/{decisionId}")]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<IActionResult> DeleteDecision(Guid decisionId)
         {
             await _decisionService.DeleteDecision(decisionId);

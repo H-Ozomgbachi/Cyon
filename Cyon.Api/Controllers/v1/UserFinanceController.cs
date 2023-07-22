@@ -52,7 +52,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpDelete("DeleteUserFinance/{id}")]
-        [Authorize(Roles = Roles.Executive)]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<IActionResult> DeleteUserFinance(Guid id)
         {
             await _userFinanceService.DeleteUserFinance(id);
@@ -82,8 +82,16 @@ namespace Cyon.Api.Controllers.v1
             var result = await _userFinanceService.GetDebts(userId, pagination);
             return Ok(result);
         }
+        [HttpPost("GetUserFinancesByDateRange")]
+        [Authorize(Roles = $"{Roles.Executive}")]
+        public async Task<ActionResult<IEnumerable<UserFinanceModel>>> GetUserFinancesByDateRange([FromBody]UserFinanceByDateDto userFinanceByDateDto)
+        {
+            var result = await _userFinanceService.GetUserFinancesByDateRange(userFinanceByDateDto);
+            return Ok(result);
+        }
 
         [HttpPost("ClearDebt/")]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<IActionResult> ClearDebt([FromBody]DebtPaymentDto debtPaymentDto)
         {
             await _userFinanceService.ClearDebt(debtPaymentDto, User.FindFirstValue(ClaimTypes.Actor));

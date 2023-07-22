@@ -74,6 +74,9 @@ namespace Cyon.Infrastructure.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("ImportantDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -604,6 +607,9 @@ namespace Cyon.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ImportantDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -651,6 +657,9 @@ namespace Cyon.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("EmailConfirmationPasscode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
@@ -670,6 +679,9 @@ namespace Cyon.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsCommunicant")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsWelcomed")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("LastLogin")

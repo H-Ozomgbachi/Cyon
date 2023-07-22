@@ -60,9 +60,9 @@ namespace Cyon.Application.Services
 
         public async Task<IEnumerable<MeetingModel>> GetMeetings(Pagination pagination)
         {
-            IEnumerable<Meeting> minutes = await _unitOfWork.MeetingRepository.GetAllAsync(pagination.Skip, pagination.Limit, new List<string> { "Agenda"});
+            IEnumerable<Meeting> meetings = await _unitOfWork.MeetingRepository.GetAllAsync(pagination.Skip, pagination.Limit, new List<string> { "Agenda"});
 
-            return _mapper.Map<IEnumerable<MeetingModel>>(minutes);
+            return _mapper.Map<IEnumerable<MeetingModel>>(meetings.OrderByDescending(x => x.Date));
         }
 
         public async Task UpdateMeeting(UpdateMeetingDto meetingDto, Guid modifiedBy)

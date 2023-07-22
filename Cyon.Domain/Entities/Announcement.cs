@@ -7,5 +7,6 @@
         public bool IsActive { get; set; } = true;
         public string ReadBy { get; set; } = string.Empty;
         public string ModifiedBy { get; set; }
+        public DateTime ImportantDate { get; set; } = DateTime.MinValue;
     }
 }

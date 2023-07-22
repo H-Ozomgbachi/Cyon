@@ -6,5 +6,6 @@ namespace Cyon.Domain.Repositories
     public interface IUserFinanceRepository : IRepository<UserFinance>
     {
         Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId);
+        Task<IEnumerable<UserFinanceModel>> GetUserFinancesByRange(string userId, DateTime startDate, DateTime endDate);
     }
 }

@@ -7,5 +7,6 @@ namespace Cyon.Domain.DTOs.UpcomngEvent
         public string Title { get; set; }
         public string Description { get; set; }
         public IFormFile Image { get; set; }
+        public DateTime ImportantDate { get; set; }
     }
 }

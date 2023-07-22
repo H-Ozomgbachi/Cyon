@@ -1,6 +1,5 @@
 ﻿using Cyon.Domain.Common;
 using Cyon.Domain.DTOs.Decision;
-using Cyon.Domain.Entities;
 using Cyon.Domain.Models.Decision;
 using Cyon.Domain.Services;
 using Microsoft.AspNetCore.Authorization;

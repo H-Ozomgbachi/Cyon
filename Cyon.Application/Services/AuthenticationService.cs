@@ -3,10 +3,12 @@ using Cyon.Domain.DTOs.Authentication;
 using Cyon.Domain.Entities;
 using Cyon.Domain.Exceptions;
 using Cyon.Domain.Models.Authentication;
+using Cyon.Domain.Repositories;
 using Cyon.Domain.Services;
 using Cyon.Infrastructure.Database;
 using Cyon.Infrastructure.EmailManager;
 using Cyon.Infrastructure.EmailManager.Templates;
+using Cyon.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +29,10 @@ namespace Cyon.Application.Services
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AppDbContext _dbContext;
         private readonly IEmailSender _emailSender;
+        private readonly IUtilityRepository _utilityRepository;
         private User? _user;
 
-        public AuthenticationService(UserManager<User> userManager, IConfiguration config, IMapper mapper, IDepartmentService departmentService, RoleManager<IdentityRole> roleManager, AppDbContext dbContext, IEmailSender emailSender)
+        public AuthenticationService(UserManager<User> userManager, IConfiguration config, IMapper mapper, IDepartmentService departmentService, RoleManager<IdentityRole> roleManager, AppDbContext dbContext, IEmailSender emailSender, IUtilityRepository utilityRepository)
         {
             _userManager = userManager;
             _config = config;
@@ -38,6 +41,7 @@ namespace Cyon.Application.Services
             _roleManager = roleManager;
             _dbContext = dbContext;
             _emailSender = emailSender;
+            _utilityRepository = utilityRepository;
         }
 
         public async Task<string> CreateToken()
@@ -223,8 +227,8 @@ namespace Cyon.Application.Services
 
         public async Task<IEnumerable<AccountModel>> GetAllUsers()
         {
-            var user = await _userManager.Users.Where(x => x.IsActive).ToListAsync();
-            return _mapper.Map<IEnumerable<AccountModel>>(user);
+            var users = await _userManager.Users.Where(x => x.IsActive).ToListAsync();
+            return _mapper.Map<IEnumerable<AccountModel>>(users.OrderBy(x => x.UserName));
         }
 
         public async Task<bool> UpdateMyAccount(UserForUpdateDto userForUpdateDto, Guid modifiedBy)
@@ -270,6 +274,50 @@ namespace Cyon.Application.Services
             }
 
             return "Password reset successful";
+        }
+
+        public async Task SendConfirmEmailMessage(string email)
+        {
+            // Get user
+            User user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new NotFoundException("User with given email was not found");
+            }
+
+            string emailConfirmationPasscode = GeneralHelpers.GeneratePasscode();
+
+            user.EmailConfirmationPasscode = emailConfirmationPasscode;
+            await _userManager.UpdateAsync(user);
+
+            string content = _utilityRepository.LoadEmailTemplate("emailConfirm.html");
+            StringBuilder sb = new(content);
+            sb.Replace("[UserName]", $"{user.FirstName}");
+            sb.Replace("[PassCode]", emailConfirmationPasscode);
+
+            var message = new Message(new string[] { user.Email }, "Confirm Email Address", sb.ToString(), null);
+
+            await _emailSender.SendEmail(message);
+        }
+
+        public async Task ConfirmEmail(string email, string passcode)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                throw new NotFoundException("User not found");
+            }
+
+            if (user.EmailConfirmationPasscode != passcode)
+            {
+                throw new BadRequestException("Incorrect passcode was supplied!");
+            }
+
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            await _userManager.ConfirmEmailAsync(user, token);
         }
     }
 }

@@ -17,5 +17,7 @@ namespace Cyon.Domain.Services
         Task<IEnumerable<AccountModel>> GetAllUsers();
         Task SendPasswordResetMail(User user, string token);
         Task<string> ResetPassword(ResetPasswordDto resetPasswordDto);
+        Task SendConfirmEmailMessage(string email);
+        Task ConfirmEmail(string email, string passcode);
     }
 }

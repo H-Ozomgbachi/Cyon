@@ -16,5 +16,6 @@ namespace Cyon.Domain.Services
         Task<UserFinanceSummary> GetUserFinanceSummary(Guid userId);
         Task<IEnumerable<UserFinanceModel>> GetDebts(Guid userId, Pagination pagination);
         Task ClearDebt(DebtPaymentDto debtPaymentDto, string ModifiedBy);
+        Task<IEnumerable<UserFinanceModel>> GetUserFinancesByDateRange(UserFinanceByDateDto userFinanceByDateDto);
     }
 }

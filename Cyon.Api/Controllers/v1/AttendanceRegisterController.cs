@@ -40,7 +40,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("MarkAbsentees")]
-        [Authorize(Roles = Roles.Executive)]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<ActionResult<string>> MarkAbsentees([FromBody]MarkAbsentDto markAbsentDto)
         {
             string result = await _attendanceRegisterService.MarkAbsent(markAbsentDto, User.FindFirstValue(ClaimTypes.Actor));

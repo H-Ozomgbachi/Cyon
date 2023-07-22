@@ -59,7 +59,7 @@ namespace Cyon.Application.Services
         {
             IEnumerable<AttendanceType> attendanceTypes = await _unitOfWork.AttendanceTypeRepository.GetAllAsync();
 
-            return _mapper.Map<IEnumerable<AttendanceTypeModel>>(attendanceTypes);
+            return _mapper.Map<IEnumerable<AttendanceTypeModel>>(attendanceTypes.OrderBy(x => x.Name));
         }
 
         public async Task UpdateAttendanceType(UpdateAttendanceTypeDto attendanceTypeDto)

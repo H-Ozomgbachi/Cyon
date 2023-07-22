@@ -8,5 +8,6 @@
         public bool IsActive { get; set; }
         public DateTime DateAdded { get; set; }
         public string ReadBy { get; set; }
+        public DateTime ImportantDate { get; set; }
     }
 }
