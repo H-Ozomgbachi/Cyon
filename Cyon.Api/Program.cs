@@ -61,6 +61,7 @@ builder.Services.AddScoped<IUpcomingEventService, UpcomingEventService>();
 builder.Services.AddScoped<IDecisionService, DecisionService>();
 builder.Services.AddScoped<IDecisionResponseService, DecisionResponseService>();
 builder.Services.AddScoped<INotificationsService, NotificationsService>();
+builder.Services.AddScoped<IGamesService, GamesService>();
 
 builder.Services.AddScoped<IUtilityRepository, UtilityRepository>();
 

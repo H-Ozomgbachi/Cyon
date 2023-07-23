@@ -584,6 +584,35 @@ namespace Cyon.Infrastructure.Migrations
                     b.ToTable("OrganisationFinances");
                 });
 
+            modelBuilder.Entity("Cyon.Domain.Entities.TreasureHuntResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FounderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FounderPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TreasureHuntResults");
+                });
+
             modelBuilder.Entity("Cyon.Domain.Entities.UpcomingEvent", b =>
                 {
                     b.Property<Guid>("Id")

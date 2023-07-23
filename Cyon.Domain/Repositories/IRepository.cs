@@ -14,6 +14,7 @@ namespace Cyon.Domain.Repositories
         Task<IEnumerable<TEntity>> GetAllAsync(int skip, int limit, IEnumerable<string> entitiesToInclude = null, IEnumerable<Expression<Func<TEntity, bool>>> predicates = null);
         void Delete(TEntity entity);
         Task DeleteAsync(TEntity entity);
+        void DeleteRange(IEnumerable<TEntity> entitiesToDelete);
         Task<int> Count(IEnumerable<Expression<Func<TEntity, bool>>> predicates = null);
         Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate);
     }

@@ -26,6 +26,7 @@ namespace Cyon.Infrastructure
         private IUpcomingEventRepository _upcomingEventRepository;
         private IDecisionRepository _decisionRepository;
         private IDecisionResponseRepository _decisionResponseRepository;
+        private IGamesRepository _gamesRepository;
 
         public UnitOfWork(AppDbContext dbContext, DapperContext dapperContext)
         {
@@ -264,6 +265,18 @@ namespace Cyon.Infrastructure
                     return _decisionResponseRepository;
                 }
                 return _decisionResponseRepository;
+            }
+        }
+        public IGamesRepository GamesRepository
+        {
+            get
+            {
+                if (_gamesRepository == null)
+                {
+                    _gamesRepository = new GamesRepository(_dbContext.TreasureHuntResults);
+                    return _gamesRepository;
+                }
+                return _gamesRepository;
             }
         }
         public void Dispose() => _dbContext.Dispose();

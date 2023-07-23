@@ -28,6 +28,7 @@ namespace Cyon.Infrastructure.Database
         public DbSet<UpcomingEvent> UpcomingEvents { get; set; }
         public DbSet<Decision> Decisions { get; set; }
         public DbSet<DecisionResponse> DecisionResponses { get; set; }
+        public DbSet<TreasureHuntResult> TreasureHuntResults { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

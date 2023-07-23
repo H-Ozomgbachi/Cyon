@@ -12,7 +12,7 @@ namespace Cyon.Domain.Services
         Task UpdateApology(Apology apology);
         Task DeleteApology(Guid id);
         Task<IEnumerable<ApologyModel>> GetApologiesByUser(Guid userId, Pagination pagination);
-        Task ApproveApology(ResolveApologyDto apology);
+        Task ApproveApology(ResolveApologyDto apology, string doneBy);
         Task DeclineApology(ResolveApologyDto apology);
         Task<ApologySummaryModel> GetApologySummary(Guid userId);
     }

@@ -53,7 +53,8 @@ namespace Cyon.Api.Controllers.v1
         [Authorize(Roles = $"{Roles.Super},{Roles.Executive}")]
         public async Task<IActionResult> ApproveApology(ResolveApologyDto approveApologyDto)
         {
-            await _apologyService.ApproveApology(approveApologyDto);
+            string doneBy = User.FindFirstValue(ClaimTypes.Actor);
+            await _apologyService.ApproveApology(approveApologyDto, doneBy);
             return Ok();
         }
 

@@ -55,7 +55,7 @@ namespace Cyon.Application.Services
             return _mapper.Map<ApologyModel>(apology);
         }
 
-        public async Task ApproveApology(ResolveApologyDto apology)
+        public async Task ApproveApology(ResolveApologyDto apology, string doneBy)
         {
             AttendanceRegister attendanceRegister = new()
             {
@@ -66,6 +66,7 @@ namespace Cyon.Application.Services
                 Name = apology.Name,
                 IsPresent = true,
                 Rating = 2,
+                CreatedBy = doneBy
             };
 
             await _unitOfWork.AttendanceRegisterRepository.AddAsync(attendanceRegister);

@@ -77,14 +77,13 @@ namespace Cyon.Api.Controllers.v1
 
         [HttpPost("account/{id}/change-role")]
         [Authorize(Roles = $"{Roles.Super}")]
-        [AllowAnonymous]
         public async Task<IActionResult> ChangeRole(Guid id, [FromBody] IEnumerable<string> roles)
         {
             await _authenticationService.ChangeRole(roles, id);
             return StatusCode(201);
         }
         [HttpPost("create-roles")]
-        [AllowAnonymous]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<IActionResult> CreateRoles([FromBody] IEnumerable<string> roles)
         {
             await _authenticationService.AddRolesToDb(roles);

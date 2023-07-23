@@ -21,6 +21,7 @@ namespace Cyon.Domain
         IUpcomingEventRepository UpcomingEventRepository { get; }
         IDecisionRepository DecisionRepository { get; }
         IDecisionResponseRepository DecisionResponseRepository { get; }
+        IGamesRepository GamesRepository { get; }
         Task<int> SaveAsync();
     }
 }

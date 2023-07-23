@@ -22,6 +22,7 @@ namespace Cyon.Infrastructure.Repositories
         public async virtual Task<int> Count(IEnumerable<Expression<Func<TEntity, bool>>> predicates = null) => await _entities.Filter(predicates).CountAsync();
 
         public void Delete(TEntity entity) => _entities.Remove(entity);
+        public void DeleteRange(IEnumerable<TEntity> entitiesToDelete) => _entities.RemoveRange(entitiesToDelete);
 
         public async Task DeleteAsync(TEntity entity) => await Task.Run(() => Delete(entity));
 
