@@ -60,7 +60,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPost("PayDuesByAmount")]
-        [Authorize(Roles = Roles.Executive)]
+        [Authorize(Roles = Roles.Super)]
         public async Task<IActionResult> PayDuesByAmount([FromBody] PayDuesByAmountDto duesByAmountDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
@@ -83,11 +83,19 @@ namespace Cyon.Api.Controllers.v1
             return Ok(result);
         }
         [HttpPost("GetUserFinancesByDateRange")]
-        [Authorize(Roles = $"{Roles.Executive}")]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<ActionResult<IEnumerable<UserFinanceModel>>> GetUserFinancesByDateRange([FromBody]UserFinanceByDateDto userFinanceByDateDto)
         {
-            var result = await _userFinanceService.GetUserFinancesByDateRange(userFinanceByDateDto);
-            return Ok(result);
+            string currentUser = User.FindFirstValue(ClaimTypes.Name);
+            if (User.IsInRole(Roles.Super) || userFinanceByDateDto.UserId == currentUser)
+            {
+                var result = await _userFinanceService.GetUserFinancesByDateRange(userFinanceByDateDto);
+                return Ok(result);
+            }
+            else
+            {
+                throw new UnauthorizedAccessException("Unauthorized");
+            }
         }
 
         [HttpPost("ClearDebt/")]

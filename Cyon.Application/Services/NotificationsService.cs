@@ -78,13 +78,13 @@ namespace Cyon.Application.Services
             }
             var activeUsers = await _userManager.Users.Where(x => x.IsActive == true).ToListAsync();
 
-            string content = _utilityRepository.LoadEmailTemplate("announce.html");
-            StringBuilder sb = new(content);
-            sb.Replace("[Title]", announcement.Title);
-            sb.Replace("[Content]", announcement.Content);
-
             foreach (var user in activeUsers)
             {
+                string content = _utilityRepository.LoadEmailTemplate("announce.html");
+                StringBuilder sb = new(content);
+
+                sb.Replace("[Title]", announcement.Title);
+                sb.Replace("[Content]", announcement.Content);
                 sb.Replace("[UserName]", user.FirstName);
                 var message = new Message(new string[] {user.Email}, "Reminder: Important Announcement ", sb.ToString(), null);
 
