@@ -64,7 +64,7 @@ namespace Cyon.Application.Services
         {
             IEnumerable<UpcomingEvent> upcomingEvents = await _unitOfWork.UpcomingEventRepository.GetAllAsync(pagination.Skip, pagination.Limit);
 
-            return _mapper.Map<IEnumerable<UpcomingEventModel>>(upcomingEvents);
+            return _mapper.Map<IEnumerable<UpcomingEventModel>>(upcomingEvents.OrderBy(x => x.ImportantDate));
         }
 
         public async Task UpdateUpcomingEvent(UpdateUpcomingEventDto upcomingEventDto, string modifiedBy)
