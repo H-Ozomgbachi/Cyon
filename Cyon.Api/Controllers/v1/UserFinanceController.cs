@@ -43,7 +43,7 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpPut("UpdateUserFinance")]
-        [Authorize(Roles = Roles.Executive)]
+        [Authorize(Roles = Roles.Super)]
         public async Task<IActionResult> UpdateUserFinance([FromForm] UpdateUserFinanceDto userFinanceDto)
         {
             Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.Name));
@@ -76,14 +76,13 @@ namespace Cyon.Api.Controllers.v1
         }
 
         [HttpGet("GetDebts/{userId}")]
-        [Authorize(Roles = $"{Roles.Executive}")]
+        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<ActionResult<UserFinanceModel>> GetDebts([FromQuery]Pagination pagination, Guid userId)
         {
             var result = await _userFinanceService.GetDebts(userId, pagination);
             return Ok(result);
         }
         [HttpPost("GetUserFinancesByDateRange")]
-        [Authorize(Roles = $"{Roles.Super}")]
         public async Task<ActionResult<IEnumerable<UserFinanceModel>>> GetUserFinancesByDateRange([FromBody]UserFinanceByDateDto userFinanceByDateDto)
         {
             string currentUser = User.FindFirstValue(ClaimTypes.Name);
