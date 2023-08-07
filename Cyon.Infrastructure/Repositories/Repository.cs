@@ -32,7 +32,7 @@ namespace Cyon.Infrastructure.Repositories
 
         public async Task<TEntity> GetFirstMatchAsync(IEnumerable<Expression<Func<TEntity, bool>>> predicates = null, IEnumerable<string> entitiesToInclude = null) => await _entities.AsNoTracking().Filter(predicates).Include(entitiesToInclude).FirstOrDefaultAsync();
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(int skip, int limit, IEnumerable<string> entitiesToInclude = null, IEnumerable<Expression<Func<TEntity, bool>>> predicates = null) => await _entities.AsNoTracking().Skip(skip).Take(limit).Include(entitiesToInclude).Filter(predicates).ToListAsync();
+        public async Task<IEnumerable<TEntity>> GetAllAsync(int skip, int limit, IEnumerable<string> entitiesToInclude = null, IEnumerable<Expression<Func<TEntity, bool>>> predicates = null) => await _entities.AsNoTracking().Filter(predicates).Skip(skip).Take(limit).Include(entitiesToInclude).ToListAsync();
 
         public async Task<TEntity> GetByIdAsync(Guid id, IEnumerable<string> entitiesToInclude = null) => await _entities.AsNoTracking().Include(entitiesToInclude).FirstOrDefaultAsync(e => e.Id == id);
 
