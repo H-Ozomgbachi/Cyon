@@ -29,6 +29,11 @@ namespace Cyon.Infrastructure.Database
         public DbSet<Decision> Decisions { get; set; }
         public DbSet<DecisionResponse> DecisionResponses { get; set; }
         public DbSet<TreasureHuntResult> TreasureHuntResults { get; set; }
+        public DbSet<Biz> Bizs { get; set; }
+        public DbSet<BizCategory> BizCategories { get; set; }
+        public DbSet<BizProduct> BizProducts { get; set; }
+        public DbSet<BizProductReview> BizProductReviews { get; set; }
+        public DbSet<BizProductTransaction> BizProductTransactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

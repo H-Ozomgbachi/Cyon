@@ -22,6 +22,11 @@ namespace Cyon.Domain
         IDecisionRepository DecisionRepository { get; }
         IDecisionResponseRepository DecisionResponseRepository { get; }
         IGamesRepository GamesRepository { get; }
+        IBizRepository BizRepository { get; }
+        IBizCategoryRepository BizCategoryRepository { get; }
+        IBizProductRepository BizProductRepository { get; }
+        IBizProductReviewRepository BizProductReviewRepository { get; }
+        IBizProductTransactionRepository BizProductTransactionRepository { get; }
         Task<int> SaveAsync();
     }
 }

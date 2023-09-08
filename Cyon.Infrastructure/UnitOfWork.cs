@@ -27,11 +27,41 @@ namespace Cyon.Infrastructure
         private IDecisionRepository _decisionRepository;
         private IDecisionResponseRepository _decisionResponseRepository;
         private IGamesRepository _gamesRepository;
+        private IBizRepository _bizRepository;
+        private IBizCategoryRepository _bizCategoryRepository;
+        private IBizProductRepository _bizProductRepository;
+        private IBizProductReviewRepository _bizProductReviewRepository;
+        private IBizProductTransactionRepository _bizProductTransactionRepository;
 
         public UnitOfWork(AppDbContext dbContext, DapperContext dapperContext)
         {
             _dbContext = dbContext;
             _dapperContext = dapperContext;
+        }
+        public IBizProductTransactionRepository BizProductTransactionRepository
+        {
+            get
+            {
+                _bizProductTransactionRepository ??= new BizProductTransactionRepository(_dbContext.BizProductTransactions);
+                return _bizProductTransactionRepository;
+            }
+        }
+        public IBizProductReviewRepository BizProductReviewRepository
+        {
+            get
+            {
+                _bizProductReviewRepository ??= new BizProductReviewRepository(_dbContext.BizProductReviews);
+                return _bizProductReviewRepository;
+            }
+        }
+
+        public IBizProductRepository BizProductRepository
+        {
+            get
+            {
+                _bizProductRepository ??= new BizProductRepository(_dbContext.BizProducts);
+                return _bizProductRepository;
+            }
         }
 
         public IChaplainRepository ChaplainRepository
@@ -277,6 +307,29 @@ namespace Cyon.Infrastructure
                     return _gamesRepository;
                 }
                 return _gamesRepository;
+            }
+        }
+        public IBizRepository BizRepository
+        {
+            get
+            {
+                if (_bizRepository == null)
+                {
+                    _bizRepository = new BizRepository(_dbContext.Bizs);
+                    return _bizRepository;
+                }
+                return _bizRepository;
+            }
+        }
+        public IBizCategoryRepository BizCategoryRepository
+        {
+            get
+            {
+                if (_bizCategoryRepository == null)
+                {
+                    _bizCategoryRepository = new BizCategoryRepository(_dbContext.BizCategories);
+                }
+                return _bizCategoryRepository;
             }
         }
         public void Dispose() => _dbContext.Dispose();
